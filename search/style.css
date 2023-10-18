@@ -84,6 +84,14 @@ header .signup:hover {
     background: linear-gradient(#e66465, #9198e5);
   }
   
+  .search-button {
+    background-color: white;
+  }
+
+  .search-button:hover {
+    background-color: #0d6efd;
+  }
+  
   .pet-details-wrapper {
     padding: 2rem;
     display: inline-flex;
