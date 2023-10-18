@@ -113,6 +113,10 @@ header .signup:hover {
       display: block;
       height: 125rem;
     }
+
+    .search-wrap {
+      height: 110rem;
+    }
   
     .search-filter-wrapper {
       display: block;
