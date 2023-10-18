@@ -131,12 +131,14 @@
                                 <div class="form-floating">
                                     <input type="email" class="form-control" id="inputEmail" required>
                                     <label for="inputEmail" class="form-label">Email</label>
+                                    <small id="login-fail" class="form-text">**Invalid email address.</small>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="inputUsername" autocomplete="username" required>
                                     <label for="inputUsername" class="form-label">Username</label>
+                                    <small id="login-fail" class="form-text">**Invalid username.</small>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -152,6 +154,7 @@
                                 <div class="form-floating">
                                     <input type="password" class="form-control" id="inputPassword2" autocomplete="new-password" required>
                                     <label for="inputPassword2" class="form-label">Confirmed-Password</label>
+                                    <small id="login-fail" class="form-text">**Passwords are not matching.</small>
                                 </div>
                             </div>
                             <h5 class="form-subtitle">Who are you?</h5>

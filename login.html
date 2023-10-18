@@ -40,9 +40,6 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/search/search-initial.html">Home</a>
-                                </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -97,8 +94,14 @@
                                         Lingyun's Part
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="/login.html">Login page</a></li>
+                                        <li><a class="dropdown-item" href="/login-error.html">Login page with error</a></li>
+                                        <li><a class="dropdown-item" href="/signup.html">Sign up page</a></li>
+                                        <li><a class="dropdown-item" href="/signup-error.html">Sign up page with error</a></li>
                                         <li><a class="dropdown-item" href="/account/pet-seeker-update.html">Update Account (Seeker)</a></li>
+                                        <li><a class="dropdown-item" href="/account/pet-seeker-update-error.html">Update Account with error (Seeker)</a></li>
                                         <li><a class="dropdown-item" href="/account/pet-shelter-update.html">Update Account (Shelter)</a></li>
+                                        <li><a class="dropdown-item" href="/account/pet-shelter-update-error.html">Update Account with error (Shelter)</a></li>
                                     </ul>
                             </ul>
                             <a class="btn btn-outline-success login" href="/login.html">Log In</a>
@@ -119,7 +122,6 @@
                         <div class="form-group">
                             <input type="password" class="form-control" id="InputPassword" required
                                 placeholder="Password">
-                            <small id="login-fail" class="form-text">Incorrect username or password.</small>
                             <a id="passwordHelp" href="">Forgot password?</small></a>
                         </div>
                         <div class="checkbox">
