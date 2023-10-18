@@ -63,7 +63,7 @@ header .signup:hover {
 }
 
 #login-fail {
-    display: none;
+    /* display: none; */
     color:red;
 }
 
@@ -139,7 +139,7 @@ a.profile-update-link:hover {
     margin-bottom: 1rem;
 }
 
-.form-update #formFile {
+.form-update #formFile,.form-pet-listing #formFile {
     padding-top: 35px;
 }
 
@@ -156,4 +156,17 @@ a.profile-update-link:hover {
 .form-update-pre button{
     margin-top: 0px;
     margin-bottom:2rem;
+}
+
+.form-floating > textarea.form-control {
+    height:100px;
+}
+
+.shelter-setting-title {
+    margin-top: 2rem!important;
+}
+
+.form-pet-listing button,.form-pet-listing .update-manage-btn {
+    margin-top: 0px;
+    margin-bottom:0.5rem;
 }
