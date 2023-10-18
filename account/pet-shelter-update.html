@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSC309 PetPal Phase1 - Home</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon//favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicon//favicon-16x16.png">
+    <link rel="manifest" href="../assets/img/favicon//site.webmanifest">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="page_container">
+        <div class="content_wrap">
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="/search/search-initial.html">
+                            <img src="/assets/img/favicon/favicon-32x32.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                            PetPal
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/search/search-initial.html">Home</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        David's Part
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="/search/search.html">Search Page</a></li>
+                                        <li><a class="dropdown-item" href="/search/search-initial.html">Search Initial Page</a></li>
+                                        <li><a class="dropdown-item" href="/search/search-filter.html">Search Filtered Page</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="/search/petdetails.html">Pet Details Page</a></li>
+                                        <li><a class="dropdown-item" href="/search/petdetails-adopted.html">Pet Details Adopted Page</a></li>
+                                        <li><a class="dropdown-item" href="/search/petdetails-pending.html">Pet Details Pending Page</a></li>
+                                        <li><a class="dropdown-item" href="/search/petdetails-withdrawn.html">Pet Details Withdrawn Page</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="/search/notifications.html">Notifications Page</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Mahir's Part
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="/detail/adoption.html">Adoption Page</a></li>
+                                        <li><a class="dropdown-item" href="/detail/application.html">Application Page</a></li>
+                                        <li><a class="dropdown-item" href="/detail/creation.html">Creation Page</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li><a class="dropdown-item" href="/detail/error.html">Error Page</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Gavin's Part
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="/detail/update.html">Update Pet Page</a></li>
+                                        <li><a class="dropdown-item" href="/shelter/detail.html">Shelter Details Page</a></li>
+                                        <li><a class="dropdown-item" href="/shelter/management.html">Shelter Manage Page</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Lingyun's Part
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li><a class="dropdown-item" href="/account/pet-seeker-update.html">Update Account (Seeker)</a></li>
+                                        <li><a class="dropdown-item" href="/account/pet-shelter-update.html">Update Account (Shelter)</a></li>
+                                    </ul>
+                            </ul>
+                            <form class="d-flex">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <main>
+                <div class="container mt-5 mb-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-3 border-end">
+                            <div class="d-flex flex-column align-items-center justify-content-center text-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+                                    class="bi bi-person" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                                </svg>
+                                <h5 class="profile-username">Username</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-5 border-end">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="profile-setting">Profile Settings</h4>
+                            </div>
+                            <form class="row g-3 form-update" action="" method="">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="first name"
+                                            value="current-fn" required>
+                                        <label class="update-labels">First Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="last name"
+                                            value="current-ln" required>
+                                        <label class="update-labels">Last Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="email"
+                                            value="current-email" required>
+                                        <label class="update-labels">Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="username"
+                                            value="current-username" required>
+                                        <label class="update-labels">Username</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="phone number"
+                                            value="current-pn">
+                                        <label class="update-labels">Phone number</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="inputAddress"
+                                            placeholder="1234 Main St" value="current-address">
+                                        <label for="inputAddress" class="form-label">Address Line 1</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="inputAddress2"
+                                            placeholder="Apartment, studio, or floor" value="current-address">
+                                        <label for="inputAddress2" class="form-label">Address Line 2 (optional)</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="inputCity" value="current-city">
+                                        <label for="inputCity" class="form-label">City</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select id="inputState" class="form-select">
+                                            <option selected value="0">Current</option>
+                                            <option value="1">NL</option>
+                                            <option value="2">PE</option>
+                                            <option value="3">NS</option>
+                                            <option value="4">NB</option>
+                                            <option value="5">QC</option>
+                                            <option value="6">ON</option>
+                                            <option value="7">MB</option>
+                                            <option value="8">SK</option>
+                                            <option value="9">AB</option>
+                                            <option value="10">BC</option>
+                                        </select>
+                                        <label for="inputProvince" class="form-label">Province</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="inputZip" value="current">
+                                        <label for="inputZip" class="form-label">Postal Code</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input class="form-control" type="file" id="formFile">
+                                        <label for="formFile" class="form-label">Update your profile icon</label>
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2 col-8 mx-auto">
+                                    <button type="submit" class="btn btn-primary">Save Profile</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="change-password">Change Password</h4>
+                            </div>
+                            <form class="row g-3 form-update-pwd" action="" method="">
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="inputUpdatePwd1" required>
+                                        <label for="inputUpdatePwd1" class="form-label">New password</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="inputUpdatePwd2" required>
+                                        <label for="inputUpdatePwd2" class="form-label">Confirm password</label>
+                                        <small id="login-fail" class="form-text">**Passwords are not matching.</small>
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2 col-8 mx-auto">
+                                    <button type="submit" class="btn btn-primary">Update password</button>
+                                </div>
+                            </form>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="profile-setting">Email Preferences</h4>
+                            </div>
+                            <form class="row g-3 form-update-pre" action="" method="">
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="preference-check1">
+                                            I would like to receive communications from PetPal,
+                                            including info on pet adoption and pet care,
+                                            promotional materials and more. You can withdraw consent at any time.
+                                        </label>
+                                        <input class="form-check-input" type="checkbox" name="preference-check1"
+                                            id="preference-check1">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="preference-check2">
+                                            I would like to receive the latest news, updates, promotions, 
+                                            special offers and exclusive savings from PetPal. 
+                                            You can withdraw consent at any time. 
+                                        </label>
+                                        <input class="form-check-input" type="checkbox" name="preference-check2"
+                                            id="preference-check2">
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2 col-8 mx-auto">
+                                    <button type="submit" class="btn btn-primary">Update preferences</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+        <!-- Footer -->
+        <footer class="text-center text-lg-start bg-light text-muted">
+            <!-- Section: Social media -->
+            <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+                <!-- Left -->
+                <div class="me-5 d-none d-lg-block">
+                    <span>Get connected with us on social networks:</span>
+                </div>
+                <!-- Left -->
+
+                <!-- Right -->
+                <div>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="" class="me-4 text-reset">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                <!-- Right -->
+            </section>
+            <!-- Section: Social media -->
+
+            <!-- Section: Links  -->
+            <section class="">
+                <div class="container text-center text-md-start mt-5">
+                    <!-- Grid row -->
+                    <div class="row mt-3">
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                            <!-- Content -->
+                            <h6 class="text-uppercase fw-bold mb-4">
+                                <i class="fas fa-gem me-3"></i>PetPal
+                            </h6>
+                            <p>
+                                Adopt your pet today!
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">
+                                Products
+                            </h6>
+                            <p>
+                                <a href="#!" class="text-reset">Angular</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">React</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Vue</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Laravel</a>
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">
+                                Useful links
+                            </h6>
+                            <p>
+                                <a href="#!" class="text-reset">Pricing</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Settings</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Orders</a>
+                            </p>
+                            <p>
+                                <a href="#!" class="text-reset">Help</a>
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                            <!-- Links -->
+                            <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                            <p><i class="fas fa-home me-3"></i> Toronto, ON, Canada</p>
+                            <p>
+                                <i class="fas fa-envelope me-3"></i>
+                                utoronto.ca
+                            </p>
+                            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                        </div>
+                        <!-- Grid column -->
+                    </div>
+                    <!-- Grid row -->
+                </div>
+            </section>
+            <!-- Section: Links  -->
+
+            <!-- Copyright -->
+            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+                © 2023 Copyright:
+                <a class="text-reset fw-bold" href="https://PetPal.com/">PetPal.com</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+        <!-- Footer -->
+    </div>
+</body>
+
+</html>

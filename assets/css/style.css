@@ -1,0 +1,159 @@
+.page_container {
+    position: relative;
+    min-height: 100vh;
+}
+
+.content_wrap {
+    padding-bottom: 420px;
+}
+
+header .btn,.btn-outline-success {
+    margin: 4px;
+}
+
+header .login {
+    color: #198754;
+    background: #bcf9b8;
+}
+
+header .login:hover {
+    color: #198754;
+    background: #7fe979;
+}
+
+header .signup {
+    color: white;
+    background: #259918;
+}
+header .signup:hover {
+    color: white;
+    background: #167b0b;
+}
+
+/*
+# Login Page
+*/
+.form-login {
+    background: ghostwhite;
+    width: 100%;
+    max-width: 330px;
+    padding: 60px 15px 30px 15px;
+    margin: auto;
+    margin-bottom: 30px;
+    margin-top: 60px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.form-login .form-group,button,.checkbox{
+    display: block;
+    margin-top: 30px;
+}
+
+.form-group + .form-group{
+    display: block;
+    margin-top: 4px;
+}
+
+.btn-lg {
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+}
+
+#login-fail {
+    display: none;
+    color:red;
+}
+
+a#passwordHelp {
+    display: block;
+    margin-top: 15px;
+    margin-bottom:-10px;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.login-signup {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-signup > a, a#passwordHelp {
+    text-decoration: none;
+}
+
+/*
+# Sign-up Page
+*/
+
+.form-signup {
+    max-width: 800px;
+    background: ghostwhite;
+    margin-bottom: var(--bs-gutter-y);
+}
+
+.form-signup button{
+    margin-top: 0px;
+}
+
+.form-subtitle {
+    margin-bottom: 0px;
+}
+
+/*
+# footer
+*/
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 420px;
+}
+
+/*
+# Update Page
+*/
+
+a.profile-update-link {
+    color:gray
+}
+
+a.profile-update-link:hover {
+    color:black
+}
+
+.profile-icon {
+    margin-right: 1rem;
+}
+
+.profile-username {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-update #formFile {
+    padding-top: 35px;
+}
+
+.form-update button{
+    margin-top: 0px;
+    margin-bottom:2rem;
+}
+
+.form-update-pwd button{
+    margin-top: 0px;
+    margin-bottom:2rem;
+}
+
+.form-update-pre button{
+    margin-top: 0px;
+    margin-bottom:2rem;
+}

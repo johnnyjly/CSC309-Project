@@ -1,0 +1,52 @@
+.page_container {
+    position: relative;
+    min-height: 100vh;
+}
+
+.content_wrap {
+    padding-bottom: 420px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 420px;
+}
+
+main {
+    margin: 1%;
+}
+
+#update-form {
+    padding: 1rem;
+}
+
+#mission {
+    margin-top: 1rem;
+}
+
+.location {
+    color: gray;
+    font-style: italic;
+}
+
+.pet-preview {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: auto;
+    justify-content: center;
+    margin: 1em;
+    padding: 1em;
+    text-align: center;
+}
+
+.comment {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+#new-listing {
+    margin-top: 2em;
+    width: 100%;
+}
