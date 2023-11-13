@@ -1,10 +1,8 @@
 from django.db import models
 from accounts.models.models import PetShelter, PetSeeker
+from petlistings.models import Pet
 
 # Create your models here.
-
-class Pet(models.Model):
-    pass
 
 class Application(models.Model):
     STATUS_CHOICES = (
@@ -22,7 +20,7 @@ class Application(models.Model):
     food_check = models.BooleanField()
     water_check = models.BooleanField()
     shelter_check = models.BooleanField()
-    animal = models.ForeignKey(Pet, on_delete=models.CASCADE)
+    animal = models.ForeignKey(Pet, on_delete=models.CASCADE, limit_choices_to={'status': 'available'})
     update_time = models.DateTimeField(auto_now=True)
     creation_time = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
