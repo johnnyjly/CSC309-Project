@@ -1,10 +1,12 @@
-from django.urls import path
-from .views import AppCreateView, AppEditView, AppListView, AppDetailView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import AppViewSet
 
-app_name="pet_apps"
-urlpatterns = [ 
-    path('create/', AppCreateView.as_view(), name="create"),
-    path('all/', AppListView.as_view(), name="list"),
-    path('<int:pk>/update/', AppEditView.as_view(), name="update"),
-    path('<int:pk>/', AppDetailView.as_view(), name="detail"),
+app_name = "pet_apps"
+
+router = DefaultRouter()
+router.register(r'', AppViewSet, basename='application')
+
+urlpatterns = [
+    path('', include(router.urls)),
 ]
