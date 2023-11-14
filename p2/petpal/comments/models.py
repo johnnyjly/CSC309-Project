@@ -17,9 +17,7 @@ class Comment(models.Model):
 
 class CommentOnShelter(Comment):
     pet_shelter = models.ForeignKey(PetShelter, on_delete=models.CASCADE, blank=False, related_name='pet_shelter')
-    reply = models.ForeignKey("CommentOnShelter", on_delete=models.CASCADE, null=True)
 
 
 class CommentOnApplication(Comment):
     application = models.ForeignKey(Application, on_delete=models.CASCADE, blank=False)
-    reply = models.ForeignKey("CommentOnApplication", on_delete=models.CASCADE, null=True)
