@@ -2,6 +2,7 @@ from django.shortcuts import render
 from ..models import (
     PetSeeker,
     PetShelter,
+    MyUser,
 )
 from ..serializers import (
     UserCreateSerializer,
@@ -21,8 +22,9 @@ from rest_framework.generics import (
     DestroyAPIView,
 )
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, PermissionDenied
 from django.shortcuts import get_object_or_404
+from applications.models import Application
 
 
 # Create your views here.
@@ -47,13 +49,16 @@ class UserUpdateView(UpdateAPIView):
             return SeekerUpdateSerializer
 
     def get_object(self):
-        if self.request.user.username != self.kwargs["username"]:
-            raise ValidationError("You don't have permission to do this.")
-        if self.request.user.is_shelter:
+        # Check token validity
+        user = get_object_or_404(MyUser, username=self.request.user.username)
+
+        if user.username != self.kwargs["username"]:
+            raise PermissionDenied()
+        if user.is_shelter:
             return get_object_or_404(
                 PetShelter, username=self.kwargs["username"]
             )
-        elif self.request.user.is_seeker:
+        elif user.is_seeker:
             return get_object_or_404(
                 PetSeeker, username=self.kwargs["username"]
             )
@@ -65,6 +70,9 @@ class ShelterRetrieveView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
+        # Check token validity
+        _ = get_object_or_404(MyUser, username=self.request.user.username)
+
         return get_object_or_404(PetShelter, username=self.kwargs["username"])
 
 
@@ -74,7 +82,10 @@ class SeekerRetrieveView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
-        if self.request.user.is_shelter:
+        # Check token validity
+        user = get_object_or_404(MyUser, username=self.request.user.username)
+
+        if user.is_shelter:
             seeker = get_object_or_404(
                 PetSeeker, username=self.kwargs["username"]
             )
@@ -84,8 +95,8 @@ class SeekerRetrieveView(RetrieveAPIView):
                 shelter=self.request.user,
                 applicant=seeker,
             )
-        elif self.request.user.username != self.kwargs["username"]:
-            raise ValidationError("You don't have permission to do this.")
+        elif user.username != self.kwargs["username"]:
+            raise PermissionDenied()
         else:
             return get_object_or_404(
                 PetSeeker, username=self.kwargs["username"]
@@ -110,13 +121,16 @@ class UserDeleteView(DestroyAPIView):
             return ShelterDeleteSerializer
 
     def get_object(self):
-        if self.request.user.username != self.kwargs["username"]:
-            raise ValidationError("You don't have permission to do this.")
-        if self.request.user.is_shelter:
+        # Check token validity
+        user = get_object_or_404(MyUser, username=self.request.user.username)
+
+        if user.username != self.kwargs["username"]:
+            raise PermissionDenied()
+        if user.is_shelter:
             return get_object_or_404(
                 PetShelter, username=self.kwargs["username"]
             )
-        elif self.request.user.is_seeker:
+        elif user.is_seeker:
             return get_object_or_404(
                 PetSeeker, username=self.kwargs["username"]
             )
