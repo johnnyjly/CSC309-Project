@@ -74,8 +74,22 @@ class SeekerRetrieveView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
-        # TODO: Need to check if the seeker has an active application
-        return get_object_or_404(PetSeeker, username=self.kwargs["username"])
+        if self.request.user.is_shelter:
+            seeker = get_object_or_404(
+                PetSeeker, username=self.kwargs["username"]
+            )
+            return get_object_or_404(
+                Application,
+                status="pending",
+                shelter=self.request.user,
+                applicant=seeker,
+            )
+        elif self.request.user.username != self.kwargs["username"]:
+            raise ValidationError("You don't have permission to do this.")
+        else:
+            return get_object_or_404(
+                PetSeeker, username=self.kwargs["username"]
+            )
 
 
 class ShelterListView(ListAPIView):
