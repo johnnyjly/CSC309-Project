@@ -16,7 +16,6 @@ class NotificationViewSet(viewsets.ModelViewSet):
   def get_queryset(self):
     read_param = self.request.query_params.get('is_read')
     queryset = Notification.objects.all()
-    
     if read_param is not None:
             read_status = read_param.lower() == 'true'
             queryset = queryset.filter(is_read=read_status)
@@ -24,10 +23,21 @@ class NotificationViewSet(viewsets.ModelViewSet):
   
   def update(self, request, *args, **kwargs):
       instance = self.get_object()
+      if request.data.get('is_read') is None:
+          return Response(
+          {"detail": "You can only change the state of an unread notification to read."},
+          status=status.HTTP_400_BAD_REQUEST
+      )
+      print(request.data.get('is_read')) 
+      if request.data.get('is_read') == "false":
+          return Response(
+          {"detail": "You can only change the state of an unread notification to read."},
+          status=status.HTTP_400_BAD_REQUEST
+      )
+
       if not instance.is_read:
             instance.is_read = True
             instance.save()
-
             # Serialize and return the updated notification
             serializer = self.get_serializer(instance)
             return Response(serializer.data, status=status.HTTP_200_OK)
