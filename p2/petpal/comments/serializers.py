@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from .models import *
 
@@ -9,9 +10,10 @@ class CommentOnShelterCreateSerializer(ModelSerializer):
 
 
 class CommentOnShelterListSerializer(ModelSerializer):
+    commenter_name = serializers.CharField(max_length=255)
     class Meta:
         model = CommentOnShelter
-        fields = ['content', 'commenter', 'creation_time']
+        fields = ['content', 'commenter_name', 'creation_time']
 
 
 class CommentOnApplicationCreateSerializer(ModelSerializer):
@@ -23,4 +25,4 @@ class CommentOnApplicationCreateSerializer(ModelSerializer):
 class CommentOnApplicationListSerializer(ModelSerializer):
     class Meta:
         model = CommentOnApplication
-        fields = ['content', 'commenter', 'creation_time']
+        fields = ['content', 'commenter_name', 'creation_time']

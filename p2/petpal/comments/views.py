@@ -19,7 +19,10 @@ class CommentOnShelterListCreate(ListCreateAPIView, LoginRequiredMixin):
 
     def get_queryset(self):
         pet_shelter = get_object_or_404(PetShelter, username=self.kwargs['username'])
-        return CommentOnShelter.objects.filter(pet_shelter=pet_shelter).order_by('-creation_time')
+        queryset = CommentOnShelter.objects.filter(pet_shelter=pet_shelter).order_by('-creation_time')
+        for commenter in queryset:
+            commenter.commenter_name = commenter.commenter.username
+        return queryset
 
     def perform_create(self, serializer):
         pet_shelter = get_object_or_404(PetShelter, username=self.kwargs['username'])
@@ -41,7 +44,10 @@ class CommentOnApplicationListCreate(ListCreateAPIView, LoginRequiredMixin):
         application = get_object_or_404(Application, ID=self.kwargs['pk'])
         if self.request.user.username not in [application.applicant.username, application.shelter.username]:
             raise Http404
-        return CommentOnApplication.objects.filter(application=application).order_by('-creation_time')
+        queryset = CommentOnApplication.objects.filter(application=application).order_by('-creation_time')
+        for commenter in queryset:
+            commenter.commenter_name = commenter.commenter.username
+        return queryset
 
     def perform_create(self, serializer):
         application = get_object_or_404(Application, ID=self.kwargs['pk'])
