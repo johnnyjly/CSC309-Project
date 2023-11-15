@@ -19,7 +19,7 @@ class Pet(models.Model):
   publication_date = models.DateTimeField(auto_now_add=True)
   color = models.CharField(max_length=100)
   size = models.CharField(max_length=100)
-  image = models.ImageField(upload_to='images/')
+  image = models.ImageField(upload_to='images/', blank=True, null=True)
   status = models.CharField(max_length=10, choices=STATUS_CHOICES)
   shelter = models.ForeignKey(PetShelter, on_delete=models.CASCADE)
   

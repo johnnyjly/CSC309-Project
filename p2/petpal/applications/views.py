@@ -19,7 +19,7 @@ class AppViewSet(viewsets.ModelViewSet):
         if status_filter:
             queryset = queryset.filter(status=status_filter)
 
-        if self.request.user.is_authenticated and hasattr(self.request.user, 'shelter_name'):
+        if self.request.user.is_authenticated and self.request.user.is_shelter:
             shelter = self.request.user.petshelter
             return queryset.order_by('-creation_time', '-update_time').filter(shelter=shelter)
         else:
@@ -30,7 +30,7 @@ class AppViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
 
-        shelter = hasattr(self.request.user, 'shelter_name')
+        shelter = self.request.user.is_shelter
 
         # Shelter can only update the status from pending to accepted or denied
         if shelter and instance.status == 'pending' and request.data['status'] in ['accepted', 'rejected']:
@@ -49,4 +49,10 @@ class AppViewSet(viewsets.ModelViewSet):
         return Response(
             {'error': 'Invalid status update for the current user and application status.'},
             status=status.HTTP_400_BAD_REQUEST
+        )
+
+    def destroy(self, request, *args, **kwargs):
+        return Response(
+            {'error': 'Deleting applications is not allowed.'},
+            status=status.HTTP_405_METHOD_NOT_ALLOWED
         )
