@@ -2,13 +2,25 @@ from rest_framework.serializers import ModelSerializer
 from .models import *
 
 
-class CommentOnShelterSerializer(ModelSerializer):
+class CommentOnShelterCreateSerializer(ModelSerializer):
     class Meta:
         model = CommentOnShelter
-        fields = ['content', 'commenter', 'reply', 'creation_time']
+        fields = ['content']
 
 
-class CommentOnApplicationSerializer(ModelSerializer):
+class CommentOnShelterListSerializer(ModelSerializer):
+    class Meta:
+        model = CommentOnShelter
+        fields = ['content', 'commenter', 'creation_time']
+
+
+class CommentOnApplicationCreateSerializer(ModelSerializer):
     class Meta:
         model = CommentOnApplication
-        fields = ['content', 'commenter', 'reply', 'creation_time']
+        fields = ['content']
+
+
+class CommentOnApplicationListSerializer(ModelSerializer):
+    class Meta:
+        model = CommentOnApplication
+        fields = ['content', 'commenter', 'creation_time']
