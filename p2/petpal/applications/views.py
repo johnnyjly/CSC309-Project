@@ -21,9 +21,11 @@ class AppViewSet(viewsets.ModelViewSet):
 
         if self.request.user.is_authenticated and hasattr(self.request.user, 'shelter_name'):
             shelter = self.request.user.petshelter
-            queryset = queryset.filter(shelter=shelter)
-
-        return queryset.order_by('-creation_time', '-update_time')
+            return queryset.order_by('-creation_time', '-update_time').filter(shelter=shelter)
+        else:
+            seeker = self.request.user.petseeker
+            return queryset.order_by('-creation_time', '-update_time').filter(applicant=seeker)
+        
     
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
