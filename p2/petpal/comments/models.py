@@ -9,6 +9,7 @@ class Comment(models.Model):
     ID = models.AutoField(primary_key=True)
     content = models.TextField(blank=False)
     commenter = models.ForeignKey(MyUser, on_delete=models.CASCADE, blank=False)
+    commenter_name = models.CharField(max_length=255, blank=True, null=True)
     creation_time = models.DateTimeField(blank=False)
 
     class Meta:
