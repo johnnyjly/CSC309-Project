@@ -89,12 +89,13 @@ class SeekerRetrieveView(RetrieveAPIView):
             seeker = get_object_or_404(
                 PetSeeker, username=self.kwargs["username"]
             )
-            return get_object_or_404(
+            application = get_object_or_404(
                 Application,
                 status="pending",
                 shelter=self.request.user,
                 applicant=seeker,
             )
+            return seeker
         elif user.username != self.kwargs["username"]:
             raise PermissionDenied()
         else:
