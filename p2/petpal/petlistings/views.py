@@ -18,7 +18,6 @@ class PetListingViewSet(viewsets.ModelViewSet):
       queryset = Pet.objects.all()
       return queryset.order_by('-' + sort_param)
 
-
     status_param = self.request.query_params.get('status')
     shelter_param = self.request.query_params.get('shelter')
     breed_param = self.request.query_params.get('breed')
