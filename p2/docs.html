@@ -208,6 +208,28 @@
   <li><a href="#createTokenRefresh"><code><span class="http-method">post</span> /api/token/refresh/</code></a></li>
   </ul>
   <h4><a href="#Applications">Applications</a></h4>
+  <div class="app-desc">The Accounts API consists of 6 end-points: 3 GET, 1 POST, 1DELETE, and 1 PUT. The authentication
+    of the user is done by using the JWT token imported from the REST framework.</div>
+    <div class="app-desc">The user is created through the POST method, with all the fields required, and could either
+      choose to become a pet
+      shelter (become_shelter = true) or pet seeker.</div>
+    <div class="app-desc">All the requests except for the POST request require the authentication token. This can be
+      retrieved from the (POST
+      /api/token/) with the username and password. This is considered the login for this project, i.e., if you can
+      provide
+      a valid token, then you’re considered logged in as a user with a unique user_id and username.</div>
+    <div class="app-desc">PUT request allows the user to update its profile and for a pet shelter it has 4 extra fields
+      for its shelter’s
+      information.</div>
+    <div class="app-desc">GET request basically get the profile of the user with {username} in the end-point.</div>
+    <div class="app-desc">1. GET /accounts/shelters/, allows all users to get a list of all the pet shelters’ profile.
+    </div>
+    <div class="app-desc">2. GET /accounts/shelters/{username}/, allows all users to get the {username} pet shelter’s
+      profile.</div>
+    <div class="app-desc">3. GET /accounts/seekers/{username}/, allows the pet shelter to get the profile of the
+      {username} pet seeker, only if it has an active application with the pet shelter.</div>
+    <div class="app-desc">DELETE request simply delete the current logged in user.</div>
+  </div>
   <ul>
   <li><a href="#createApplication"><code><span class="http-method">post</span> /applications/</code></a></li>
   <li><a href="#listApplications"><code><span class="http-method">get</span> /applications/</code></a></li>
