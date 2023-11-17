@@ -26,5 +26,8 @@ class Application(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
 
+    class Meta:
+        unique_together = ('applicant', 'animal')
+        
     def __str__(self):
         return f"Application ID: {self.ID} - Status: {self.status}"

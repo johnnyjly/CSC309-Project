@@ -25,6 +25,13 @@ class ApplicationSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
 
         if user.is_authenticated and not user.is_shelter:
+            existing_application = Application.objects.filter(
+                applicant=user.petseeker, 
+                animal=validated_data['animal']
+            ).first()
+            if existing_application:
+                raise serializers.ValidationError("An application for this pet already exists.")
+            
             validated_data['applicant'] = user.petseeker
             validated_data['status'] = 'pending'
 
