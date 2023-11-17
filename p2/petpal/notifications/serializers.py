@@ -39,7 +39,7 @@ class NotificationSerializer(serializers.ModelSerializer):
     if object.application:
       return reverse("pet_apps:application-detail", args=[object.application.pk])
     elif object.comment_on_shelter:
-      return reverse("comments:comment-on-shelter", args=[object.comment_on_shelter.pk])
+      return reverse("comments:comment-on-shelter", args=[object.comment_on_shelter.pet_shelter])
     elif object.comment_on_application:
       return reverse("comments:comment-on-application", args=[object.comment_on_application.pk])
 
