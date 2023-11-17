@@ -1133,7 +1133,7 @@ token if the refresh token is valid.</div>
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /comments/applications/{id}/</code></pre></div>
     <div class="method-summary"> (<span class="nickname">createCommentOnApplicationList</span>)</div>
-    <div class="method-notes"></div>
+    <div class="method-notes">Create a comment for the application with the given ID. You must be logged in and either the pet seeker or pet shelter of the application in order to create a comment.</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
@@ -1197,7 +1197,7 @@ token if the refresh token is valid.</div>
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /comments/pet_shelters/{username}/</code></pre></div>
     <div class="method-summary"> (<span class="nickname">createCommentOnShelterList</span>)</div>
-    <div class="method-notes"></div>
+    <div class="method-notes">Create a comment for the pet shelter with the given username. You must be logged in to create a comment.</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
@@ -1261,7 +1261,7 @@ token if the refresh token is valid.</div>
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /comments/applications/{id}/</code></pre></div>
     <div class="method-summary"> (<span class="nickname">retrieveCommentOnApplicationList</span>)</div>
-    <div class="method-notes"></div>
+    <div class="method-notes">List all comments for the shelter with the given username. You must be logged in to view comments.</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
@@ -1308,7 +1308,7 @@ token if the refresh token is valid.</div>
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /comments/pet_shelters/{username}/</code></pre></div>
     <div class="method-summary"> (<span class="nickname">retrieveCommentOnShelterList</span>)</div>
-    <div class="method-notes"></div>
+    <div class="method-notes">List all comments for the application with the given ID. You must be logged in and either the pet seeker or pet shelter of the application in order to view comments.</div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
