@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import Pet
+from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from accounts.models.models import PetShelter
 from .serializers import PetListingSerializer
-from rest_framework.pagination import PageNumberPagination
+from .models import Pet
+from rest_framework import status
+
 
 
 # Create your views here.
@@ -12,6 +15,20 @@ class PetListingViewSet(viewsets.ModelViewSet):
   serializer_class = PetListingSerializer
   pagination_class = PageNumberPagination
   
+  def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        if instance.shelter == request.user.petshelter:
+            self.perform_update(serializer)
+            return Response(serializer.data)
+        else:
+            return Response(
+                {'error': 'You are not allowed to update this pet listing.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        
   def get_queryset(self):
     sort_param = self.request.query_params.get('sort')
     if sort_param is not None:
@@ -45,3 +62,4 @@ class PetListingViewSet(viewsets.ModelViewSet):
         return queryset
     else:
         return queryset.filter(status = 'available')
+        

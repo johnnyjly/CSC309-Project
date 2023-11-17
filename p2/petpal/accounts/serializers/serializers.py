@@ -35,9 +35,12 @@ class UserCreateSerializer(ModelSerializer):
         ]
 
     def create(self, validated_data):
+        email = validated_data.get("email")
         password1 = validated_data.pop("password1", "")
         password2 = validated_data.pop("password2", "")
         become_shelter = validated_data.pop("become_shelter", "")
+        if MyUser.objects.filter(email=email).exists():
+            raise ValidationError("User with this email already exists.")
         # check password
         if password1 and password2 and password1 != password2:
             raise ValidationError("password mismatch")

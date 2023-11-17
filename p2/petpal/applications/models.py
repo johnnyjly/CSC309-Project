@@ -9,6 +9,7 @@ class Application(models.Model):
         ('pending', 'Pending'),
         ('accepted', 'Accepted'),
         ('rejected', 'Rejected'),
+        ('withdrawn', 'Withdrawn')
     )
 
     ID = models.AutoField(primary_key=True)
