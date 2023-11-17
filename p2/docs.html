@@ -789,7 +789,7 @@ token if the refresh token is valid.</div>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /applications/</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">createApplication</span>)</div>
+    <div class="method-summary"> (<span class="nickname">createApplication</span>) The Create Application API allows authenticated pet seekers to submit applications for adopting pets listed by shelters. Pet seekers provide information about themselves, their experience with pets, and details specific to the pet adoption application. The API ensures that a pet seeker can submit only one application per pet, preventing duplicate submissions. The application status is initially set to "Pending," and shelters have the ability to review and update the status accordingly. Only pet seekers, not shelters, can create applications using this API.</div>
     <div class="method-notes"></div>
 
 
@@ -880,7 +880,8 @@ token if the refresh token is valid.</div>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /applications/</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">listApplications</span>)</div>
+    <div class="method-summary"> (<span class="nickname">listApplications</span>) 
+      The Get Application API endpoint provides a list of adoption applications, allowing both shelters and pet seekers to view relevant information about each application. Shelters can filter applications based on the status of the applications, while pet seekers can review the status and details of their submitted applications. The information includes the application ID, applicant details, pet details, application status, and timestamps indicating the creation and last update times.</div>
     <div class="method-notes"></div>
 
 
@@ -959,7 +960,7 @@ token if the refresh token is valid.</div>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="get"><code class="huge"><span class="http-method">get</span> /applications/{ID}/</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">retrieveApplication</span>)</div>
+    <div class="method-summary"> (<span class="nickname">retrieveApplication</span>) This version of the Get Application API outlines detailed information about a specific adoption application identified by its unique ID. It provides comprehensive details about the application, including the applicant's information, the associated pet details, the application status, and timestamps indicating when the application was created and last updated. This endpoint is designed to offer a focused view of a particular adoption application, facilitating effective tracking and management of individual applications within the system.</div>
     <div class="method-notes"></div>
 
     <h3 class="field-label">Path parameters</h3>
@@ -1013,7 +1014,7 @@ token if the refresh token is valid.</div>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
     <pre class="put"><code class="huge"><span class="http-method">put</span> /applications/{ID}/</code></pre></div>
-    <div class="method-summary"> (<span class="nickname">updateApplication</span>)</div>
+    <div class="method-summary"> (<span class="nickname">updateApplication</span>) Finally, the Put Application API allows for the update of an existing adoption application identified by its unique ID. This endpoint enables users, typically shelters or applicants, to modify specific details of the application. The payload for this request should include the updated information, such as changes to the application status. It adheres to the constraints specified in the system, ensuring that certain fields, like the application details, can only be updated under specific conditions. </div>
     <div class="method-notes"></div>
 
     <h3 class="field-label">Path parameters</h3>
