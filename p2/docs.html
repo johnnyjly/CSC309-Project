@@ -1592,39 +1592,19 @@ token if the refresh token is valid.</div>
 
     <h3 class="field-label">Form parameters</h3>
     <div class="field-items">
-      <div class="param">id (optional)</div>
       
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">message (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">is_read (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">recipient (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">creation_time (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  format: date-time</div>      <div class="param">url (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">type (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">pk (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">id (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">message (optional)</div>
+          <div class="param">message </div>
       
             <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">is_read (optional)</div>
       
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">recipient (optional)</div>
+            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">recipient </div>
       
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">creation_time (optional)</div>
+
+            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">type </div>
       
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  format: date-time</div>      <div class="param">url (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">type (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">pk (optional)</div>
-      
-            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>      <div class="param">pk </div>
+            <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>  
+
 
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
@@ -1637,14 +1617,10 @@ token if the refresh token is valid.</div>
     <h3 class="field-label">Example data</h3>
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
-  "is_read" : true,
-  "creation_time" : "2000-01-23T04:56:07.000+00:00",
   "recipient" : "recipient",
-  "id" : 0,
-  "pk" : 6,
   "message" : "message",
   "type" : "application",
-  "url" : "url"
+  "pk" : 6,
 }</code></pre>
 
     <h3 class="field-label">Produces</h3>
@@ -1726,21 +1702,18 @@ token if the refresh token is valid.</div>
     "creation_time" : "2000-01-23T04:56:07.000+00:00",
     "recipient" : "recipient",
     "id" : 0,
-    "pk" : 6,
     "message" : "message",
-    "type" : "application",
     "url" : "url"
   }, {
     "is_read" : true,
     "creation_time" : "2000-01-23T04:56:07.000+00:00",
     "recipient" : "recipient",
     "id" : 0,
-    "pk" : 6,
     "message" : "message",
-    "type" : "application",
     "url" : "url"
   } ]
 }</code></pre>
+    
 
     <h3 class="field-label">Produces</h3>
     This API call produces the following media types according to the <span class="header">Accept</span> request header;
@@ -1784,8 +1757,7 @@ token if the refresh token is valid.</div>
                 </div>  <!-- field-items -->
 
 
-
-    <h3 class="field-label">Form parameters</h3>
+<h3 class="field-label">Form parameters</h3>
     <div class="field-items">
       <div class="param">id (optional)</div>
       
@@ -1821,6 +1793,7 @@ token if the refresh token is valid.</div>
       
             <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
 
+  
     <h3 class="field-label">Return type</h3>
     <div class="return-type">
       <a href="#Notification">Notification</a>
@@ -1836,9 +1809,7 @@ token if the refresh token is valid.</div>
   "creation_time" : "2000-01-23T04:56:07.000+00:00",
   "recipient" : "recipient",
   "id" : 0,
-  "pk" : 6,
   "message" : "message",
-  "type" : "application",
   "url" : "url"
 }</code></pre>
 
