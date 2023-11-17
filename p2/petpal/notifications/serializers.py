@@ -39,9 +39,9 @@ class NotificationSerializer(serializers.ModelSerializer):
     if object.application:
       return reverse("pet_apps:application-detail", args=[object.application.pk])
     elif object.comment_on_shelter:
-      return reverse("comments:comment-on-shelter", args=[object.comment_on_shelter.pet_shelter])
+      return reverse("comments:comment-on-shelter-retrieve", args=[object.comment_on_shelter.pet_shelter, object.comment_on_shelter.pk])
     elif object.comment_on_application:
-      return reverse("comments:comment-on-application", args=[object.comment_on_application.pk])
+      return reverse("comments:comment-on-application-retrieve", args=[object.comment_on_application.pk, object.comment_on_application.application.pk])
 
     return ""
 
@@ -53,8 +53,15 @@ class NotificationSerializer(serializers.ModelSerializer):
         type = validated_data.pop('type')
         pk = validated_data.pop('pk')
 
+        recipient = validated_data['recipient']
+        print("Recipient:", recipient)
         if type == 'application':
             validated_data['application'] = get_object_or_404(Application, pk=pk)
+            if str(validated_data['application'].shelter) != str(recipient):
+                raise serializers.ValidationError(
+                    "You can only create notifications for your own applications."
+                )
+               
             if str(validated_data['application'].shelter) != str(self.context['request'].user) and str(validated_data['application'].applicant) != str(self.context['request'].user):
                 raise serializers.ValidationError(
                     "You can only create notifications for your own applications."
@@ -67,8 +74,11 @@ class NotificationSerializer(serializers.ModelSerializer):
                 )
         elif type == 'comment_on_application':
             validated_data['comment_on_application'] = get_object_or_404(CommentOnApplication, pk=pk)
-            if str(validated_data['comment_on_application'].application.shelter) != str(self.context['request'].user) and str(validated_data['comment_on_application'].commenter) != str(self.context['request'].user):
+            print(str(validated_data['comment_on_application'].application.shelter))
+            print(str(self.context['request'].user))
+            if str(validated_data['comment_on_application'].application.shelter) != str(self.context['request'].user) and str(validated_data['comment_on_application'].application.applicant) != str(self.context['request'].user):
                 raise serializers.ValidationError(
-                    "You can only create notifications for your own applications."
+                    "You can only create notifications for your own comments."
                 )
+            
         return super().create(validated_data)
