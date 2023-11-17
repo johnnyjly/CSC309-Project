@@ -6,7 +6,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
 from rest_framework.response import Response
 
-
+#dasd
 # Create your views here.
 class NotificationViewSet(viewsets.ModelViewSet):
   #queryset = Notification.objects.all().filter(recipient=self.request.user)
@@ -23,17 +23,12 @@ class NotificationViewSet(viewsets.ModelViewSet):
   
   def update(self, request, *args, **kwargs):
       instance = self.get_object()
-      if request.data.get('is_read') is None:
+      if request.data.get('is_read') is None or request.data.get('is_read') == "false":
           return Response(
           {"detail": "You can only change the state of an unread notification to read."},
           status=status.HTTP_400_BAD_REQUEST
       )
-      print(request.data.get('is_read')) 
-      if request.data.get('is_read') == "false":
-          return Response(
-          {"detail": "You can only change the state of an unread notification to read."},
-          status=status.HTTP_400_BAD_REQUEST
-      )
+
 
       if not instance.is_read:
             instance.is_read = True
