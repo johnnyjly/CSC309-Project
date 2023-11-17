@@ -13,7 +13,7 @@ class CommentOnShelterListSerializer(ModelSerializer):
     commenter_name = serializers.CharField(max_length=255)
     class Meta:
         model = CommentOnShelter
-        fields = ['content', 'commenter_name', 'creation_time']
+        fields = ['ID', 'content', 'commenter_name', 'creation_time']
 
 
 class CommentOnApplicationCreateSerializer(ModelSerializer):
@@ -25,4 +25,4 @@ class CommentOnApplicationCreateSerializer(ModelSerializer):
 class CommentOnApplicationListSerializer(ModelSerializer):
     class Meta:
         model = CommentOnApplication
-        fields = ['content', 'commenter_name', 'creation_time']
+        fields = ['ID', 'content', 'commenter_name', 'creation_time']
