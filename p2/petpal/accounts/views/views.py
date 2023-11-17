@@ -89,13 +89,14 @@ class SeekerRetrieveView(RetrieveAPIView):
             seeker = get_object_or_404(
                 PetSeeker, username=self.kwargs["username"]
             )
-            application = get_object_or_404(
-                Application,
+            if Application.objects.filter(
                 status="pending",
                 shelter=self.request.user,
                 applicant=seeker,
-            )
-            return seeker
+            ).exists():
+                return seeker
+            else:
+                raise PermissionDenied()
         elif user.username != self.kwargs["username"]:
             raise PermissionDenied()
         else:
@@ -117,9 +118,9 @@ class UserDeleteView(DestroyAPIView):
 
     def get_serializer_class(self):
         if self.request.user.is_shelter:
-            return SeekerDeleteSerializer
-        elif self.request.user.is_seeker:
             return ShelterDeleteSerializer
+        elif self.request.user.is_seeker:
+            return SeekerDeleteSerializer
 
     def get_object(self):
         # Check token validity

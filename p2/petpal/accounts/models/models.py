@@ -7,6 +7,9 @@ from django.conf import settings
 # Create your models here.
 # MyUser - customized user model
 class MyUser(AbstractUser):
+    email = models.EmailField("Email", unique=True)
+    first_name = models.CharField("First name", max_length=100)
+    last_name = models.CharField("Last name", max_length=100)
     # Common fields
     phone_regex = RegexValidator(
         regex=r"^\+?1?\d{9,15}$",

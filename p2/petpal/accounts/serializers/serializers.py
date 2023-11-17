@@ -8,6 +8,7 @@ from rest_framework.serializers import (
     CharField,
     BooleanField,
     ImageField,
+    EmailField,
 )
 from rest_framework.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -37,17 +38,9 @@ class UserCreateSerializer(ModelSerializer):
         password1 = validated_data.pop("password1", "")
         password2 = validated_data.pop("password2", "")
         become_shelter = validated_data.pop("become_shelter", "")
-        email = validated_data.pop("email", "")
         # check password
         if password1 and password2 and password1 != password2:
             raise ValidationError("password mismatch")
-        # check email
-        if email == "" or email is None:
-            raise ValidationError("Email is required")
-        try:
-            validate_email(email)
-        except ValidationError as e:
-            raise ValidationError("Invalid email format, details: " + str(e))
         # check user type
         if become_shelter:
             user = PetShelter.objects.create(**validated_data)
@@ -55,7 +48,7 @@ class UserCreateSerializer(ModelSerializer):
         else:
             user = PetSeeker.objects.create(**validated_data)
             user.is_seeker = True
-        user.email = email
+        # user.email = email
         user.set_password(password1)
         user.save()
         return user
@@ -66,6 +59,9 @@ class SeekerUpdateSerializer(ModelSerializer):
     old_password = CharField(style={"input_type": "password"}, required=False)
     new_password = CharField(style={"input_type": "password"}, required=False)
     username = CharField(required=False)
+    email = EmailField(required=False)
+    first_name = CharField(required=False, max_length=100)
+    last_name = CharField(required=False, max_length=100)
 
     class Meta:
         model = MyUser
@@ -89,6 +85,24 @@ class SeekerUpdateSerializer(ModelSerializer):
     def update(self, instance, validated_data):
         old_password = validated_data.pop("old_password", None)
         new_password = validated_data.pop("new_password", None)
+
+        # Check if email exists
+        if "email" in validated_data:
+            email = validated_data["email"]
+            if MyUser.objects.filter(email=email) and email != instance.email:
+                raise ValidationError("This email already exists.")
+            else:
+                validate_email(email)
+
+        # Check if username exists
+        if "username" in validated_data:
+            username = validated_data["username"]
+            if (
+                MyUser.objects.filter(username=username)
+                and username != instance.username
+            ):
+                raise ValidationError("This username already exists.")
+
         if old_password and new_password:
             if instance.check_password(old_password):
                 instance.set_password(new_password)
