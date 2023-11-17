@@ -6,6 +6,7 @@ from accounts.models import PetShelter
 class Pet(models.Model):
   STATUS_CHOICES = (
       ('available', 'Available'),
+      ('pending', 'Pending'),
       ('withdrawn', 'Withdrawn'),
       ('adopted', 'Adopted')
   )
