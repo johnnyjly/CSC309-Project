@@ -16,8 +16,15 @@ class AppViewSet(viewsets.ModelViewSet):
         status_filter = self.request.query_params.get('status', None)
         queryset = Application.objects.all()
 
-        if status_filter:
-            queryset = queryset.filter(status=status_filter)
+        if (status_filter is not None):
+            if (status_filter.lower() == 'pending'):
+                queryset = queryset.filter(status = 'pending')
+            if (status_filter.lower() == 'accepted'):
+                queryset = queryset.filter(status = 'accepted')
+            if (status_filter.lower() == 'rejected'):
+                queryset = queryset.filter(status = 'rejected')
+            if (status_filter.lower() == 'withdrawn'):
+                queryset = queryset.filter(status = 'withdrawn')
 
         if self.request.user.is_authenticated and self.request.user.is_shelter:
             shelter = self.request.user.petshelter

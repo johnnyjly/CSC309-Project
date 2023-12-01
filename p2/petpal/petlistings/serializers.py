@@ -29,6 +29,14 @@ class PetListingSerializer(serializers.ModelSerializer):
 
         if user.is_authenticated and user.is_shelter:
             instance.status = validated_data.get('status', instance.status)
+            instance.age = validated_data.get('age', instance.age)
+            instance.breed = validated_data.get('breed', instance.breed)
+            instance.name = validated_data.get('name', instance.name)
+            instance.gender = validated_data.get('gender', instance.gender)
+            instance.description = validated_data.get('description', instance.description)
+            instance.color = validated_data.get('color', instance.color)
+            instance.size = validated_data.get('size', instance.size)
+            instance.image = validated_data.get('image', instance.image)
             instance.save()
             return instance
         else:
