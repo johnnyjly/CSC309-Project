@@ -41,6 +41,7 @@ class CommentOnShelterRetrieve(RetrieveAPIView, LoginRequiredMixin):
         comment = get_object_or_404(CommentOnShelter, ID=self.kwargs['id'])
         if comment.pet_shelter.username != pet_shelter.username:
             raise Http404
+        comment.commenter_name = comment.commenter.username
         return comment
 
 
