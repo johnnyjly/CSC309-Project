@@ -3,205 +3,221 @@
     min-height: 100vh;
   }
   
-  .content_wrap {
-    padding-bottom: 320px;
-  }
+.content_wrap {
+  padding-bottom: 420px;
+}
   
-  header .btn,.btn-outline-success {
-    margin: 4px;
+header .btn,.btn-outline-success {
+  margin: 4px;
 }
 
 header .login {
-    color: #198754;
-    background: #bcf9b8;
+  color: #198754;
+  background: #bcf9b8;
 }
 
 header .login:hover {
-    color: #198754;
-    background: #7fe979;
+  color: #198754;
+  background: #7fe979;
 }
 
 header .signup {
-    color: white;
-    background: #259918;
+  color: white;
+  background: #259918;
 }
 header .signup:hover {
-    color: white;
-    background: #167b0b;
+  color: white;
+  background: #167b0b;
 }
 
-  footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: auto;
-  }
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+}
   
-  .sort-wrapper {
-    margin-left: 3rem;
-    margin-top: .5rem;
-  }
+.sort-wrapper {
+  margin-left: 3rem;
+  margin-top: .5rem;
+}
   
-  .sort-text {
-    font-size: 1.1rem;
-  }
-  
-  .sort-btn-wrapper {
-    margin-right: 3rem;
-    margin-left: .3rem;
-   
-  }
-  
-  .sort-btn {
-    background-color: white;
-    color: #0d6efd;
-  }
-  
-  .card-container {
-    margin: 0;
-    margin-right: 3rem;
-    margin-top: 1rem;
-  }
-  
-  .card-img-top {
-    max-width: 30rem;
-    max-height: 15rem;
-    width: auto;
-    height: auto;
-  }
-  
-  .card {
-    padding-bottom: 3rem;
-  }
-  
-  .search-container {
-    margin-top: 15rem;
-    margin-bottom: 20rem;
-    
-  }
-  
-  .search-wrap {
-    background: linear-gradient(#e66465, #9198e5);
-  }
-  
-  .search-button {
-    background-color: white;
-  }
+.sort-text {
+  font-size: 1.1rem;
+}
 
-  .search-button:hover {
-    background-color: #0d6efd;
-  }
+.sort-btn-wrapper {
+  margin-right: 3rem;
+  margin-left: .3rem;
   
+}
+
+.sort-btn {
+  background-color: white;
+  color: #0d6efd;
+}
+  
+.card-container {
+  margin: 0;
+  margin-right: 3rem;
+  margin-top: 1rem;
+}
+
+.card-img-top {
+  max-width: 30rem;
+  max-height: 15rem;
+  width: auto;
+  height: auto;
+}
+
+.card {
+  padding-bottom: 3rem;
+}
+
+.search-container {
+  margin-top: 15rem;
+  margin-bottom: 20rem;
+  
+}
+
+.search-wrap {
+  background: linear-gradient(#e66465, #9198e5);
+}
+
+.search-button {
+  background-color: white;
+}
+
+.search-button:hover {
+  background-color: #0d6efd;
+}
+
+.pet-details-wrapper {
+  padding: 2rem;
+  display: inline-flex;
+  min-width: 10rem;
+  min-height: 10rem;
+}
+
+@media screen and (max-width: 768px) {
   .pet-details-wrapper {
-    padding: 2rem;
-    display: inline-flex;
-    min-width: 10rem;
-    min-height: 10rem;
+    display: block;
+    height: 90rem;
   }
-  
-  @media screen and (max-width: 768px) {
-    .pet-details-wrapper {
-      display: block;
-      height: 90rem;
-    }
-  
-    .text-container {
-      margin-top: 2rem;
-    }
-  
-    .search-wrapper {
-      display: block;
-      height: 125rem;
-    }
 
-    .search-wrap {
-      height: 110rem;
-    }
-  
-    .search-filter-wrapper {
-      display: block;
-      height: 80rem;
-      margin-left: -1.5rem;
-  
-    }
-  
-    .filter-text {
-      font-size: 1.5rem;
-    }
-  
-    .notifications-wrapper {
-      display: block;
-      height: 60rem;
-      margin-left: 1rem;
-      margin-right: 1rem;
-    }
-  
-    .alert.notifications {
-      font-size: 1rem;
-    }
-  }
-    
-  
-  
-  .carousel {
-    max-width: 32rem;
-    max-height: 18rem;
-  }
-  
   .text-container {
-    margin-left: 2rem;
-  }
-  
-  .detail-title {
-    
-    font-size: 2rem;
-  }
-  
-  .detail-subtitle {
-    font-size: 1.2rem;
-    color: rgb(16, 166, 16);
-    margin-left: rem;
-  }
-  
-  .detail-paragraph {
-    font-size: 1.2rem;
-    line-height: 2rem;
-  }
-  
-  .detail-specs {
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
-  
-  .specs-container {
-    display: inline-flex;
-  }
-  
-  .detail-specs.first, .detail-specs.second {
-    margin-right: 1rem;
-    padding-right: 1rem;
-    border-right: 1px solid rgb(229, 229, 229);
-  }
-  
-  .detail-specs.date {
-    margin-top: 0.8rem;
-    margin-left: 0.2rem;
-  }
-  
-  .notifications-wrapper {
     margin-top: 2rem;
-    text-align: center;
   }
-  
-  .alerts-container {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
+
+  .search-wrapper {
+    display: block;
+    height: 125rem;
   }
-  
+
+  .search-wrap {
+    height: 110rem;
+  }
+
+  .search-filter-wrapper {
+    display: block;
+    height: 80rem;
+    margin-left: -1.5rem;
+
+  }
+
+  .filter-text {
+    font-size: 1.5rem;
+  }
+
+  .notifications-wrapper {
+    display: block;
+    height: 60rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
   .alert.notifications {
-    max-width: 50rem;
-    max-height: 4rem;
-    margin: auto;
-    margin-top: 0.5rem;
-    
+    font-size: 1rem;
   }
+}
+  
+
+
+.carousel {
+  max-width: 32rem;
+  max-height: 18rem;
+}
+
+.text-container {
+  margin-left: 2rem;
+}
+
+.detail-title {
+  
+  font-size: 2rem;
+}
+
+.detail-subtitle {
+  font-size: 1.2rem;
+  color: rgb(16, 166, 16);
+  margin-left: rem;
+}
+
+.detail-paragraph {
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
+
+.detail-specs {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.specs-container {
+  display: inline-flex;
+}
+
+.detail-specs.first, .detail-specs.second {
+  margin-right: 1rem;
+  padding-right: 1rem;
+  border-right: 1px solid rgb(229, 229, 229);
+}
+
+.detail-specs.date {
+  margin-top: 0.8rem;
+  margin-left: 0.2rem;
+}
+
+.notifications-wrapper {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.alerts-container {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.alert.notifications {
+  max-width: 50rem;
+  max-height: 4rem;
+  margin: auto;
+  margin-top: 0.5rem;
+  
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  width: 300px;
+  height: 10vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pagination-container button:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
