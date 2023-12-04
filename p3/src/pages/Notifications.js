@@ -1,5 +1,6 @@
 // Notification.js
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Header from '../components/Header/Header.jsx';
 import Footer from '../components/Footer/Footer.jsx';
@@ -9,17 +10,20 @@ const About = () => {
     const [notifications, setNotifications] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const location = useLocation();
 
     useEffect(() => {
-        // Fetch notifications for the current page from your Django API endpoint
-        fetch(`http://127.0.0.1:8000/notifications?page=${currentPage}`)
-          .then(response => response.json())
-          .then(data => {
-            setNotifications(data.results);
-            setTotalPages(data.total_pages);
-          })
-          .catch(error => console.error('Error fetching notifications:', error));
-    }, [currentPage]);
+        const searchParams = new URLSearchParams(location.search);
+        const statusFilter = searchParams.get('filter');
+        
+        fetch(`http://127.0.0.1:8000/notifications?page=${currentPage}&status=${statusFilter || ''}`)
+            .then(response => response.json())
+            .then(data => {
+                setNotifications(data.results);
+                setTotalPages(data.total_pages);
+            })
+            .catch(error => console.error('Error fetching notifications:', error));
+    }, [currentPage, location.search]);
     
     const handlePageChange = direction => {
         setCurrentPage(prevPage =>
