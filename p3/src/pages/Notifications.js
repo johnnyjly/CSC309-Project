@@ -6,7 +6,7 @@ import Header from '../components/Header/Header.jsx';
 import Footer from '../components/Footer/Footer.jsx';
 import '../styles/search.css'
 
-const About = () => {
+const Notifications = () => {
     const [notifications, setNotifications] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -16,7 +16,16 @@ const About = () => {
         const searchParams = new URLSearchParams(location.search);
         const statusFilter = searchParams.get('filter');
         
-        fetch(`http://127.0.0.1:8000/notifications?page=${currentPage}&status=${statusFilter || ''}`)
+        fetch(`http://127.0.0.1:8000/notifications?page=${currentPage}&status=${statusFilter || ''}`, {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                // Add any request payload if needed
+                }),
+            })
             .then(response => response.json())
             .then(data => {
                 setNotifications(data.results);
@@ -83,4 +92,4 @@ const About = () => {
     );
 };
 
-export default About;
+export default Notifications;

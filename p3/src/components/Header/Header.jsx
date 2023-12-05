@@ -17,8 +17,8 @@ const Header = () => (
           <Nav className="me-auto">
             <Nav.Link href="#link">Search</Nav.Link>
             <Nav.Link href="#link">Profile</Nav.Link>
-            <Nav.Link href="#link">Notifications</Nav.Link>
-            <Nav.Link href="#link">Applications</Nav.Link>
+            <Nav.Link as={Link} to="/notifications">Notifications</Nav.Link>
+            <Nav.Link as={Link} to="/seekerapps">Applications</Nav.Link>
             {/* <NavDropdown title="Profile" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Edit Profile</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
