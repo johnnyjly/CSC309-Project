@@ -10,6 +10,7 @@ pip install django
 pip install djangorestframework
 pip install djangorestframework-simplejwt
 pip install --upgrade Pillow
+pip install django-cors-headers
 
 # migrate database
 python3 petpal/manage.py makemigrations
