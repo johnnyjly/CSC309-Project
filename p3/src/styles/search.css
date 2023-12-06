@@ -100,7 +100,19 @@ footer {
   height: auto;
 }
 
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-subtitle-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
 .card-title,
+.card-subtitle,
 .card-text {
   text-align: left;
   margin-bottom: 0;
@@ -113,7 +125,6 @@ footer {
 .search-container {
   margin-top: 15rem;
   margin-bottom: 20rem;
-  
 }
 
 .search-wrap {

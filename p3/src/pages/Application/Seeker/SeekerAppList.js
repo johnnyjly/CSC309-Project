@@ -12,35 +12,38 @@ import 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js
 
 
 const SeekerAppList = () => {
-  const [jsonCardData, setCardData] = useState([]);
+  const [cardData, setCardData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [sortOption, setSortOption] = useState('name');
   const location = useLocation();
 
-  const cardData = [
-    { id: 1, name: 'Alice', description: 'Meet Alice, who is a cute kitty!' },
-    { id: 1, name: 'Alice', description: 'Meet Alice, who is a cute kitty!' },
-    { id: 1, name: 'Alice', description: 'Meet Alice, who is a cute kitty!' },
-    // Add more card data as needed
-  ];
+  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxOTE3MDUxLCJpYXQiOjE3MDE4MzA2NTEsImp0aSI6Ijc1MmU0YWE5YWFhMTQ4ZDA5YmQ0Zjg2M2EzOWIxMmViIiwidXNlcl9pZCI6MiwidXNlcm5hbWUiOiJwZXRzZWVrZXIiLCJpc19zaGVsdGVyIjpmYWxzZSwiaXNfc2Vla2VyIjp0cnVlfQ.SIEiTxfvv0Sx087tO5JpU3n90p6mZUUlUUNX9YrMMvM';
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const statusFilter = searchParams.get('filter');
     const sortFilter = searchParams.get('sort');
-
+    
     fetch(`http://127.0.0.1:8000/applications/?page=${currentPage}&status=${statusFilter || ''}&sort=${sortFilter || ''}`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`,
         },
         credentials: 'include',
       })
       .then((response) => response.json())
       .then((data) => {
-        setCardData(data.applications);
-        setTotalPages(data.total_pages);
+        console.log('Fetched data:', data);
+        const newCardData = data.results.map((result) => ({
+          id: result.ID,
+          name: result.animal,
+          shelter: result.shelter,
+          description: result.status,
+        }));
+        setCardData(newCardData);
+        setTotalPages(Math.ceil(data.count / 10));
       })
       .catch((error) => console.error('Error fetching applications:', error));
   }, [currentPage, location.search, sortOption]);
@@ -54,6 +57,10 @@ const SeekerAppList = () => {
   const handleSortChange = (option) => {
     setSortOption(option);
   };
+  
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
   
   return (
     <div>
@@ -96,13 +103,15 @@ const SeekerAppList = () => {
                   </div>
                 </div>
                 <div className="card-container row row-cols-1 row-cols-md-3 g-4">
-                  {/* Map through cardData to create cards */}
                   {cardData.map((card) => (
                     <div key={card.id} className="col">
                       <div className="card">
                         <div className="card-body">
-                          <h5 className="card-title">{card.name}</h5>
-                          <p className="card-text">{card.description}</p>
+                          <div className="title-subtitle-container">
+                            <h5 className="card-title">{capitalizeFirstLetter(card.name)}</h5>
+                            <h5 className="card-subtitle">{capitalizeFirstLetter(card.shelter)}</h5>
+                          </div>
+                          <p className="card-text">Status: {capitalizeFirstLetter(card.description)}</p>
                         </div>
                         <div className="card-footer">
                           <button type="button" class="btn btn-success">
