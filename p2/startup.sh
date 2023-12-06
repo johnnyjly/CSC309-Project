@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # create and activate virtual environment
 virtualenv -p /usr/bin/python3 venv
