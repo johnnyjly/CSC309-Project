@@ -40,10 +40,16 @@ class MyUser(AbstractUser):
 
 
 class PetSeeker(MyUser):
+    class Meta:
+        verbose_name = "Pet seeker"
+        verbose_name_plural = "Pet seekers"
     pass
 
 
 class PetShelter(MyUser):
+    class Meta:
+        verbose_name = "Pet shelter"
+        verbose_name_plural = "Pet shelters"
     # Shelter specific fields
     shelter_name = models.CharField("Shelter name", max_length=255, blank=True)
     shelter_avatar = models.ImageField(
