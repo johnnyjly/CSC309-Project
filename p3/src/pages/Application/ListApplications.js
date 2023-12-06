@@ -1,24 +1,24 @@
-// SeekerAppList.js
+// AppList.js
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import Header from '../../../components/Header/Header.jsx';
-import Footer from '../../../components/Footer/Footer.jsx';
-import '../../../styles/search.css'
-import '../../../styles/base.css'
+import Header from '../../components/Header/Header.jsx';
+import Footer from '../../components/Footer/Footer.jsx';
+import '../../styles/search.css'
+import '../../styles/base.css'
 
 import 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'
 import 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'
 
 
-const SeekerAppList = () => {
+const AppList = () => {
   const [cardData, setCardData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [sortOption, setSortOption] = useState('name');
   const location = useLocation();
 
-  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxOTE3MDUxLCJpYXQiOjE3MDE4MzA2NTEsImp0aSI6Ijc1MmU0YWE5YWFhMTQ4ZDA5YmQ0Zjg2M2EzOWIxMmViIiwidXNlcl9pZCI6MiwidXNlcm5hbWUiOiJwZXRzZWVrZXIiLCJpc19zaGVsdGVyIjpmYWxzZSwiaXNfc2Vla2VyIjp0cnVlfQ.SIEiTxfvv0Sx087tO5JpU3n90p6mZUUlUUNX9YrMMvM';
+  const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxOTc5MjMzLCJpYXQiOjE3MDE4OTI4MzMsImp0aSI6ImJlNWJlMzVjY2NiMzQ3Nzg4MTRhZmM3MzgyNWQ1NGIyIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJwZXRzZWVrZXIiLCJpc19zaGVsdGVyIjpmYWxzZSwiaXNfc2Vla2VyIjp0cnVlfQ.3SPzCu_e7--0VrfSh0viv5ljnb_YT11DiRB_foWMgas';
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -45,7 +45,9 @@ const SeekerAppList = () => {
         setCardData(newCardData);
         setTotalPages(Math.ceil(data.count / 10));
       })
-      .catch((error) => console.error('Error fetching applications:', error));
+      .catch((error) => {
+        console.error('Error fetching applications:', error);
+      })
   }, [currentPage, location.search, sortOption]);
 
   const handlePageChange = direction => {
@@ -69,7 +71,11 @@ const SeekerAppList = () => {
           <Header />
           <main>
             <div class="search-wrapper">
-              <h1 class="display-6 lead text-center mt-5">My Applications</h1>
+              {cardData.length > 0 ? (
+                <h1 class="display-6 lead text-center mt-5">My Applications</h1>
+              ) : (
+                <h1 class="display-6 lead text-center mt-5">You have no Applications</h1>
+              )}
               <div class="input-group mt-5 px-5">
                 <input type="search" class="form-control rounded" placeholder="Search for keywords" aria-label="Search" aria-describedby="search-addon" />
                 <div class="btn-group">
@@ -122,19 +128,21 @@ const SeekerAppList = () => {
                     </div>
                   ))}
                 </div>
-                <div className="pagination-container">
-                  <button type="button" class="btn btn-primary"
-                      onClick={() => handlePageChange('previous')} 
-                      disabled={currentPage === 1}>
-                      Previous
-                  </button>
-                  <span>{`Page: ${currentPage} of ${totalPages}`}</span>
-                  <button type="button" class="btn btn-primary"
-                      onClick={() => handlePageChange('next')}
-                      disabled={currentPage === totalPages}>
-                      Next
-                  </button>
-              </div>
+                {cardData.length > 0 && (
+                  <div className="pagination-container">
+                    <button type="button" class="btn btn-primary"
+                        onClick={() => handlePageChange('previous')} 
+                        disabled={currentPage === 1}>
+                        Previous
+                    </button>
+                    <span>{`Page: ${currentPage} of ${totalPages}`}</span>
+                    <button type="button" class="btn btn-primary"
+                        onClick={() => handlePageChange('next')}
+                        disabled={currentPage === totalPages}>
+                        Next
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </main>
@@ -145,4 +153,4 @@ const SeekerAppList = () => {
   );
 };
 
-export default SeekerAppList;
+export default AppList;

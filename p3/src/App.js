@@ -6,7 +6,7 @@ import About from './pages/About';
 import Notifications from './pages/Notifications';
 import Error from './pages/Error';
 
-import SeekerAppList from './pages/Application/Seeker/SeekerAppList';
+import AppList from './pages/Application/ListApplications';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -18,7 +18,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/home" element={<Home />} />
         <Route path="/notifications" element={<Notifications />} />
-        <Route path="/seekerapps" element={<SeekerAppList />} />
+        <Route path="/seekerapps" element={<AppList />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </Router>
