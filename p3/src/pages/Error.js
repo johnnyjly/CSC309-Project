@@ -15,9 +15,12 @@ const Error = () => {
       <p className="lead">
         Go back to <Link to="/">home</Link>.
       </p>
-    </div>
       
-      <Footer />
+      
+    </div>
+    
+      
+    <Footer />
     </div>
   );
 }

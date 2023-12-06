@@ -7,18 +7,22 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import './Header.css'
+import Image from 'react-bootstrap/Image'
 
 const Header = () => (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="./">PetPal</Navbar.Brand>
+        <Navbar.Brand href="./" style={{ marginRight: '10px' }}>
+          <Image src="/icons8-dog-64.png" alt="Logo" fluid width={24} height={24} />
+        </Navbar.Brand>
+        <Navbar.Brand href="./" >PetPal</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#link">Search</Nav.Link>
             <Nav.Link href="#link">Profile</Nav.Link>
-            <Nav.Link as={Link} to="/notifications">Notifications</Nav.Link>
-            <Nav.Link as={Link} to="/seekerapps">Applications</Nav.Link>
+            <Nav.Link href="#link">Notifications</Nav.Link>
+            <Nav.Link href="#link">Applications</Nav.Link>
             {/* <NavDropdown title="Profile" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Edit Profile</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
