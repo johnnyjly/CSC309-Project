@@ -6,3 +6,4 @@ from .models import *
 
 admin.site.register(CommentOnShelter)
 admin.site.register(CommentOnApplication)
+admin.site.register(CommentOnBlogPost)

@@ -86,3 +86,32 @@ class CommentOnApplicationRetrieve(RetrieveAPIView, LoginRequiredMixin):
             raise Http404
         comment.commenter_name = comment.commenter.username
         return comment
+
+
+class CommentOnBlogPostListCreate(ListCreateAPIView, LoginRequiredMixin):
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return CommentOnBlogPostListSerializer
+        elif self.request.method == 'POST':
+            return CommentOnBlogPostCreateSerializer
+
+    def get_queryset(self):
+        poster = get_object_or_404(PetShelter, username=self.kwargs['username'])
+        blog_post = get_object_or_404(BlogPost, ID=self.kwargs['pk'])
+        if poster.username != blog_post.poster.username:
+            raise Http404
+        queryset = CommentOnBlogPost.objects.filter(blog_post=blog_post).order_by('-creation_time')
+        for commenter in queryset:
+            commenter.commenter_name = commenter.commenter.username
+        return queryset
+
+    def perform_create(self, serializer):
+        poster = get_object_or_404(PetShelter, username=self.kwargs['username'])
+        blog_post = get_object_or_404(BlogPost, ID=self.kwargs['pk'])
+        if poster.username != blog_post.poster.username:
+            raise Http404
+        comment = CommentOnBlogPost.objects.create(**serializer.validated_data,
+                                                   commenter=self.request.user,
+                                                   creation_time=datetime.now(),
+                                                   blog_post=blog_post,)
+        comment.save()

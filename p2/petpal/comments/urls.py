@@ -16,4 +16,7 @@ urlpatterns = [
 
     path('applications/<int:pk>/<int:id>/', views.CommentOnApplicationRetrieve.as_view(),
          name='comment-on-application-retrieve'),
+
+     path('blogs/<str:username>/<int:pk>/', views.CommentOnBlogPostListCreate.as_view(),
+          name='comment-on-blog-post'),
 ]
