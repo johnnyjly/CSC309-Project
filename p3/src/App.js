@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Notifications from './pages/Notifications';
 import Error from './pages/Error';
+import Login from './pages/Accounts/Login';
+import Signup from './pages/Accounts/Signup';
 
 import AppList from './pages/Application/ListApplications';
 
@@ -20,6 +22,8 @@ const App = () => {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/seekerapps" element={<AppList />} />
         <Route path="*" element={<Error />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </Router>
   );

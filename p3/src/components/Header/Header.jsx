@@ -18,7 +18,7 @@ const Header = () => (
           <Nav className="me-auto">
             <Nav.Link href="#link">Search</Nav.Link>
             <Nav.Link href="#link">Profile</Nav.Link>
-            <Nav.Link href="./notifications">Notifications</Nav.Link>
+            <Nav.Link href="#link">Notifications</Nav.Link>
             <Nav.Link href="#link">Applications</Nav.Link>
             {/* <NavDropdown title="Profile" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Edit Profile</NavDropdown.Item>
@@ -31,8 +31,8 @@ const Header = () => (
                 Separated link
               </NavDropdown.Item>
             </NavDropdown> */}
-            <Nav.Link href="#link">Log In</Nav.Link>
-            <Nav.Link href="#link">Log Out</Nav.Link>
+            <Nav.Link href="/Login">Log in</Nav.Link>
+            <Nav.Link href="/Signup">Sign up</Nav.Link>
             
           </Nav>
 
