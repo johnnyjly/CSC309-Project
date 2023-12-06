@@ -43,7 +43,7 @@ class UserCreateSerializer(ModelSerializer):
             raise ValidationError("User with this email already exists.")
         # check password
         if password1 and password2 and password1 != password2:
-            raise ValidationError("password mismatch")
+            raise ValidationError({"password2": "password mismatch"})
         # check user type
         if become_shelter:
             user = PetShelter.objects.create(**validated_data)

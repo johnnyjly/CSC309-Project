@@ -31,8 +31,8 @@ const Header = () => (
                 Separated link
               </NavDropdown.Item>
             </NavDropdown> */}
-            <Nav.Link href="#link">Log In</Nav.Link>
-            <Nav.Link href="#link">Log Out</Nav.Link>
+            <Nav.Link href="/Login">Log in</Nav.Link>
+            <Nav.Link href="/Signup">Sign up</Nav.Link>
             
           </Nav>
 
