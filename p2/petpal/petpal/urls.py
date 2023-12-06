@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('accounts/', include('accounts.urls')),
     path('applications/', include('applications.urls', namespace='applications')),
+    path('blogs/', include('blogs.urls', namespace='blogs')),
     path('comments/', include('comments.urls', namespace='comments')),
     path('notifications/', include('notifications.urls', namespace='notifications')),
     path('petlistings/', include('petlistings.urls', namespace='petlistings')),
