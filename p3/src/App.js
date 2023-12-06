@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Notifications from './pages/Notifications';
+import Error from './pages/Error';
 
 import SeekerAppList from './pages/Application/Seeker/SeekerAppList';
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/seekerapps" element={<SeekerAppList />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </Router>
   );

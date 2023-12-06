@@ -6,14 +6,13 @@ from .models import *
 class CommentOnShelterCreateSerializer(ModelSerializer):
     class Meta:
         model = CommentOnShelter
-        fields = ['content']
+        fields = ['content', 'rating']
 
 
 class CommentOnShelterListSerializer(ModelSerializer):
-    commenter_name = serializers.CharField(max_length=255)
     class Meta:
         model = CommentOnShelter
-        fields = ['ID', 'content', 'commenter_name', 'creation_time']
+        fields = ['ID', 'content', 'rating', 'commenter_name', 'creation_time']
 
 
 class CommentOnApplicationCreateSerializer(ModelSerializer):
@@ -25,4 +24,16 @@ class CommentOnApplicationCreateSerializer(ModelSerializer):
 class CommentOnApplicationListSerializer(ModelSerializer):
     class Meta:
         model = CommentOnApplication
+        fields = ['ID', 'content', 'commenter_name', 'creation_time']
+
+
+class CommentOnBlogPostCreateSerializer(ModelSerializer):
+    class Meta:
+        model = CommentOnBlogPost
+        fields = ['content']
+
+
+class CommentOnBlogPostListSerializer(ModelSerializer):
+    class Meta:
+        model = CommentOnBlogPost
         fields = ['ID', 'content', 'commenter_name', 'creation_time']
