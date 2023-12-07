@@ -61,6 +61,11 @@ footer {
   margin-bottom: 20px;
 }
 
+.input-group .form-control {
+  margin-top: 4vh;
+  height: 8vh;
+}
+
 .btn-group.sort-btn-wrapper {
   margin-right: 3rem;
   margin-left: 0.3rem;
@@ -87,11 +92,13 @@ footer {
 }
 
 .card-footer {
+  height: 40%;
   width: 100%;
 }
 
 .card button.btn-success {
   float: left;
+  margin-top: 0px;
   height: 100%;
 }
 
@@ -259,9 +266,13 @@ footer {
   align-items: center;
   margin-top: 20px;
   width: 300px;
-  height: 10vh;
+  height: 12vh;
   margin-left: auto;
   margin-right: auto;
+}
+
+.pagination-container span {
+  margin-top: 10%;
 }
 
 .pagination-container button:disabled {

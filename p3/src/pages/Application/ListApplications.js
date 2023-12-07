@@ -1,15 +1,14 @@
 // AppList.js
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { createPopper } from '@popperjs/core';
 
 import Header from '../../components/Header/Header.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
 import '../../styles/search.css'
-import '../../styles/base.css'
 
-import 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'
-import 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const AppList = () => {
   const [cardData, setCardData] = useState([]);
@@ -17,6 +16,7 @@ const AppList = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [sortOption, setSortOption] = useState('name');
   const location = useLocation();
+  const PAGE_SIZE = 10;
 
   const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxOTc5MjMzLCJpYXQiOjE3MDE4OTI4MzMsImp0aSI6ImJlNWJlMzVjY2NiMzQ3Nzg4MTRhZmM3MzgyNWQ1NGIyIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJwZXRzZWVrZXIiLCJpc19zaGVsdGVyIjpmYWxzZSwiaXNfc2Vla2VyIjp0cnVlfQ.3SPzCu_e7--0VrfSh0viv5ljnb_YT11DiRB_foWMgas';
 
@@ -43,7 +43,7 @@ const AppList = () => {
           description: result.status,
         }));
         setCardData(newCardData);
-        setTotalPages(Math.ceil(data.count / 10));
+        setTotalPages(Math.ceil(data.count / PAGE_SIZE));
       })
       .catch((error) => {
         console.error('Error fetching applications:', error);

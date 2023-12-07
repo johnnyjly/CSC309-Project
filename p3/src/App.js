@@ -22,7 +22,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/home" element={<Home />} />
         <Route path="/notifications" element={<Notifications />} />
-        <Route path="/seekerapps" element={<AppList />} />
+        <Route path="/applist" element={<AppList />} />
         <Route path="/search" element={<Search />} />
         <Route path="*" element={<Error />} />
         <Route path="/login" element={<Login />} />
