@@ -35,15 +35,26 @@ class UserCreateSerializer(ModelSerializer):
         ]
 
     def create(self, validated_data):
+        
+        # Helpers that raise the error messages all at once
+        valid = True
+        errors = {}
+        
         email = validated_data.get("email")
         password1 = validated_data.pop("password1", "")
         password2 = validated_data.pop("password2", "")
         become_shelter = validated_data.pop("become_shelter", "")
         if MyUser.objects.filter(email=email).exists():
-            raise ValidationError("User with this email already exists.")
+            valid = False
+            errors["email"] = "User with this email already exists."
         # check password
         if password1 and password2 and password1 != password2:
-            raise ValidationError({"password2": "password mismatch"})
+            valid = False
+            errors["password2"] = "password mismatch"
+            
+        if not valid:
+            raise ValidationError(errors)
+            
         # check user type
         if become_shelter:
             user = PetShelter.objects.create(**validated_data)
@@ -90,7 +101,7 @@ class SeekerUpdateSerializer(ModelSerializer):
         old_password = validated_data.pop("old_password", None)
         new_password = validated_data.pop("new_password", None)
 
-        # Helpers that raise the error messages
+        # Helpers that raise the error messages all at once
         valid = True
         errors = {}
 
@@ -134,8 +145,10 @@ class SeekerUpdateSerializer(ModelSerializer):
             else:
                 errors["password"] = "Old password is incorrect."
                 valid = False
+
         if not valid:
             raise ValidationError(errors)
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
@@ -156,6 +169,20 @@ class ShelterUpdateSerializer(SeekerUpdateSerializer):
             "location",
             "mission_statement",
         ]
+        
+    def update(self, instance, validated_data):
+        if "shelter_name" in validated_data:
+            shelter_name = validated_data["shelter_name"]
+            if (
+                PetShelter.objects.filter(shelter_name=shelter_name).exists()
+            ):
+                raise ValidationError({"shelter_name": "This shelter name already exists."})
+        
+        # update Shelter
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
 
 
 # Get profile of a shelter
