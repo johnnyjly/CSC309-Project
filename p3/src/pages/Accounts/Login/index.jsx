@@ -9,7 +9,7 @@ import Footer from '../../../components/Footer/Footer.jsx';
 
 // import the css file and other static files
 import '../style.css'
-import favicon from '../../../assets/favicon/favicon-32x32.png'
+import favicon from '../../../assets/favicon/icons8-dog-96-upscaled.png'
 
 // import react-related stuff
 import { useState } from 'react';
@@ -65,7 +65,7 @@ const Login = () => {
                                         placeholder="username"></input>
                                 </div>
                                 <div className="form-group">
-                                    <input type="password" className="form-control" id="InputPassword" name="password" required
+                                    <input type="password" className="form-control" id="InputPassword" name="password" autoComplete="password" required
                                         placeholder="password"></input>
                                     <small id="login-fail" className="form-text">{error}</small>
                                 </div>

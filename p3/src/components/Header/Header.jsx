@@ -6,19 +6,23 @@ import Navbar from 'react-bootstrap/Navbar';
 import './Header.css'
 import Image from 'react-bootstrap/Image'
 
-const Header = () => (
+
+
+const Header = () => {
+  var username = localStorage.getItem("username");
+  return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="./" style={{ marginRight: '10px' }}>
+        <Navbar.Brand href="/" style={{ marginRight: '10px' }}>
           <Image src="/icons8-dog-64.png" alt="Logo" fluid width={24} height={24} />
         </Navbar.Brand>
-        <Navbar.Brand href="./" >PetPal</Navbar.Brand>
+        <Navbar.Brand href="/" >PetPal</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#link">Search</Nav.Link>
-            <Nav.Link href="#link">Profile</Nav.Link>
-            <Nav.Link href="./notifications">Notifications</Nav.Link>
+            <Nav.Link href={"/profile/" + username}>Profile</Nav.Link>
+            <Nav.Link href="/notifications">Notifications</Nav.Link>
             <Nav.Link href="#link">Applications</Nav.Link>
             {/* <NavDropdown title="Profile" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Edit Profile</NavDropdown.Item>
@@ -39,6 +43,6 @@ const Header = () => (
         </Navbar.Collapse>
       </Container>
     </Navbar>
-);
+)};
 
 export default Header;

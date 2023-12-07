@@ -7,6 +7,7 @@ import Notifications from './pages/Notifications';
 import Error from './pages/Error';
 import Login from './pages/Accounts/Login';
 import Signup from './pages/Accounts/Signup';
+import Profile from './pages/Accounts/Profile';
 import Search from './pages/Search';
 
 import AppList from './pages/Application/ListApplications';
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="*" element={<Error />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile/:username" element={<Profile />} />
       </Routes>
     </Router>
   );

@@ -139,7 +139,7 @@ a.profile-update-link:hover {
     margin-bottom: 1rem;
 }
 
-.form-update #formFile,.form-pet-listing #formFile {
+.form-update #user_avatar,.form-pet-listing #shelter_avatar {
     padding-top: 35px;
 }
 

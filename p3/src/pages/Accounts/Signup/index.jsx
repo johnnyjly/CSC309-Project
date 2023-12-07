@@ -28,7 +28,6 @@ const Signup = () => {
                 } else {
                     let json = request.json();
                     json.then(json => {
-                        console.log(json);
                         setErrors({
                             firstNameError: json.first_name ? "**" + json.first_name[0] : "",
                             lastNameError: json.last_name ? "**" + json.last_name[0] : "",
@@ -81,21 +80,21 @@ const Signup = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-floating">
-                                        <input type="text" className="form-control" id="username" name="username" required></input>
+                                        <input type="text" className="form-control" id="username" name="username" required autoComplete="username"></input>
                                         <label htmlFor='username' className="form-label">Username</label>
                                         <small id="login-fail" className="form-text">{errors.usernameError}</small>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-floating">
-                                        <input type="password" className="form-control" id="password1" name="password1" required></input>
+                                        <input type="password" className="form-control" id="password1" name="password1" autoComplete="password1" required></input>
                                         <label htmlFor='password1' className="form-label">Password</label>
                                         <small id="login-fail" className="form-text">{errors.password1Error}</small>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-floating">
-                                        <input type="password" className="form-control" id="password2" name="password2" required></input>
+                                        <input type="password" className="form-control" id="password2" name="password2" autoComplete="password2" required></input>
                                         <label htmlFor='password2' className="form-label">Confirmed-Password</label>
                                         <small id="login-fail" className="form-text">{errors.password2Error}</small>
                                     </div>
