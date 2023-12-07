@@ -11,8 +11,8 @@ from rest_framework.serializers import (
     EmailField,
 )
 from rest_framework.exceptions import ValidationError
-from django.core.validators import validate_email
-
+from django.core.validators import validate_email, RegexValidator
+from django.core.exceptions import ValidationError as djangoValidationError
 
 # Create Shelter and Seeker user
 class UserCreateSerializer(ModelSerializer):
@@ -89,11 +89,16 @@ class SeekerUpdateSerializer(ModelSerializer):
         old_password = validated_data.pop("old_password", None)
         new_password = validated_data.pop("new_password", None)
 
+        # Helpers that raise the error messages
+        valid = True
+        errors = {}
+
         # Check if email exists
         if "email" in validated_data:
             email = validated_data["email"]
             if MyUser.objects.filter(email=email) and email != instance.email:
-                raise ValidationError("This email already exists.")
+                errors["email"] = "This email already exists."
+                valid = False
             else:
                 validate_email(email)
 
@@ -104,14 +109,32 @@ class SeekerUpdateSerializer(ModelSerializer):
                 MyUser.objects.filter(username=username)
                 and username != instance.username
             ):
-                raise ValidationError("This username already exists.")
+                errors["username"] = "This username already exists."
+                valid = False
 
+        # Check if phone_number is valid
+        if "phone_number" in validated_data:
+            phone_number = validated_data["phone_number"]
+            phone_regex = RegexValidator(
+                regex=r"^\+?1?\d{9,15}$",
+            )
+            try:
+                phone_regex(phone_number)
+            except djangoValidationError:
+                errors["phone_number"] = "Phone number must be entered in the format:"\
+                + "'+999999999'. Up to 15 digits allowed."
+                valid = False
+        
+        # Check if old password is correct
         if old_password and new_password:
             if instance.check_password(old_password):
                 instance.set_password(new_password)
                 instance.save()
             else:
-                raise ValidationError("Old password is incorrect")
+                errors["password"] = "Old password is incorrect."
+                valid = False
+        if not valid:
+            raise ValidationError(errors)
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
