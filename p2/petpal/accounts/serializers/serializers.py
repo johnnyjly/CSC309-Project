@@ -48,6 +48,7 @@ class UserCreateSerializer(ModelSerializer):
         if become_shelter:
             user = PetShelter.objects.create(**validated_data)
             user.is_shelter = True
+            user.shelter_name = validated_data.get("username")
         else:
             user = PetSeeker.objects.create(**validated_data)
             user.is_seeker = True

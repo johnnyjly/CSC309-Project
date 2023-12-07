@@ -44,7 +44,7 @@ class PetShelter(MyUser):
         verbose_name = "Pet shelter"
         verbose_name_plural = "Pet shelters"
     # Shelter specific fields
-    shelter_name = models.CharField("Shelter name", max_length=255, blank=True)
+    shelter_name = models.CharField("Shelter name", max_length=255)
     shelter_avatar = models.ImageField(
         upload_to="shelter/avatar/", blank=True
     )

@@ -336,9 +336,9 @@ const Profile = () => {
                                         <div className="col-md-6">
                                             <div className="form-floating">
                                                 <input type="text" className="form-control" id="shelter_name" name="shelter_name"
-                                                    defaultValue={user.shelter_name !== "" ? user.shelter_name : user.username} required></input>
+                                                    defaultValue={user.shelter_name} required></input>
                                                 <label htmlFor="shelter_name" className="update-labels">Current shelter name</label>
-                                                <small className="form-text">**Click save to initialize it with the username.</small>
+                                                <small className="form-text">**Default as your username.</small>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
