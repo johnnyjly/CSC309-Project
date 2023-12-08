@@ -10,7 +10,9 @@ import Signup from './pages/Accounts/Signup';
 import Profile from './pages/Accounts/Profile';
 import Search from './pages/Search';
 
-import AppList from './pages/Application/ListApplications';
+import AppList from './pages/Application/List';
+import AppDetail from './pages/Application/Detail';
+import AppApply from './pages/Application/Seeker/Create';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -22,16 +24,28 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/home" element={<Home />} />
         <Route path="/notifications" element={<Notifications />} />
-        <Route path="/applist" element={<AppList />} />
+        <Route path="/applications" element={<AppList />} />
         <Route path="/search" element={<Search />} />
         <Route path="*" element={<Error />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/applications/*" element={<ApplicationRoutes />} />
       </Routes>
     </Router>
   );
 };
+
+const ApplicationRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<AppList />} />
+      <Route path="detail/:applicationID" element={<AppDetail />} />
+      <Route path="create/:petID" element={<AppApply />} />
+    </Routes>
+  );
+};
+
 
 export default App;
 

@@ -1,0 +1,158 @@
+.page_container {
+    position: relative;
+    min-height: 100vh;
+}
+
+.content_wrap {
+    padding-bottom: 420px;
+}
+
+/* Styles for class "content_wrap" */
+.content_wrap {
+    /* Add styles here */
+}
+
+/* Styles for class "py-5" */
+.py-5 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+/* Styles for class "container" */
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* Styles for class "row" */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+/* Styles for class "gx-5" */
+.gx-5 > [class*='col-'] {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* Styles for class "col-lg-6" */
+.col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+/* Styles for class "border" */
+.border {
+    border: 1px solid #dee2e6;
+}
+
+/* Styles for class "rounded-4" */
+.rounded-4 {
+    border-radius: 0.5rem;
+}
+
+/* Styles for class "d-flex" */
+.d-flex {
+    display: flex !important;
+}
+
+/* Styles for class "justify-content-center" */
+.justify-content-center {
+    justify-content: center !important;
+}
+
+/* Styles for class "data-fslightbox" */
+[data-fslightbox] {
+    cursor: pointer;
+}
+
+/* Styles for class "rounded-2" */
+.rounded-2 {
+    border-radius: 0.25rem;
+}
+
+/* Styles for class "fit" */
+.fit {
+    max-width: 100%;
+    max-height: 100vh;
+    margin: auto;
+}
+
+/* Styles for class "ps-lg-3" */
+.ps-lg-3 {
+    padding-left: 1rem !important;
+}
+
+/* Styles for class "title" */
+.title {
+    color: #343a40;
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
+/* Styles for class "form-group" */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Styles for class "form-control" */
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Styles for class "form-check" */
+.form-check {
+    margin-bottom: 5px;
+}
+
+/* Styles for class "btn" */
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: #007bff;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+/* Styles for class "btn-secondary" */
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Styles for class "shadow-0" */
+.shadow-0 {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+/* Styles for class "btn-primary" */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}

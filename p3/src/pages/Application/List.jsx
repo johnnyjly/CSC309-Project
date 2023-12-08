@@ -2,12 +2,11 @@
 // Import Basic Libraries
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ajax_or_login } from '../../ajax';
+import { ajax_or_login } from '../../ajax.js';
 
 // Import Components
 import Header from '../../components/Header/Header.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
-
 
 // Import CSS and Bootstrap
 import '../../styles/search.css'

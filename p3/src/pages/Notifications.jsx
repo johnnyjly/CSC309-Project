@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Header from '../components/Header/Header.jsx';
 import Footer from '../components/Footer/Footer.jsx';
 import '../styles/search.css'
+import { ajax_or_login } from '../ajax';
 
 const Notifications = () => {
     const [notifications, setNotifications] = useState([]);
@@ -14,20 +15,17 @@ const Notifications = () => {
 
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
-        const statusFilter = searchParams.get('filter');
         
-        fetch(`http://127.0.0.1:8000/notifications?page=${currentPage}&status=${statusFilter || ''}`, {
-                method: 'POST',
+        ajax_or_login(`/notifications/?page=${currentPage}`, {
+                method: 'GET',
                 headers: {
                 'Content-Type': 'application/json',
                 },
                 credentials: 'include',
-                body: JSON.stringify({
-                // Add any request payload if needed
-                }),
             })
             .then(response => response.json())
             .then(data => {
+                console.log('Fetched data:', data);
                 setNotifications(data.results);
                 setTotalPages(data.total_pages);
             })
