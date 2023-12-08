@@ -32,13 +32,11 @@ function User() {
         user_avatar: "",
     });
     const [error, setError] = useState("");
-    const { username } = useParams();
-
-    const isShelter = jwtDecode(localStorage.getItem("access")).is_shelter;
+    const { username, isShelter } = useParams();
 
     useEffect(() => {
         let link;
-        if (isShelter) {
+        if (isShelter == "shelter") {
             link = `/accounts/shelters/${username}/`;
         } else {
             link = `/accounts/seekers/${username}/`;
@@ -74,7 +72,8 @@ function User() {
                                         </svg> :
                                         <img src={user.user_avatar} alt="user_avatar" className="rounded-circle" width="80" height="80"></img>}
                                     <h5 className="profile-username">{user.username}</h5>
-                                    <div><button onClick={() => navigate(`/shelters/${user.username}`)} className="btn btn-primary" style={{ background: "orange", margin: "0.5rem"}}>Shelter</button></div>
+                                    {isShelter === "shelter" ?
+                                        <div><button onClick={() => navigate(`/shelters/${user.username}`)} className="btn btn-primary" style={{ background: "orange", margin: "0.5rem" }}>Shelter</button></div> : ""}
                                 </div>
                             </div>
                             <div className="col-md-7 border-end">

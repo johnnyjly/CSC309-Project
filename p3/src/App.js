@@ -47,7 +47,7 @@ const App = () => {
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/shelters/" element={<Shelters />} />
         <Route path="/shelters/:username" element={<Shelter />} />
-        <Route path="/users/:username" element={<User />} />
+        <Route path="/users/:username/:isShelter" element={<User />} />
         <Route path="/applications/*" element={<ApplicationRoutes />} />
         <Route path="/blogs/:username/create" element={<BlogCreate />} />
         <Route path="/blogs/:username/:pk/edit" element={<BlogEdit />} />
