@@ -19,7 +19,10 @@ import AppList from './pages/Application/List';
 import AppDetail from './pages/Application/Detail';
 import AppApply from './pages/Application/Seeker/Create';
 
+import BlogCreate from './pages/Blog/BlogCreate';
 import BlogRetrieve from './pages/Blog/BlogRetrieve';
+import BlogEdit from './pages/Blog/BlogEdit';
+import BlogList from './pages/Blog/BlogList';
 
 import CommentList from './pages/Comment/CommentList';
 import CommentRetrieve from './pages/Comment/CommentRetrieve';
@@ -45,7 +48,10 @@ const App = () => {
         <Route path="/shelters/" element={<Shelters />} />
         <Route path="/shelters/:username" element={<Shelter />} />
         <Route path="/applications/*" element={<ApplicationRoutes />} />
+        <Route path="/blogs/:username/create" element={<BlogCreate />} />
+        <Route path="/blogs/:username/:pk/edit" element={<BlogEdit />} />
         <Route path="/blogs/:username/:pk" element={<BlogRetrieve />} />
+        <Route path="/blogs/:username/" element={<BlogList />} />
         <Route path="/comments/*" element={<CommentRoutes />} />
       </Routes>
     </Router>
