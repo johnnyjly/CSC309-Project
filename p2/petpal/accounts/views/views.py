@@ -25,6 +25,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import ValidationError, PermissionDenied
 from django.shortcuts import get_object_or_404
 from applications.models import Application
+from rest_framework.pagination import PageNumberPagination
 
 
 # Create your views here.
@@ -108,6 +109,7 @@ class SeekerRetrieveView(RetrieveAPIView):
 class ShelterListView(ListAPIView):
     serializer_class = ShelterProfileSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = PageNumberPagination
 
     def get_queryset(self):
         return PetShelter.objects.all()
