@@ -68,6 +68,66 @@ const AppDetail = () => {
       })
   }, []);
 
+  function handleWithdraw() {
+    ajax_or_login(`/applications/${appID}/`, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'status': 'withdrawn'
+        }),
+    }, navigate)
+    .then((response) => response.json())
+    .then(data => {
+        alert("Withdrawn successfully!")
+        window.location.reload();
+    })
+    .catch((error) => {
+      console.error('Error fetching applications:', error);
+    })
+  }
+
+  function handleAccept() {
+    ajax_or_login(`/applications/${appID}/`, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'status': 'accepted'
+        }),
+    }, navigate)
+    .then((response) => response.json())
+    .then(data => {
+        alert("Accepted successfully!")
+        window.location.reload();
+    })
+    .catch((error) => {
+      console.error('Error fetching applications:', error);
+    })
+  }
+
+  function handleReject() {
+    ajax_or_login(`/applications/${appID}/`, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'status': 'rejected'
+        }),
+    }, navigate)
+    .then((response) => response.json())
+    .then(data => {
+        alert("Rejected successfully!")
+        window.location.reload();
+    })
+    .catch((error) => {
+      console.error('Error fetching applications:', error);
+    })
+  }
+
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -140,19 +200,19 @@ const AppDetail = () => {
                       <p className="subsubsubtitle">I have access to Shelter for the Pet.</p>
                     </div>
                     <h2 className="subsubtitle text-dark">Status: {capitalizeFirstLetter(appData.status)}</h2>
-                    {isShelter && (
+                    {isShelter && appData.status == 'pending' && (
                       <>
-                        <a href="#" className="btn btn-success shadow-0">
+                        <a href="#" className="btn btn-success shadow-0" onClick={handleAccept}>
                           Accept
                         </a>
-                        <a href="#" className="btn btn-danger shadow-0 btn2">
+                        <a href="#" className="btn btn-danger shadow-0 btn2" onClick={handleReject}>
                           Reject
                         </a>
                       </>
                     )}
-                    {!isShelter && (
+                    {!isShelter && appData.status == 'pending' && (
                       <>
-                        <a href="#" className="btn btn-danger shadow-0">
+                        <a className="btn btn-danger shadow-0" onClick={handleWithdraw}>
                           Withdraw
                         </a>
                       </>
