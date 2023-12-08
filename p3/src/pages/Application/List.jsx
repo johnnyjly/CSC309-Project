@@ -1,7 +1,7 @@
 
 // Import Basic Libraries
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { ajax_or_login } from '../../ajax.js';
 
 // Import Components
@@ -9,7 +9,7 @@ import Header from '../../components/Header/Header.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
 
 // Import CSS and Bootstrap
-import '../../styles/search.css'
+import '../../styles/applications.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
@@ -120,9 +120,9 @@ const AppList = () => {
                           <p className="card-text">Status: {capitalizeFirstLetter(card.description)}</p>
                         </div>
                         <div className="card-footer">
-                          <button type="button" class="btn btn-success">
+                          <Link type="button" class="btn btn-success" to={`/applications/details/${card.id}`}>
                               Details
-                          </button>
+                          </Link>
                         </div>
                       </div>
                     </div>

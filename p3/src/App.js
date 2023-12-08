@@ -13,6 +13,7 @@ import Shelter from './pages/Accounts/Shelter';
 
 import Search from './pages/Search';
 import NewPet from './pages/NewPet';
+import PetDetails from './pages/PetDetails'
 
 import AppList from './pages/Application/List';
 import AppDetail from './pages/Application/Detail';
@@ -55,7 +56,7 @@ const ApplicationRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<AppList />} />
-      <Route path="detail/:applicationID" element={<AppDetail />} />
+      <Route path="details/:appID" element={<AppDetail />} />
       <Route path="create/:petID" element={<AppApply />} />
     </Routes>
   );

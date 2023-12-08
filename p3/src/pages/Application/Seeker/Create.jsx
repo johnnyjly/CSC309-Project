@@ -1,6 +1,6 @@
 // Import Basic Libraries
 import React, { useState, useEffect } from 'react';
-import { useLocation, useParams, useNavigate  } from 'react-router-dom';
+import { useParams, useNavigate  } from 'react-router-dom';
 import { ajax_or_login } from '../../../ajax.js';
 
 // Import Components
@@ -28,12 +28,9 @@ const AppApply = () => {
       "image": null,
       "status": "invalid"
   });
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-
     ajax_or_login(`/petlistings/${petID}/`, {
       method: 'GET',
       headers: {
@@ -55,7 +52,7 @@ const AppApply = () => {
     .catch((error) => {
       console.error('Error fetching applications:', error);
     })
-  }, [location.search]);
+  }, []);
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
