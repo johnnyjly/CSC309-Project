@@ -10,6 +10,7 @@ import Signup from './pages/Accounts/Signup';
 import Profile from './pages/Accounts/Profile';
 import Shelters from './pages/Accounts/Shelters';
 import Shelter from './pages/Accounts/Shelter';
+import User from './pages/Accounts/User';
 
 import Search from './pages/Search';
 import NewPet from './pages/NewPet';
@@ -46,6 +47,7 @@ const App = () => {
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/shelters/" element={<Shelters />} />
         <Route path="/shelters/:username" element={<Shelter />} />
+        <Route path="/users/:username" element={<User />} />
         <Route path="/applications/*" element={<ApplicationRoutes />} />
         <Route path="/blogs/:username/create" element={<BlogCreate />} />
         <Route path="/blogs/:username/:pk/edit" element={<BlogEdit />} />

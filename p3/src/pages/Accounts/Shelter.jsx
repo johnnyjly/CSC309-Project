@@ -73,7 +73,7 @@ function Shelter() {
                                                 d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                                         </svg> :
                                         <img src={user.user_avatar} alt="user_avatar" className="rounded-circle" width="80" height="80"></img>}
-                                    <h5 className="profile-username" style={{margin: "1rem 0.5rem"}}>{user.username}</h5>
+                                    <h5 className="profile-username" style={{margin: "1rem 0.5rem"}}><Link to={`/users/${user.username}`} style={{textDecoration: "none"}}>{user.username}</Link></h5>
                                 </div>
                             </div>
                             <div className="d-grid col-md-7 gap-3">
@@ -107,8 +107,8 @@ function Shelter() {
                                 </div>
                             </div>
                         </div>
-                        <div className="row justify-content-center">
-                            {user.shelter_avatar !== null ? <img src={user.shelter_avatar} alt="shelter_avatar" height={630} width={1200}></img> : ""}
+                        <div className="row justify-content-center" style={{maxHeight: "10%", width: "auto"}}>
+                            {user.shelter_avatar !== null ? <img src={user.shelter_avatar} alt="shelter_avatar"></img> : ""}
                         </div>
                     </div>
                     <BlogList username={username} />
