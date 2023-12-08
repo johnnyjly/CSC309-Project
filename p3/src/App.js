@@ -9,6 +9,8 @@ import Login from './pages/Accounts/Login';
 import Signup from './pages/Accounts/Signup';
 import Profile from './pages/Accounts/Profile';
 import Search from './pages/Search';
+import NewPet from './pages/NewPet';
+import PetDetails from './pages/PetDetails';
 
 import AppList from './pages/Application/List';
 import AppDetail from './pages/Application/Detail';
@@ -25,7 +27,9 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/applications" element={<AppList />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/listings" element={<Search />} />
+        <Route path="/listings/:id" element={<PetDetails />} />
+        <Route path="/newpet" element={<NewPet />} />
         <Route path="*" element={<Error />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

@@ -49,7 +49,8 @@ class PetListingViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(status = 'adopted')
 
     if (shelter_param is not None):
-        queryset = queryset.filter(shelter = shelter_param)
+        queryset = queryset.filter(shelter__shelter_name=shelter_param)
+
     
     if (breed_param is not None):
         queryset = queryset.filter(breed = breed_param)

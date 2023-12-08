@@ -97,6 +97,7 @@ header .signup:hover {
     display: inline-flex;
     min-width: 10rem;
     min-height: 10rem;
+    
   }
   
   @media screen and (max-width: 768px) {

@@ -24,4 +24,4 @@ class Pet(models.Model):
   shelter = models.ForeignKey(PetShelter, on_delete=models.CASCADE)
   
   def __str__(self) -> str:
-    return f"{self.name}, {self.age} years old, {self.breed}, Status: {self.status}"
+    return f"{self.name}, {self.age} years old, {self.breed}, Status: {self.status}, shelter: {self.shelter}"

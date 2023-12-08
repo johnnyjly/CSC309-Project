@@ -1,4 +1,4 @@
-/* .page_container {
+.page_container {
   position: relative;
   min-height: 100vh;
 }
@@ -98,13 +98,6 @@ footer {
   min-width: 10rem;
   min-height: 10rem;
 }
-
-.input-container {
-  height: 50px;
-  background-color: red;
-}
-
-
 
 @media screen and (max-width: 768px) {
   .pet-details-wrapper {
@@ -211,14 +204,4 @@ footer {
   margin: auto;
   margin-top: 0.5rem;
   
-} */
-
-.add-pet-btn {
-  border-radius: 100px;
-  background-color: red;
 }
-
-bo:hover {
-  background-color: #0d6efd;
-}
-
