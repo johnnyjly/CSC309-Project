@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate  } from 'react-router-dom';
 import { ajax_or_login } from '../../../ajax.js';
+import { jwtDecode } from 'jwt-decode';
 
 // Import Components
 import Header from '../../../components/Header/Header.jsx';
@@ -29,6 +30,19 @@ const AppApply = () => {
       "status": "invalid"
   });
   const navigate = useNavigate();
+
+  const authToken = localStorage.access;
+  let decoded;
+  useEffect(() => {
+    try {
+      decoded = jwtDecode(authToken);
+      if (decoded.is_shelter === true) {
+        navigate('/error');
+      }
+    } catch (e) {
+      decoded = null;
+    }
+  }, [authToken, decoded]);
 
   useEffect(() => {
     ajax_or_login(`/petlistings/${petID}/`, {

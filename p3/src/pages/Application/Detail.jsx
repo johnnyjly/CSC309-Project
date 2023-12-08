@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ajax_or_login } from '../../ajax.js';
+import { jwtDecode } from 'jwt-decode';
 
 // Import Components
 import Header from '../../components/Header/Header.jsx';
@@ -31,6 +32,20 @@ const AppDetail = () => {
     "status": "invalid"
   });
   const navigate = useNavigate();
+
+  const [isShelter, setIsShelter] = useState(false);
+  const authToken = localStorage.access;
+  let decoded;
+  useEffect(() => {
+    try {
+      decoded = jwtDecode(authToken);
+      if (decoded.is_shelter === true) {
+        setIsShelter(true);
+      }
+    } catch (e) {
+      decoded = null;
+    }
+  }, [authToken, decoded]);
 
   useEffect(() => {
     ajax_or_login(`/applications/${appID}/`, {
@@ -68,7 +83,7 @@ const AppDetail = () => {
               <div className="row gx-5">
                 <aside className="col-lg-6">
                   <h2 className="title text-dark">
-                    {capitalizeFirstLetter(appData.applicant)+`'s Form for ` +capitalizeFirstLetter(appData.animal)}
+                    {capitalizeFirstLetter(appData.applicant)+`'s Form for `+capitalizeFirstLetter(appData.animal)}
                   </h2>
                   <CommentList on={'application'} pk={appID} />
                 </aside>
@@ -124,6 +139,24 @@ const AppDetail = () => {
                       />
                       <p className="subsubsubtitle">I have access to Shelter for the Pet.</p>
                     </div>
+                    <h2 className="subsubtitle text-dark">Status: {capitalizeFirstLetter(appData.status)}</h2>
+                    {isShelter && (
+                      <>
+                        <a href="#" className="btn btn-success shadow-0">
+                          Accept
+                        </a>
+                        <a href="#" className="btn btn-danger shadow-0 btn2">
+                          Reject
+                        </a>
+                      </>
+                    )}
+                    {!isShelter && (
+                      <>
+                        <a href="#" className="btn btn-danger shadow-0">
+                          Withdraw
+                        </a>
+                      </>
+                    )}
                   </div>
                 </main>
               </div>

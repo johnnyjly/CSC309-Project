@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { ajax_or_login } from '../../ajax.js';
+import { jwtDecode } from 'jwt-decode';
 
 // Import Components
 import Header from '../../components/Header/Header.jsx';
@@ -20,6 +21,20 @@ const AppList = () => {
   const [sortOption, setSortOption] = useState('name');
   const location = useLocation();
   const PAGE_SIZE = 10;
+
+  const [isShelter, setIsShelter] = useState(false);
+  const authToken = localStorage.access;
+  let decoded;
+  useEffect(() => {
+    try {
+      decoded = jwtDecode(authToken);
+      if (decoded.is_shelter === true) {
+        setIsShelter(true);
+      }
+    } catch (e) {
+      decoded = null;
+    }
+  }, [authToken, decoded]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -40,6 +55,7 @@ const AppList = () => {
           id: result.ID,
           name: result.animal,
           shelter: result.shelter,
+          applicant: result.applicant,
           description: result.status,
         }));
         setCardData(newCardData);
@@ -115,7 +131,12 @@ const AppList = () => {
                         <div className="card-body">
                           <div className="title-subtitle-container">
                             <h5 className="card-title">{capitalizeFirstLetter(card.name)}</h5>
-                            <h5 className="card-subtitle">{capitalizeFirstLetter(card.shelter)}</h5>
+                            {isShelter && (
+                              <h5 className="card-subtitle">{capitalizeFirstLetter(card.applicant)}</h5>
+                            )}
+                            {!isShelter && (
+                              <h5 className="card-subtitle">{capitalizeFirstLetter(card.shelter)}</h5>
+                            )}
                           </div>
                           <p className="card-text">Status: {capitalizeFirstLetter(card.description)}</p>
                         </div>
