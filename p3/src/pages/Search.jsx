@@ -37,6 +37,7 @@ const PetListing = () => {
   const location = useLocation();
   const [loggedIn, setLoggedIn] = useState(false);
   const [isShelter, setIsShelter] = useState(false);
+  const [shelterName, setShelterName] = useState('');
 
   // TODO: add ajax_or_login() or support 404 page if not logged in
   const authToken = localStorage.access;
@@ -49,7 +50,10 @@ const PetListing = () => {
       setLoggedIn(true);
       if (decoded.is_shelter === true) {
         setIsShelter(true);
+        setShelterName(decoded.username);
       }
+      console.log(decoded.username);
+      console.log(shelterName);
 
     } catch (e) {
       decoded = null;
@@ -253,7 +257,7 @@ const PetListing = () => {
                   </DropdownButton>
 
 
-                  {isShelter ? <Link className='btn btn-outline-primary' style={{ marginTop: 30, maxWidth: 160 }} role='button' to='/newpet'>
+                  {isShelter ? <Link className='btn btn-primary' style={{ marginTop: 30, maxWidth: 160 }} role='button' to='/newpet'>
                     + Add a new pet
                   </Link> : ''}
 
@@ -282,13 +286,18 @@ const PetListing = () => {
                   {cardData.map((card) => (
                     <Col key={card.id}>
                       <Card key={card.id} >
+                        <Card.Header>{capitalizeFirstLetter(card.status)} 
+                        {card.shelter === shelterName ? <Link className='btn btn-primary' style={{ float: 'right',  fontSize: 14, padding: '2px 6px 2px 6px'}} role='button' to={`/editpet/${card.id}`} state={card}> Update </Link> : ''}
+                        
+                        </Card.Header>
+                        
                         <Card.Img variant="top" src={card.image} style={{ height: 200, maxHeight: 200 }} />
                         <Card.Body>
                           <Card.Title>{capitalizeFirstLetter(card.name)}, {card.age} years old</Card.Title>
                           <Card.Text>
                             {card.description}
                           </Card.Text>
-                          <Link className='btn btn-outline-primary' to={`/listings/${card.id}`} state={card}>
+                          <Link className='btn btn-primary' to={`/listings/${card.id}`} state={card}>
                             Details 
                           </Link>
                           {/* <Button variant="outline-primary" href={`/listings/${card.id}`} >Details</Button> */}

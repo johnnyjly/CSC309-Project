@@ -13,6 +13,7 @@ import Shelter from './pages/Accounts/Shelter';
 
 import Search from './pages/Search';
 import NewPet from './pages/NewPet';
+import EditPet from './pages/EditPet';
 import PetDetails from './pages/PetDetails'
 
 import AppList from './pages/Application/List';
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/listings" element={<Search />} />
         <Route path="/listings/:id" element={<PetDetails />} />
         <Route path="/newpet" element={<NewPet />} />
+        <Route path="/editpet/:pk" element={<EditPet />} />
         <Route path="*" element={<Error />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
