@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
@@ -15,10 +14,16 @@ import Shelter from './pages/Accounts/Shelter';
 import Search from './pages/Search';
 import NewPet from './pages/NewPet';
 import PetDetails from './pages/PetDetails';
+import PetShelter from './pages/PetShelter';
 
 import AppList from './pages/Application/List';
 import AppDetail from './pages/Application/Detail';
 import AppApply from './pages/Application/Seeker/Create';
+
+import BlogRetrieve from './pages/Blog/BlogRetrieve';
+
+import CommentList from './pages/Comment/CommentList';
+import CommentRetrieve from './pages/Comment/CommentRetrieve';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -41,6 +46,8 @@ const App = () => {
         <Route path="/shelters/" element={<Shelters />} />
         <Route path="/shelters/:username" element={<Shelter />} />
         <Route path="/applications/*" element={<ApplicationRoutes />} />
+        <Route path="/blogs/:username/:pk" element={<BlogRetrieve />} />
+        <Route path="/comments/*" element={<CommentRoutes />} />
       </Routes>
     </Router>
   );
@@ -52,6 +59,19 @@ const ApplicationRoutes = () => {
       <Route path="/" element={<AppList />} />
       <Route path="detail/:applicationID" element={<AppDetail />} />
       <Route path="create/:petID" element={<AppApply />} />
+    </Routes>
+  );
+};
+
+// DEBUG - change these later
+const CommentRoutes = () => {
+  return (
+    <Routes>
+      <Route path="pet_shelters/:username" element={<CommentList on={'shelter'} />} />
+      <Route path="pet_shelters/:username/:id" element={<CommentRetrieve on={'shelter'} />} />
+      <Route path="applications/:pk" element={<CommentList on={'application'} />} />
+      <Route path="applications/:pk/:id" element={<CommentRetrieve on={'application'} />} />
+      <Route path="blogs/:username/:id" element={<CommentList on={'blog'} />} />
     </Routes>
   );
 };
