@@ -57,22 +57,27 @@ const Notifications = () => {
   };
 
   function handleUrl(notification) {
-    ajax_or_login(`/notifications/${notification.id}/`, {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        'is_read': 'true'
-      }),
-    }, navigate)
-    .then((response) => response.json())
-    .then(data => {
-        navigate(notification.url)
-    })
-    .catch((error) => {
-      console.error('Error fetching applications:', error);
-    })
+    if (!notification.is_read) {
+      ajax_or_login(`/notifications/${notification.id}/`, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'is_read': 'true'
+        }),
+      }, navigate)
+      .then((response) => response.json())
+      .then(data => {
+          navigate(notification.url)
+      })
+      .catch((error) => {
+        console.error('Error fetching applications:', error);
+      })
+    }
+    else {
+      navigate(notification.url)
+    }
   }
 
   function handleDelete(notification) {

@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Notifications from './pages/Notifications';
@@ -50,6 +50,8 @@ const App = () => {
         <Route path="/blogs/:username/create" element={<BlogCreate />} />
         <Route path="/blogs/:username/:pk/edit" element={<BlogEdit />} />
         <Route path="/blogs/:username/:pk" element={<BlogRetrieve />} />
+        <Route path="/comments/pet_shelters/:username/*" element={<ShelterComment />} />
+        <Route path="/comments/applications/*" element={<ApplicationComment />} />
       </Routes>
     </Router>
   );
@@ -63,6 +65,28 @@ const ApplicationRoutes = () => {
       <Route path="create/:petID" element={<AppApply />} />
     </Routes>
   );
+};
+
+const ShelterComment = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const username = window.location.pathname.split('/')[3];
+    navigate(`/shelters/${username}`);
+  }, [navigate]);
+
+  return null;
+};
+
+const ApplicationComment = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const appID = window.location.pathname.split('/')[4];
+    navigate(`/applications/${appID}`);
+  }, [navigate]);
+
+  return null;
 };
 
 
