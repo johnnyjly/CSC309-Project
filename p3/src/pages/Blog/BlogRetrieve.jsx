@@ -85,6 +85,8 @@ function BlogRetrieve() {
                   </div>
                 </div>
               </div>
+              <div style={{marginBottom: "1em"}}></div>
+              <Link to={`/shelters/${params.username}`} style={{marginLeft: "50%", maginRight: "50%"}}>Back</Link>
             </div>
           </section>
           <CommentList on={'blog'} username={params.username} id={params.pk} />

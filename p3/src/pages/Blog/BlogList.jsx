@@ -4,17 +4,16 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 
-function BlogList() {
+function BlogList(props) {
     const [ query, setQuery ] = useState({});
     const [ response, setResponse ] = useState({});
     const [ page, setPage ] = useState(1);
     const [ error, setError ] = useState("");
 
-    const params = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
-        ajax_or_login(`/blogs/${params.username}/?page=${page}`, {method: 'GET'}, navigate)
+        ajax_or_login(`/blogs/${props.username}/?page=${page}`, {method: 'GET'}, navigate)
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -37,14 +36,13 @@ function BlogList() {
         return time[1].substring(0, 5).concat(" ", time[0]);
     }
 
-    // TODO: will probably need to change Link later
     return <div class="container my-5 py-5">
       <div class="justify-content-center">
         <div class="col-md-12 col-lg-10 col-xl-8">
           <div style={{display: "flex", justifyContent: "space-between"}}>
             <h2>Blog Posts</h2>
-            { params.username === jwtDecode(localStorage.getItem('access')).username
-              ? <Link to={`/blogs/${params.username}/create`}>
+            { props.username === jwtDecode(localStorage.getItem('access')).username
+              ? <Link to={`/blogs/${props.username}/create`}>
                   <button type="button" class="btn btn-primary">New Post</button>
                 </Link>
               : <></> }
@@ -54,7 +52,7 @@ function BlogList() {
               <>
                 <div class="card" style={{marginTop: "0.5rem", marginBottom: "0.5rem"}}>
                   <div class="card-body" style={{height: "55px"}}>
-                    <h6><a href={ `/blogs/${params.username}/${result.ID}/`} style={{textDecoration: "none"}}>{ result.title }</a></h6>
+                    <h6><a href={ `/blogs/${props.username}/${result.ID}/`} style={{textDecoration: "none"}}>{ result.title }</a></h6>
                     <p class="text-muted small mb-0">Posted: { format_time(result.creation_time) }</p>
                     <p class="text-muted small mb-0">Last Updated: { format_time(result.update_time) }</p>
                   </div>

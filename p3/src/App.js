@@ -48,7 +48,6 @@ const App = () => {
         <Route path="/blogs/:username/create" element={<BlogCreate />} />
         <Route path="/blogs/:username/:pk/edit" element={<BlogEdit />} />
         <Route path="/blogs/:username/:pk" element={<BlogRetrieve />} />
-        <Route path="/blogs/:username/" element={<BlogList />} />
       </Routes>
     </Router>
   );

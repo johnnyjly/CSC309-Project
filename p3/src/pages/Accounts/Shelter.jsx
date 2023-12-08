@@ -16,6 +16,10 @@ import { useNavigate, useParams } from "react-router-dom";
 // import other components
 import { ajax_or_login } from '../../ajax.js';
 
+// import blog and comments
+import BlogList from '../Blog/BlogList.jsx';
+import CommentList from '../Comment/CommentList.jsx';
+
 function Shelter() {
 
     const navigate = useNavigate();
@@ -107,6 +111,8 @@ function Shelter() {
                             {user.shelter_avatar !== null ? <img src={user.shelter_avatar} alt="shelter_avatar" height={630} width={1200}></img> : ""}
                         </div>
                     </div>
+                    <BlogList username={username} />
+                    <CommentList on={'shelter'} username={username} />
                 </main>
                 <Footer />
             </div>
