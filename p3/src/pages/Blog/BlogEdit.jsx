@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ajax_or_login } from "../../ajax.js";
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -12,31 +12,33 @@ function BlogEdit() {
     const params = useParams()
     const navigate = useNavigate();
 
-    ajax_or_login(`/blogs/${params.username}/${params.id}/`, {method: 'GET'}, navigate)
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        }
-        else {
-            throw Error(response.statusText);
-        }
-    })
-    .then(json => {
-        setResponse(json);
-    })
-    .catch(error => setError(error.toString()));
+    useEffect(() => {
+        ajax_or_login(`/blogs/${params.username}/${params.pk}/`, {method: 'GET'}, navigate)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                throw Error(response.statusText);
+            }
+        })
+        .then(json => {
+            setResponse(json);
+        })
+        .catch(error => setError(error.toString()));
+    }, [error, navigate]);
 
-    console.log(response);
+    console.log(response); // DEBUG
 
     function handle_submit(event) {
         let data = new FormData(event.target);
 
-        ajax_or_login(`/blogs/${params.username}/`, {
-            method: 'POST',
+        ajax_or_login(`/blogs/${params.username}/${params.pk}/`, {
+            method: 'PUT',
             body: data,
         }, navigate);
 
-        navigate(`/shelters/${params.username}`);
+        navigate(`/blogs/${params.username}/${params.pk}`);
     }
 
     return <div>
@@ -50,13 +52,13 @@ function BlogEdit() {
               <div class="form-outline w-100">
               <label class="form-label" for="title">Title</label>
               <input class="form-control" name="title" id="title" type="text" maxLength="1000"
-               style={{background: "#fff"}}></input>
+               style={{background: "#fff"}} defaultValue={ response.title }></input>
               <label class="form-label" for="image">Image (optional)</label>
               <input class="form-control" name="image" id="image" type="file"
                style={{background: "#fff"}}></input>
               <label class="form-label" for="content">Content</label>
               <textarea class="form-control" name="content" id="content" rows="4"
-              style={{background: "#fff"}}></textarea>
+              style={{background: "#fff"}} defaultValue={ response.content }></textarea>
               </div>
           </div>
           <div class="float-end mt-2 pt-1">
