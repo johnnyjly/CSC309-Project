@@ -5,21 +5,20 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Comment from './Comment.jsx';
 
 
-function CommentList(props) {
+function CommentRetrieve(props) {
     const [ query, setQuery ] = useState({});
     const [ response, setResponse ] = useState({});
     const [ error, setError ] = useState("");
 
-    const params = useParams(); // params used for testing, can replace with props later
     const navigate = useNavigate();
     useEffect(() => {
         let url = "";
         switch(props.on) {
             case 'shelter':
-                url = `/comments/pet_shelters/${params.username}/${params.id}/`;
+                url = `/comments/pet_shelters/${props.username}/${props.id}/`;
                 break;
             case 'application':
-                url = `/comments/applications/${params.pk}/${params.id}/`;
+                url = `/comments/applications/${props.pk}/${props.id}/`;
                 break;
         };
         ajax_or_login(url, {method: 'GET'}, navigate)
@@ -66,4 +65,4 @@ function CommentList(props) {
     </div>
 }
 
-export default CommentList;
+export default CommentRetrieve;
