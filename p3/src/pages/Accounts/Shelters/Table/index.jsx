@@ -19,8 +19,8 @@ function Table({ shelters }) {
                     <td>{shelter.username}</td>
                     <td>{shelter.city + "/" + shelter.province}</td>
                     <td>{shelter.postal_code}</td>
-                    <td>{shelter.email}</td>
-                    <td>{shelter.phone}</td>
+                    <td><a style={{textDecoration: "none"}} href={`mailto:${shelter.email}`}>{shelter.email}</a></td>
+                    <td>{shelter.phone_number}</td>
                 </tr>
             ))}
         </tbody>

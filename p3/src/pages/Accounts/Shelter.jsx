@@ -11,7 +11,7 @@ import Footer from '../../components/Footer/Footer.jsx';
 import './style.css'
 
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 // import other components
 import { ajax_or_login } from '../../ajax.js';
@@ -80,11 +80,11 @@ function Shelter() {
                                 <div className="d-flex justify-content-between align-items-center mb-3 border-bottom">
                                     <h1 className="profile-setting" style={{ fontFamily: "Nexa Regular,arial,helvetica,sans-serif", WebkitFontSmoothing: "antialiased" }}>{user.shelter_name}</h1>
                                 </div>
-                                <div className="d-flex justify-content-evenly row-g-3">
-                                    <div className="col-md-3">
+                                <div className="justify-content-between row-g-3">
+                                    <div className="col-md-6">
                                         <p className="address"> {user.address} </p>
                                     </div>
-                                    <div className="col-md-3">
+                                    <div className="col-md-6">
                                         <p className="city-province" style={{ color: "gray", fontStyle: "italic", }}> {user.city + ", " + user.province}</p>
                                     </div>
                                 </div>
@@ -96,14 +96,14 @@ function Shelter() {
                                 </div>
                             </div>
                             <div className="col-md-3">
-                                <div className="d-flex justify-content-center align-items-center mb-3">
-                                    <button className="btn btn-primary" style={{ padding: "0.5rem 4rem", margin: "1rem 0.5rem" }}>VIEW OUR PETS</button>
+                                <div className="d-flex justify-content-center align-items-center flex-wrap mb-3">
+                                    <button className="btn btn-primary" style={{ padding: "0.5rem 3rem", margin: "1rem 0.5rem" }}>VIEW OUR PETS</button>
                                 </div>
                                 <div className="d-flex justify-content-center align-items-center mb-3 border-bottom">
-                                    <h6>Email: {user.email}</h6>
+                                <a style={{textDecoration: "none"}} href={`mailto:${user.email}`}>{user.email}</a>
                                 </div>
                                 <div className="d-flex justify-content-center align-items-center mb-3 border-bottom">
-                                    <h6>Phone: {user.phone_number}</h6>
+                                    <h6>{"Phone: " + user.phone_number}</h6>
                                 </div>
                             </div>
                         </div>

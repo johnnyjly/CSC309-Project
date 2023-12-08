@@ -28,12 +28,16 @@ function Shelters() {
     const [error, setError] = useState("");
 
     const query = useMemo(() => ({
-        page: parseInt(searchParams.get("page") > totalPages ? 1 : searchParams.get("page") || 1),
+        page: parseInt(searchParams.get("page")),
     }), [searchParams]);
 
     useEffect(() => {
 
-        const { page } = query;
+        let { page } = query;
+        if (isNaN(page)) {
+            setSearchParams({ ...query, page: 1 });
+            page = 1;
+        }
 
         ajax_or_login(`/accounts/shelters/?page=${page}`, { method: "GET" }, navigate)
             .then(response => {
@@ -46,12 +50,19 @@ function Shelters() {
             .then(json => {
                 setShelters(json.results);
                 setTotalPages(Math.ceil(parseFloat(json.count / 10.0)));
+                setError("");
             })
-            .catch(error => setError(error));
+            .catch(error => {
+                setError(error)
+                if (page > totalPages) {
+                    setSearchParams({ ...query, page: totalPages });
+                    setError("Page Not Found");
+                }
+            });
         if (error !== "") {
             alert(error);
         }
-    }, [query, navigate]);
+    }, [query, navigate, query]);
 
     return <>
         <div className="page_container">
