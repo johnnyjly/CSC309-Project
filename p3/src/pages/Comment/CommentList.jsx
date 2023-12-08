@@ -14,9 +14,7 @@ function CommentList(props) {
     const [ error, setError ] = useState("");
     const [ status, setStatus ] = useState(200);
 
-    const params = useParams();
     const navigate = useNavigate();
-
     useEffect(() => {
         switch (props.on) {
             case 'shelter':
@@ -33,9 +31,11 @@ function CommentList(props) {
         .then(response => {
             setStatus(response.status);
             if (response.ok) {
+                console.log("Response is OK");
                 return response.json();
             }
             else {
+                console.log("Response has error");
                 throw Error(response.statusText);
             }
         })
@@ -43,12 +43,12 @@ function CommentList(props) {
             setResponse(json);
         })
         .catch(error => setError(error.toString()));
-    }, [query, page, error, navigate]);
 
-    console.log(response); // DEBUG
-    console.log(url); // DEBUG
-    console.log(error); // DEBUG
-    console.log(status); // DEBUG
+        console.log("Response:", response); // DEBUG
+        console.log("URL:", url); // DEBUG
+        console.log("Error:", error); // DEBUG
+        console.log("Status:", status); // DEBUG
+    }, [query, page, status, error, navigate]);
 
     return <div>
         <section>

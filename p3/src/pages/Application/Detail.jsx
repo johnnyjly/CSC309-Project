@@ -70,7 +70,7 @@ const AppDetail = () => {
                   <h2 className="title text-dark">
                     {capitalizeFirstLetter(appData.applicant)+`'s Form for ` +capitalizeFirstLetter(appData.animal)}
                   </h2>
-                  <CommentList on={'application'} pk={appData.ID} />
+                  <CommentList on={'application'} pk={appID} />
                 </aside>
                 <main className="col-lg-6">
                   <div className="ps-lg-3">
