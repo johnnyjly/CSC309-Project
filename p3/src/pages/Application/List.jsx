@@ -238,7 +238,7 @@ const AppList = () => {
                           <p className="card-text">Status: {capitalizeFirstLetter(card.status)}</p>
                         </div>
                         <div className="card-footer">
-                          <Link type="button" class="btn btn-success" to={`/applications/details/${card.id}`}>
+                          <Link type="button" class="btn btn-success" to={`/applications/${card.id}`}>
                               Details
                           </Link>
                         </div>

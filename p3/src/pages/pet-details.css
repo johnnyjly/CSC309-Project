@@ -128,17 +128,6 @@ footer {
   .filter-text {
     font-size: 1.5rem;
   }
-
-  .notifications-wrapper {
-    display: block;
-    height: 60rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
-  .alert.notifications {
-    font-size: 1rem;
-  }
 }
   
 
@@ -191,17 +180,4 @@ footer {
 .notifications-wrapper {
   margin-top: 2rem;
   text-align: center;
-}
-
-.alerts-container {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-}
-
-.alert.notifications {
-  max-width: 50rem;
-  max-height: 4rem;
-  margin: auto;
-  margin-top: 0.5rem;
-  
 }

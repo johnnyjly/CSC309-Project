@@ -59,7 +59,7 @@ const ApplicationRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<AppList />} />
-      <Route path="details/:appID" element={<AppDetail />} />
+      <Route path="/:appID" element={<AppDetail />} />
       <Route path="create/:petID" element={<AppApply />} />
     </Routes>
   );
