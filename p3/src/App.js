@@ -24,9 +24,6 @@ import BlogRetrieve from './pages/Blog/BlogRetrieve';
 import BlogEdit from './pages/Blog/BlogEdit';
 import BlogList from './pages/Blog/BlogList';
 
-import CommentList from './pages/Comment/CommentList';
-import CommentRetrieve from './pages/Comment/CommentRetrieve';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
@@ -52,7 +49,6 @@ const App = () => {
         <Route path="/blogs/:username/:pk/edit" element={<BlogEdit />} />
         <Route path="/blogs/:username/:pk" element={<BlogRetrieve />} />
         <Route path="/blogs/:username/" element={<BlogList />} />
-        <Route path="/comments/*" element={<CommentRoutes />} />
       </Routes>
     </Router>
   );
@@ -64,19 +60,6 @@ const ApplicationRoutes = () => {
       <Route path="/" element={<AppList />} />
       <Route path="details/:appID" element={<AppDetail />} />
       <Route path="create/:petID" element={<AppApply />} />
-    </Routes>
-  );
-};
-
-// DEBUG - change these later
-const CommentRoutes = () => {
-  return (
-    <Routes>
-      <Route path="pet_shelters/:username" element={<CommentList on={'shelter'} />} />
-      <Route path="pet_shelters/:username/:id" element={<CommentRetrieve on={'shelter'} />} />
-      <Route path="applications/:pk" element={<CommentList on={'application'} />} />
-      <Route path="applications/:pk/:id" element={<CommentRetrieve on={'application'} />} />
-      <Route path="blogs/:username/:id" element={<CommentList on={'blog'} />} />
     </Routes>
   );
 };
