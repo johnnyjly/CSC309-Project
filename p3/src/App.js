@@ -18,7 +18,7 @@ import PetDetails from './pages/PetDetails'
 
 import AppList from './pages/Application/List';
 import AppDetail from './pages/Application/Detail';
-import AppApply from './pages/Application/Seeker/Create';
+import AppApply from './pages/Application/Create';
 
 import BlogCreate from './pages/Blog/BlogCreate';
 import BlogRetrieve from './pages/Blog/BlogRetrieve';

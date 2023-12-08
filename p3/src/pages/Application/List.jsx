@@ -5,6 +5,11 @@ import { useLocation, Link } from 'react-router-dom';
 import { ajax_or_login } from '../../ajax.js';
 import { jwtDecode } from 'jwt-decode';
 
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+
 // Import Components
 import Header from '../../components/Header/Header.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
@@ -18,7 +23,8 @@ const AppList = () => {
   const [cardData, setCardData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [sortOption, setSortOption] = useState('name');
+  const [sortOption, setSortOption] = useState('None');
+  const [statusOption, setStatusOption] = useState('All');
   const location = useLocation();
   const PAGE_SIZE = 10;
 
@@ -37,11 +43,7 @@ const AppList = () => {
   }, [authToken, decoded]);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const statusFilter = searchParams.get('filter');
-    const sortFilter = searchParams.get('sort');
-    
-    ajax_or_login(`/applications/?page=${currentPage}&status=${statusFilter || ''}&sort=${sortFilter || ''}`, {
+    ajax_or_login(`/applications/?page=${currentPage}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +58,8 @@ const AppList = () => {
           name: result.animal,
           shelter: result.shelter,
           applicant: result.applicant,
-          description: result.status,
+          status: result.status,
+          last_created: result.creation_time,
         }));
         setCardData(newCardData);
         setTotalPages(Math.ceil(data.count / PAGE_SIZE));
@@ -64,7 +67,7 @@ const AppList = () => {
       .catch((error) => {
         console.error('Error fetching applications:', error);
       })
-  }, [currentPage, location.search, sortOption]);
+  }, [currentPage]);
 
   const handlePageChange = direction => {
     setCurrentPage(prevPage =>
@@ -74,7 +77,78 @@ const AppList = () => {
 
   const handleSortChange = (option) => {
     setSortOption(option);
+    let sortedData = [...cardData];
+  
+    switch (option) {
+      case 'Pet':
+        sortedData.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'Shelter':
+        sortedData.sort((a, b) => a.shelter.localeCompare(b.shelter));
+        break;
+      case 'Seeker':
+        sortedData.sort((a, b) => a.applicant.localeCompare(b.applicant));
+        break;
+      case 'Last Created':
+        sortedData.sort((a, b) => new Date(b.last_created) - new Date(a.last_created));
+        break;
+      default:
+        // Default sorting, you can modify this based on your requirements
+        sortedData.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+    }
+  
+    setCardData(sortedData);
   };
+
+  const handleStatusChange = (option) => {
+    setStatusOption(option);
+    switch (option) {
+      case 'Pending':
+        option = 'pending';
+        break;
+      case 'Rejected':
+          option = 'rejected';
+          break;
+      case 'Accepted':
+        option = 'accepted';
+        break;
+      case 'Withdrawn':
+          option = 'withdrawn';
+          break;
+      case 'All':
+          option = '';
+          break;
+      default:
+          option = '';
+          break;
+    }
+
+    ajax_or_login(`/applications/?page=${currentPage}&status=${option}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Fetched data:', data);
+      const newCardData = data.results.map((result) => ({
+        id: result.ID,
+        name: result.animal,
+        shelter: result.shelter,
+        applicant: result.applicant,
+        status: result.status,
+        last_created: result.last_created,
+      }));
+      setCardData(newCardData);
+      setTotalPages(Math.ceil(data.count / PAGE_SIZE));
+    })
+    .catch((error) => {
+      console.error('Error fetching applications:', error);
+    })
+  }
   
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -92,14 +166,14 @@ const AppList = () => {
               ) : (
                 <h1 class="display-6 lead text-center mt-5">You have no Applications</h1>
               )}
-              <div class="input-group mt-5 px-5">
+              {/* <div class="input-group mt-5 px-5">
                 <input type="search" class="form-control rounded" placeholder="Search for keywords" aria-label="Search" aria-describedby="search-addon" />
                 <div class="btn-group">
                   <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Search By
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Search All</a></li>
+                    <li><a class="dropdown-item" href="#">Name</a></li>
                     <li><a class="dropdown-item" href="#">Age</a></li>
                     <li><a class="dropdown-item" href="#">Breed</a></li>
                     <li><a class="dropdown-item" href="#">Colour</a></li>
@@ -109,21 +183,44 @@ const AppList = () => {
                   </ul>
                 </div>
                 <button type="button" class="btn btn-outline-primary p-3">Search</button>
-              </div>
+              </div> */}
 
               <div class="sort-wrapper text-end">
-                <div class=" sort-text"> Sort by
-                  <div class="btn-group sort-btn-wrapper">
-                    <button class="btn btn-primary dropdown-toggle sort-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Name (A-Z)
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" onClick={() => handleSortChange('name')}>Name (A-Z)</a></li>
-                      <li><a class="dropdown-item" onClick={() => handleSortChange('age')}>Age (Old-Young)</a></li>
-                      <li><a class="dropdown-item" onClick={() => handleSortChange('date')}>Date (Recent-Old)</a></li>
-                    </ul>
-                  </div>
-                </div>
+                <DropdownButton className="ddbtn" as={ButtonGroup} id="dropdown-basic-button" title={"Sort by: "+sortOption}>
+                  <Dropdown.Item onClick={() => {
+                    handleSortChange('Pet');
+                  }}>Pet</Dropdown.Item>
+                  {!isShelter && (
+                    <Dropdown.Item onClick={() => {
+                      handleSortChange('Shelter');
+                    }}>Shelter</Dropdown.Item>
+                  )}
+                  {isShelter && (
+                    <Dropdown.Item onClick={() => {
+                      handleSortChange('Seeker');
+                    }}>Seeker</Dropdown.Item>
+                  )}
+                  <Dropdown.Item onClick={() => {
+                    handleSortChange('Last Created');
+                  }}>Last Created</Dropdown.Item>
+                </DropdownButton>
+                <DropdownButton className="ddbtn2" as={ButtonGroup} id="dropdown-basic-button" title={"Status: "+statusOption}>
+                  <Dropdown.Item onClick={() => {
+                    handleStatusChange('Pending');
+                  }}>Pending</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    handleStatusChange('Rejected');
+                  }}>Rejected</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    handleStatusChange('Accepted');
+                  }}>Accepted</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    handleStatusChange('Withdrawn');
+                  }}>Withdrawn</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {
+                    handleStatusChange('All');
+                  }}>All</Dropdown.Item>
+                </DropdownButton>
                 <div className="card-container row row-cols-1 row-cols-md-3 g-4">
                   {cardData.map((card) => (
                     <div key={card.id} className="col">
@@ -138,7 +235,7 @@ const AppList = () => {
                               <h5 className="card-subtitle">{capitalizeFirstLetter(card.shelter)}</h5>
                             )}
                           </div>
-                          <p className="card-text">Status: {capitalizeFirstLetter(card.description)}</p>
+                          <p className="card-text">Status: {capitalizeFirstLetter(card.status)}</p>
                         </div>
                         <div className="card-footer">
                           <Link type="button" class="btn btn-success" to={`/applications/details/${card.id}`}>

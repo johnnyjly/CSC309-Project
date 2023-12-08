@@ -154,6 +154,14 @@ footer {
   min-height: 10rem;
 }
 
+.ddbtn {
+  margin-right: 1rem;
+}
+
+.ddbtn2 {
+  margin-right: 3rem;
+}
+
 @media screen and (max-width: 768px) {
   .pet-details-wrapper {
     display: block;
@@ -166,7 +174,7 @@ footer {
 
   .search-wrapper {
     display: block;
-    height: 125rem;
+    height: 100rem;
   }
 
   .search-wrap {
@@ -177,7 +185,6 @@ footer {
     display: block;
     height: 80rem;
     margin-left: -1.5rem;
-
   }
 
   .filter-text {
