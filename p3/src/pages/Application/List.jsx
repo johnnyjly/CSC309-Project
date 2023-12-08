@@ -114,15 +114,15 @@ const AppList = () => {
         option = 'accepted';
         break;
       case 'Withdrawn':
-          option = 'withdrawn';
-          break;
+        option = 'withdrawn';
+        break;
       case 'All':
-          option = '';
-          break;
+        option = '';
+        break;
       default:
-          option = '';
-          break;
-    }
+        option = '';
+        break;
+  }
 
     ajax_or_login(`/applications/?page=${currentPage}&status=${option}`, {
       method: 'GET',

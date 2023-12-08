@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import Header from "../components/Header/Header.jsx";
 import Footer from '../components/Footer/Footer.jsx';
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Image from 'react-bootstrap/Image'
+import { ajax_or_login } from '../ajax.js';
+import { jwtDecode } from 'jwt-decode';
 
 import './pet-details.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,7 +12,24 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const PetDetails = () => {
   const location = useLocation()
+  const navigate = useNavigate();
   console.log(location.state)
+
+  const [isShelter, setIsShelter] = useState(false);
+  const [username, setUsername] = useState('');
+  const authToken = localStorage.access;
+  let decoded;
+  useEffect(() => {
+    try {
+      decoded = jwtDecode(authToken);
+      if (decoded.is_shelter === true) {
+        setIsShelter(true);
+      }
+      setUsername(decoded.username);
+    } catch (e) {
+      decoded = null;
+    }
+  }, [authToken, decoded]);
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -19,13 +38,42 @@ const PetDetails = () => {
   function renderSwitch(param) {
     switch (param) {
       case 'available':
-        return <button type="button" className="btn btn-success">Available</button>;
+        return <button type="button" className="btn btn-success" onClick={handleCreateApp}>Available</button>;
       case 'adopted':
         return <button type="button" disabled className="btn btn-danger">Adopted</button>;
       case 'pending':
         return <button type="button" disabled className="btn btn-warning">Pending</button>;
       default:
         return <button type="button" disabled className="btn btn-dark">Unknown</button>;
+    }
+  }
+
+  function handleCreateApp() {
+    if (!isShelter) {
+      ajax_or_login(`/applications/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Fetched data:', data);
+        const matchingApplication = data.results.find(
+          (app) => app.animal === location.state.name && app.applicant === username
+        );
+  
+        if (matchingApplication) {
+          alert("You already applied for this pet!")
+          navigate('/listings');
+        } else {
+          navigate("/applications/create/" + location.state.id)
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching applications:', error);
+      });
     }
   }
 
