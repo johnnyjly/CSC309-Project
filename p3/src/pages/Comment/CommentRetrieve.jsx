@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Comment from './Comment.jsx';
 
 
-function CommentList(props) {
+function CommentRetrieve(props) {
     const [ query, setQuery ] = useState({});
     const [ response, setResponse ] = useState({});
     const [ error, setError ] = useState("");
@@ -65,4 +65,4 @@ function CommentList(props) {
     </div>
 }
 
-export default CommentList;
+export default CommentRetrieve;
