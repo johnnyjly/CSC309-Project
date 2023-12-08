@@ -23,7 +23,7 @@ function CommentList(props) {
                 setUrl(`/comments/pet_shelters/${props.username}/`);
                 break;
             case 'application':
-                setUrl(`/comments/applications/${params.pk}/`);
+                setUrl(`/comments/applications/${props.pk}/`);
                 break;
             case 'blog':
                 setUrl(`/comments/blogs/${props.username}/${props.id}/`);
