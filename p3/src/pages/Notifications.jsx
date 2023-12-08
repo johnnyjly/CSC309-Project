@@ -76,7 +76,22 @@ const Notifications = () => {
   }
 
   function handleDelete(notification) {
-    console.log('Deleting notification with id:', notification.id);
+    ajax_or_login(`/notifications/${notification.id}/`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }, navigate)
+    .then((response) => {
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        console.error('Failed to delete notification:', response.status);
+      }
+    })
+    .catch((error) => {
+      console.error('Error deleting notification:', error);
+    });
   }
 
   return (
@@ -86,7 +101,11 @@ const Notifications = () => {
                 <Header />
                 <main>
                     <div class="notifications-wrapper text-center">
-                        <h1 class="display-4">Your Notifications</h1>
+                        {notifications.length > 0 ? (
+                          <h1 class="display-4">Your Notifications</h1>
+                        ) : (
+                          <h1 class="display-4">You have no notifications!</h1>
+                        )}
                         <div class="alerts-container">
                             {notifications.map(notification => (
                                 <div
@@ -109,19 +128,21 @@ const Notifications = () => {
                                 </div>
                             ))}
                         </div>
-                        <div className="pagination-container">
-                            <button type="button" class="btn btn-primary"
-                                onClick={() => handlePageChange('previous')} 
-                                disabled={currentPage === 1}>
-                                Previous
-                            </button>
-                            <span>{`Page: ${currentPage} of ${totalPages}`}</span>
-                            <button type="button" class="btn btn-primary"
-                                onClick={() => handlePageChange('next')}
-                                disabled={currentPage === totalPages}>
-                                Next
-                            </button>
-                        </div>
+                        {notifications.length > 0 && (
+                          <div className="pagination-container">
+                              <button type="button" class="btn btn-primary"
+                                  onClick={() => handlePageChange('previous')} 
+                                  disabled={currentPage === 1}>
+                                  Previous
+                              </button>
+                              <span>{`Page: ${currentPage} of ${totalPages}`}</span>
+                              <button type="button" class="btn btn-primary"
+                                  onClick={() => handlePageChange('next')}
+                                  disabled={currentPage === totalPages}>
+                                  Next
+                              </button>
+                          </div>
+                        )}
                     </div>
                 </main>
                 <Footer />
