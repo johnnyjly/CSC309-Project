@@ -36,6 +36,19 @@ function BlogRetrieve() {
     console.log(response); // DEBUG
     console.log(jwtDecode(localStorage.getItem('access')).username); // DEBUG
 
+    function handle_delete(id) {
+        console.log(params.username); // DEBUG
+        console.log(id); // DEBUG
+        ajax_or_login(`/blogs/${params.username}/${id}/`, {method: 'DELETE'}, navigate);
+        navigate(`/shelters/${params.username}`);
+    }
+
+    function handle_edit(id) {
+        console.log(params.username); // DEBUG
+        console.log(id); // DEBUG
+        navigate(`/blogs/${params.username}/${id}/edit`);
+    }
+
     function format_time(time) {
         time = time.split('T');
         return time[1].substring(0, 5).concat(" ", time[0]);
@@ -64,8 +77,8 @@ function BlogRetrieve() {
                       : <></> }
                     { params.username === jwtDecode(localStorage.getItem('access')).username
                       ? <div class="prev-next-container" style={{textAlign: "center"}}>
-                          <button type="button" class="btn btn-primary" onClick={ () => console.log("edit") } style={{margin: "0.5rem"}}>Edit</button>
-                          <button type="button" class="btn btn-secondary" onClick={ () => console.log("delete") } style={{margin: "0.5rem"}}>Delete</button>
+                          <button type="button" class="btn btn-primary" onClick={ () => handle_edit(response.ID) } style={{margin: "0.5rem"}}>Edit</button>
+                          <button type="button" class="btn btn-secondary" onClick={ () => handle_delete(response.ID) } style={{margin: "0.5rem"}}>Delete</button>
                         </div>
                       : <></>
                     }
@@ -74,12 +87,11 @@ function BlogRetrieve() {
               </div>
             </div>
           </section>
-          <CommentList on={"blog"} username={params.username} id={params.pk} />
+          <CommentList on={'blog'} username={params.username} id={params.pk} />
         </div>
         <Footer />
       </div>
     </div>
-
 }
 
 export default BlogRetrieve;

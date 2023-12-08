@@ -17,7 +17,7 @@ function CommentCreate(props) {
         }, navigate);
     }
 
-    return <form id="comment-create" class="card-footer py-3 border-0" style={{backgroundColor: "#f8f9fa"}} onSubmit={handle_submit}>
+    return <form id="comment-create" class="card-footer py-3 border-0" style={{backgroundColor: "#fff", marginBottom: "1em"}} onSubmit={handle_submit}>
       <div class="d-flex flex-start w-100">
         <div class="form-outline w-100">
           <label class="form-label" for="content">Message</label>

@@ -14,6 +14,7 @@ function CommentList(props) {
     const [ error, setError ] = useState("");
     const [ status, setStatus ] = useState(200);
 
+    const params = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,7 +23,7 @@ function CommentList(props) {
                 setUrl(`/comments/pet_shelters/${props.username}/`);
                 break;
             case 'application':
-                setUrl(`/comments/applications/${props.pk}/`);
+                setUrl(`/comments/applications/${params.pk}/`);
                 break;
             case 'blog':
                 setUrl(`/comments/blogs/${props.username}/${props.id}/`);

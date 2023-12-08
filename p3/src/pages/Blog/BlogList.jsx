@@ -1,3 +1,80 @@
-function BlogList(props) {
-    
+import { useState, useEffect } from "react";
+import { ajax, ajax_or_login } from "../../ajax.js";
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
+
+function BlogList() {
+    const [ query, setQuery ] = useState({});
+    const [ response, setResponse ] = useState({});
+    const [ page, setPage ] = useState(1);
+    const [ error, setError ] = useState("");
+
+    const params = useParams();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        ajax_or_login(`/blogs/${params.username}/?page=${page}`, {method: 'GET'}, navigate)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                throw Error(response.statusText);
+            }
+        })
+        .then(json => {
+            setResponse(json);
+        })
+        .catch(error => setError(error.toString()));
+    }, [query, error, page, navigate]);
+
+    console.log(response); // DEBUG
+    console.log(jwtDecode(localStorage.getItem('access')).username); // DEBUG
+
+    function format_time(time) {
+        time = time.split('T');
+        return time[1].substring(0, 5).concat(" ", time[0]);
+    }
+
+    // TODO: will probably need to change Link later
+    return <div class="container my-5 py-5">
+      <div class="justify-content-center">
+        <div class="col-md-12 col-lg-10 col-xl-8">
+          <div style={{display: "flex", justifyContent: "space-between"}}>
+            <h2>Blog Posts</h2>
+            { params.username === jwtDecode(localStorage.getItem('access')).username
+              ? <Link to={`/blogs/${params.username}/create`}>
+                  <button type="button" class="btn btn-primary">New Post</button>
+                </Link>
+              : <></> }
+          </div>
+          { response.results
+            ? response.results.map(result =>
+              <>
+                <div class="card" style={{marginTop: "0.5rem", marginBottom: "0.5rem"}}>
+                  <div class="card-body" style={{height: "55px"}}>
+                    <h6><a href={ `/blogs/${params.username}/${result.ID}/`} style={{textDecoration: "none"}}>{ result.title }</a></h6>
+                    <p class="text-muted small mb-0">Posted: { format_time(result.creation_time) }</p>
+                    <p class="text-muted small mb-0">Last Updated: { format_time(result.update_time) }</p>
+                  </div>
+                </div>
+              </>)
+            : <p>No blog posts yet.</p> }
+          { response.count > 1
+            ? <div style={{textAlign: "center"}}>
+                { response.previous
+                  ? <button type="button" class="btn btn-primary" onClick={ () => setPage(page - 1) } style={{margin: "0.5rem"}}>{"<<"}</button>
+                  : <></> }
+                { response.next
+                  ? <button type="button" class="btn btn-primary" onClick={ () => setPage(page + 1) } style={{margin: "0.5rem"}}>{">>"}</button>
+                  : <></> }
+                </div>
+            : <></> }
+        </div>
+      </div>
+      
+    </div>
 }
+
+export default BlogList;
