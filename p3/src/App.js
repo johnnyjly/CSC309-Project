@@ -13,8 +13,6 @@ import Shelter from './pages/Accounts/Shelter';
 
 import Search from './pages/Search';
 import NewPet from './pages/NewPet';
-import PetDetails from './pages/PetDetails';
-import PetShelter from './pages/PetShelter';
 
 import AppList from './pages/Application/List';
 import AppDetail from './pages/Application/Detail';
