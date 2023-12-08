@@ -38,7 +38,6 @@ const Profile = () => {
         receive_news: false,
         shelter_name: "",
         shelter_avatar: "",
-        location: "",
         mission_statement: "",
     });
 
@@ -61,7 +60,7 @@ const Profile = () => {
                 setUser(json);
             })
             .catch(error => setErrors({ ...errors, otherErrors: error }));
-    }, [navigate, username, errors]);
+    }, [navigate, username]);
 
     function handle_profile_submit(event) {
         let data = new FormData(event.target);
@@ -100,6 +99,9 @@ const Profile = () => {
                 });
                 setUser(json);
                 alert("Profile updated successfully!")
+                if (user.username !== json.username) {
+                    navigate('/login');
+                }
             })
             .catch(error => setErrors({ ...errors, otherErrors: error }));
         event.preventDefault();
@@ -160,6 +162,14 @@ const Profile = () => {
         event.preventDefault();
     }
 
+    function handle_logout(event) {
+        localStorage.removeItem("access");
+        localStorage.removeItem("username");
+        alert("Logged out successfully!");
+        navigate("/");
+        event.preventDefault();
+    }
+
     return <>
         <div className="page_container">
             <div className="content_wrap">
@@ -177,8 +187,9 @@ const Profile = () => {
                                         </svg> :
                                         <img src={user.user_avatar} alt="user_avatar" className="rounded-circle" width="80" height="80"></img>}
                                     <h5 className="profile-username">{user.username}</h5>
-                                    <div className="d-grid gap-2 col-8 mx-auto">
-                                        <button onClick={handle_delete} className="btn btn-primary" style={{ background: "red", margin: "10px 1rem", }}>Delete</button>
+                                    <div>
+                                    <button onClick={handle_logout} className="btn btn-primary" style={{ background: "orange", margin: "0.5rem"}}>Log out</button>
+                                    <button onClick={handle_delete} className="btn btn-primary" style={{ background: "red", margin: "0.5rem"}}>Delete</button>
                                     </div>
                                 </div>
                             </div>

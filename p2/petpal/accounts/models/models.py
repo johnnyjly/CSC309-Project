@@ -48,5 +48,4 @@ class PetShelter(MyUser):
     shelter_avatar = models.ImageField(
         upload_to="shelter/avatar/", blank=True
     )
-    location = models.CharField("Location", max_length=255, blank=True)
     mission_statement = models.TextField("Mission statement", blank=True)

@@ -34,6 +34,7 @@ const Header = () => {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown> */}
+            <Nav.Link href='/shelters/?page=1'> Shelters</Nav.Link>
             <Nav.Link href="/Login">Log in</Nav.Link>
             <Nav.Link href="/Signup">Sign up</Nav.Link>
             

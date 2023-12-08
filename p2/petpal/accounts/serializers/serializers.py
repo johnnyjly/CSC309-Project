@@ -158,7 +158,6 @@ class SeekerUpdateSerializer(ModelSerializer):
 class ShelterUpdateSerializer(SeekerUpdateSerializer):
     shelter_name = CharField(required=False)
     shelter_avatar = ImageField(required=False)
-    location = CharField(required=False)
     mission_statement = CharField(required=False)
 
     class Meta:
@@ -166,7 +165,6 @@ class ShelterUpdateSerializer(SeekerUpdateSerializer):
         fields = SeekerUpdateSerializer.Meta.fields + [
             "shelter_name",
             "shelter_avatar",
-            "location",
             "mission_statement",
         ]
         
@@ -174,7 +172,7 @@ class ShelterUpdateSerializer(SeekerUpdateSerializer):
         if "shelter_name" in validated_data:
             shelter_name = validated_data["shelter_name"]
             if (
-                PetShelter.objects.filter(shelter_name=shelter_name).exists()
+                PetShelter.objects.filter(shelter_name=shelter_name) and shelter_name != instance.shelter_name
             ):
                 raise ValidationError({"shelter_name": "This shelter name already exists."})
         
@@ -202,10 +200,22 @@ class ShelterProfileSerializer(ModelSerializer):
             "user_avatar",
             "shelter_name",
             "shelter_avatar",
-            "location",
             "mission_statement",
         ]
 
+class ShelterListSerializer(ModelSerializer):
+    class Meta:
+        model = PetShelter
+        fields = [
+            "id",
+            "shelter_name",
+            "username",
+            "city",
+            "province",
+            "postal_code",
+            "phone_number",
+            "email",
+        ]
 
 # Get profile of a seeker from a shelter's perspective
 class SeekerProfileSerializer(ModelSerializer):

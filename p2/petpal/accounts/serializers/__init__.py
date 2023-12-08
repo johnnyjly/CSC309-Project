@@ -4,6 +4,7 @@ from .serializers import (
     SeekerUpdateSerializer,
     ShelterUpdateSerializer,
     ShelterProfileSerializer,
+    ShelterListSerializer,
     SeekerProfileSerializer,
     SeekerDeleteSerializer,
     ShelterDeleteSerializer,

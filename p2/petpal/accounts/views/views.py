@@ -10,6 +10,7 @@ from ..serializers import (
     SeekerUpdateSerializer,
     ShelterUpdateSerializer,
     ShelterProfileSerializer,
+    ShelterListSerializer,
     SeekerProfileSerializer,
     SeekerDeleteSerializer,
     ShelterDeleteSerializer,
@@ -107,7 +108,7 @@ class SeekerRetrieveView(RetrieveAPIView):
 
 
 class ShelterListView(ListAPIView):
-    serializer_class = ShelterProfileSerializer
+    serializer_class = ShelterListSerializer
     permission_classes = [IsAuthenticated]
     pagination_class = PageNumberPagination
 
