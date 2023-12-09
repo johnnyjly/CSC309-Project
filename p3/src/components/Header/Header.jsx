@@ -4,13 +4,14 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image'
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import { jwtDecode } from 'jwt-decode';
 
 const Header = () => {
   const token = localStorage.getItem("access");
   return <>
-    <Navbar expand="lg" className="bg-body-tertiary" style={{background: "#F1F1F1"}}>
+    <Navbar expand="lg" className="bg-body-tertiary" style={{ background: "#F1F1F1" }}>
       <Container>
         <Navbar.Brand href="/" style={{ marginRight: '10px' }}>
           <Image src="/icons8-dog-64.png" alt="Logo" fluid width={24} height={24} />
@@ -23,8 +24,21 @@ const Header = () => {
             <Nav.Link href='/shelters/?page=1'> Shelter Listings</Nav.Link>
             {(token !== null) ?
               <>
-                <Nav.Link href="/notifications">Notifications</Nav.Link>
-                <Nav.Link href="/applications">Applications</Nav.Link>
+                <NavDropdown title="User" id="basic-nav-dropdown">
+                  <NavDropdown.Item href={"/profile/" + jwtDecode(token).username}>Profile</NavDropdown.Item>
+                  {(jwtDecode(token).is_shelter) ?
+                    <>
+                      <NavDropdown.Item href={"/shelters/" + jwtDecode(token).username}>
+                        Shelter
+                      </NavDropdown.Item>
+                    </>
+                    :
+                    <>
+                    </>
+                  }
+                  <NavDropdown.Item  href="/notifications">Notifications</NavDropdown.Item >
+                  <NavDropdown.Item  href="/applications">Applications</NavDropdown.Item >
+                </NavDropdown>
               </>
               :
               <>

@@ -103,7 +103,7 @@ function Shelter() {
                             </div>
                             <div className="col-md-3">
                                 <div className="d-flex justify-content-center align-items-center flex-wrap mb-3">
-                                    <button className="btn btn-primary" style={{ padding: "0.5rem 3rem", margin: "1rem 0.5rem" }}>VIEW OUR PETS</button>
+                                    <button className="btn btn-primary" style={{ padding: "0.5rem 3rem", margin: "1rem 0.5rem" }} onClick={() => navigate(`/listings?page=1&status=Available&shelter=${user.shelter_name}`)}>VIEW OUR PETS</button>
                                 </div>
                                 <div className="d-flex justify-content-center align-items-center mb-3 border-bottom">
                                 <a style={{textDecoration: "none"}} href={`mailto:${user.email}`}>{user.email}</a>
