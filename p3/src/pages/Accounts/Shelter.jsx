@@ -80,19 +80,25 @@ function Shelter() {
                                 <div className="d-flex justify-content-between align-items-center mb-3 border-bottom">
                                     <h1 className="profile-setting" style={{ fontFamily: "Nexa Regular,arial,helvetica,sans-serif", WebkitFontSmoothing: "antialiased" }}>{user.shelter_name}</h1>
                                 </div>
+                                {user.address !== "" && user.city !== "" && user.province !== "" ?
                                 <div className="justify-content-between row-g-3">
-                                    <div className="col-md-6">
-                                        <p className="address"> {user.address} </p>
-                                    </div>
-                                    <div className="col-md-6">
+                                    <div className="col-md-6 d-flex flex-nowrap">
+                                        <a className="address" href={`https://maps.google.com/maps?q=${user.address}, ${user.city}, ${user.province}`} style={{textDecoration: "none"}}> {user.address}</a>
+                                        <div>&nbsp;&nbsp;&nbsp;</div>
                                         <p className="city-province" style={{ color: "gray", fontStyle: "italic", }}> {user.city + ", " + user.province}</p>
                                     </div>
                                 </div>
+                                : 
+                                <div className="justify-content-between row-g-3">
+                                    <div className="col-md-6">
+                                        <p>No address of this shelter is provided</p>
+                                    </div>
+                                </div>}
                                 <div className="row-g-3">
                                     <div className="d-flex justify-content-between align-items-center mb-3 border-bottom">
-                                        <h5 className="profile-setting" style={{ fontFamily: "Nexa Regular,arial,helvetica,sans-serif", WebkitFontSmoothing: "antialiased" }}>Our Missions</h5>
+                                        <h4 className="profile-setting" style={{ fontFamily: "Nexa Regular,arial,helvetica,sans-serif", WebkitFontSmoothing: "antialiased" }}>Our Missions</h4>
                                     </div>
-                                    <p>{user.mission_statement}</p>
+                                    <p>{user.mission_statement === "" ? "No mission statement provided." : user.mission_statement}</p>
                                 </div>
                             </div>
                             <div className="col-md-3">
@@ -102,16 +108,19 @@ function Shelter() {
                                 <div className="d-flex justify-content-center align-items-center mb-3 border-bottom">
                                 <a style={{textDecoration: "none"}} href={`mailto:${user.email}`}>{user.email}</a>
                                 </div>
+                                {user.phone_number !== "" ? 
                                 <div className="d-flex justify-content-center align-items-center mb-3 border-bottom">
                                     <h6>{"Phone: " + user.phone_number}</h6>
                                 </div>
+                                : ""}
                             </div>
                         </div>
-                        <div className="row justify-content-center">
+                        <div className="row justify-content-center border-bottom">
                             {user.shelter_avatar !== null ? <img src={user.shelter_avatar} alt="shelter_avatar" style={{width: "auto", height: "10%"}}></img> : ""}
                         </div>
                     </div>
                     <BlogList username={username} />
+                    <div className="border-bottom"></div>
                     <CommentList on={'shelter'} username={username} />
                 </main>
                 <Footer />

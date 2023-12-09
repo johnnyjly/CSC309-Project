@@ -10,7 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 const Header = () => {
   const token = localStorage.getItem("access");
   return <>
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary" style={{background: "#F1F1F1"}}>
       <Container>
         <Navbar.Brand href="/" style={{ marginRight: '10px' }}>
           <Image src="/icons8-dog-64.png" alt="Logo" fluid width={24} height={24} />

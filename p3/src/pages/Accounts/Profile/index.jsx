@@ -202,8 +202,8 @@ const Profile = () => {
                                         <img src={user.user_avatar} alt="user_avatar" className="rounded-circle" width="80" height="80"></img>}
                                     <h5 className="profile-username">{user.username}</h5>
                                     <div>
-                                    <button onClick={handle_logout} className="btn btn-primary" style={{ background: "orange", margin: "0.5rem"}}>Log out</button>
-                                    <button onClick={handle_delete} className="btn btn-primary" style={{ background: "red", margin: "0.5rem"}}>Delete</button>
+                                    <button onClick={handle_logout} className="btn btn-warning text-white" style={{ margin: "0.5rem"}}>Log out</button>
+                                    <button onClick={handle_delete} className="btn btn-danger" style={{ margin: "0.5rem"}}>Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -377,11 +377,14 @@ const Profile = () => {
                                             <label htmlFor="inputMission" className="form-label">&nbsp;Mission Statement</label>
                                             <textarea className="form-control" rows="3" id="inputMission" name="mission_statement" defaultValue={user.mission_statement}></textarea>
                                         </div>
-                                        <div className="d-grid gap-2 col-4 mx-auto">
+                                        <div className="d-grid gap-2 col-5 mx-auto">
                                             <button type="submit" className="btn btn-primary">Save Shelter Profile</button>
                                         </div>
-                                        <div className="d-grid gap-2 col-4 mx-auto">
-                                            <button onClick={() => navigate(`/listings?page=1&status=Available&shelter=${user.shelter_name}`)} className="btn btn-primary update-manage-btn">Manage Your Pet Listings</button>
+                                        <div className="d-grid gap-2 col-3 mx-auto">
+                                            <button onClick={() => navigate(`/listings?page=1&status=Available&shelter=${user.shelter_name}`)} className="btn btn-primary update-manage-btn">Manage Pet Listings</button>
+                                        </div>
+                                        <div className="d-grid gap-2 col-2 mx-auto">
+                                            <button onClick={() => navigate(`/shelters/${user.username}`)} className="btn btn-info text-white"> Shelter </button>
                                         </div>
                                     </form>
                                 </div>
