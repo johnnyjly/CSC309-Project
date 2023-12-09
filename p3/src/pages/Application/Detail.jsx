@@ -141,7 +141,7 @@ const AppDetail = () => {
           <section className="py-5">
             <div className="container">
               <div className="row gx-5">
-                <aside className="col-lg-6">
+                <aside className="col-md-6">
                   <h2 className="title text-dark">
                     <span>
                       <Link to={`/users/${appData.applicant}/seeker/`}>
@@ -152,7 +152,7 @@ const AppDetail = () => {
                   </h2>
                   <CommentList on={'application'} pk={appID} />
                 </aside>
-                <main className="col-lg-6">
+                <main className="col-md-6 col-12">
                   <div className="ps-lg-3">
                     
                     <div className="form-group mb-3">
