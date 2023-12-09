@@ -15,4 +15,5 @@ pip install django-cors-headers
 # migrate database
 python3 petpal/manage.py makemigrations
 python3 petpal/manage.py migrate
+python3 petpal/manage.py flush
 python3 petpal/manage.py loaddata petpal/data.json
