@@ -5,6 +5,7 @@ import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Header from "../../components/Header/Header.jsx";
 import Footer from '../../components/Footer/Footer.jsx';
 import ErrorNotLoggedIn from '../ErrorNotLoggedIn.js';
+import { ajax } from '../../ajax.js';
 
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -42,7 +43,7 @@ const PetListing = () => {
 
   const navigate = useNavigate();
 
-  // TODO: add ajax_or_login() or support 404 page if not logged in
+  // TODO: change fetch functions to ajax..
   const authToken = localStorage.access;
 
   let decoded;
@@ -97,14 +98,14 @@ const PetListing = () => {
     }
 
     if (sort === null) {
-      fetchURI = `http://127.0.0.1:8000/petlistings/?page=${currentPage}`;
+      fetchURI = `/petlistings/?page=${currentPage}`;
     }
     else if (sort !== null) {
       setSortOption(sort);
       if (sort === 'Last Updated') {
         sort = 'publication_date';
       }
-      fetchURI = `http://127.0.0.1:8000/petlistings/?page=${currentPage}&sort=${sort.toLowerCase()}`;
+      fetchURI = `/petlistings/?page=${currentPage}&sort=${sort.toLowerCase()}`;
     }
 
    
@@ -178,7 +179,7 @@ const PetListing = () => {
     navigate(`/listings?${searchParams.toString()}`);
     setCurrentPage(Number(searchParams.get('page')));
   
-    fetch(fetchURI, {
+    ajax(fetchURI, {
       method: 'GET',
       headers: {
         'Content-Type': 'pet/json',
@@ -260,7 +261,7 @@ const PetListing = () => {
     navigate(`/listings?${searchParams.toString()}`);
     setShelterOption(option);
 
-    fetch(`http://127.0.0.1:8000/petlistings/?page=${currentPage}&shelter=${option}`, {
+    ajax(`/petlistings/?page=${currentPage}&shelter=${option}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'pet/json',
@@ -316,7 +317,7 @@ const PetListing = () => {
         break;
     }
 
-    fetch(`http://127.0.0.1:8000/petlistings/?page=${currentPage}&sort=${option}`, {
+    ajax(`/petlistings/?page=${currentPage}&sort=${option}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'pet/json',
