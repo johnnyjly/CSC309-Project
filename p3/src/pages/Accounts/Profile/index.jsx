@@ -12,7 +12,7 @@ import '../style.css'
 
 // import react-related stuff
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // import other components
 import { ajax_or_login } from '../../../ajax';
@@ -98,9 +98,14 @@ const Profile = () => {
                     otherErrors: ""
                 });
                 setUser(json);
-                alert("Profile updated successfully!")
+                
                 if (user.username !== json.username) {
+                    localStorage.removeItem("access");
+                    localStorage.removeItem("username");
+                    alert("Username is changed. Please log in again.");
                     navigate('/login');
+                } else {
+                    alert("Profile updated successfully!")
                 }
             })
             .catch(error => setErrors({ ...errors, otherErrors: error }));
@@ -366,7 +371,7 @@ const Profile = () => {
                                             <button type="submit" className="btn btn-primary">Save Shelter Profile</button>
                                         </div>
                                         <div className="d-grid gap-2 col-4 mx-auto">
-                                            <Link to={"/"}><button className="btn btn-primary update-manage-btn">Manage Your Pet Listings</button></Link>
+                                            <button onClick={() => navigate(`/listings?page=1&status=Available&shelter=${user.shelter_name}`)} className="btn btn-primary update-manage-btn">Manage Your Pet Listings</button>
                                         </div>
                                     </form>
                                 </div>

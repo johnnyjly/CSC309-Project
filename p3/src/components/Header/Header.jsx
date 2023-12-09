@@ -4,12 +4,17 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image'
+import Button from 'react-bootstrap/Button';
 
-
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  const token = localStorage.getItem("access");
+  const navigate = useNavigate();
+
   var username = localStorage.getItem("username");
-  return (
+  return <>
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="/" style={{ marginRight: '10px' }}>
@@ -17,32 +22,36 @@ const Header = () => {
         </Navbar.Brand>
         <Navbar.Brand href="/" >PetPal</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse className="justify-content-end">
           <Nav className="me-auto">
             <Nav.Link href="/listings/">Pet Listings</Nav.Link>
-            <Nav.Link href={"/profile/" + username}>Profile</Nav.Link>
-            <Nav.Link href="/notifications">Notifications</Nav.Link>
-            <Nav.Link href="/applications">Applications</Nav.Link>
-            {/* <NavDropdown title="Profile" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Edit Profile</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-              Notifications
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
-            <Nav.Link href='/shelters/?page=1'> Shelters</Nav.Link>
-            <Nav.Link href="/Login">Log in</Nav.Link>
-            <Nav.Link href="/Signup">Sign up</Nav.Link>
-            
+            <Nav.Link href='/shelters/?page=1'> Shelter Listings</Nav.Link>
+            {(token !== null) ?
+              <>
+                <Nav.Link href="/notifications">Notifications</Nav.Link>
+                <Nav.Link href="/applications">Applications</Nav.Link>
+              </>
+              :
+              <>
+              </>}
           </Nav>
-
         </Navbar.Collapse>
+        {(token === null) ?
+          <>
+            <Nav.Link href="/Login">Log in </Nav.Link>
+            <Nav.Link href="/Signup">Sign up</Nav.Link>
+          </>
+          :
+          <>
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text>
+                Signed in as: <a href={"/profile/" + jwtDecode(token).username} style={{ textDecoration: "none" }}>{jwtDecode(token).username}</a>
+              </Navbar.Text>
+            </Navbar.Collapse>
+          </>}
       </Container>
     </Navbar>
-)};
+  </>;
+};
 
 export default Header;
