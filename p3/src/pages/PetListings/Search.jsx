@@ -43,7 +43,6 @@ const PetListing = () => {
 
   const navigate = useNavigate();
 
-  // TODO: change fetch functions to ajax..
   const authToken = localStorage.access;
 
   let decoded;
@@ -365,6 +364,17 @@ const PetListing = () => {
           <div className="content_wrap">
             <Header />
             <main>
+              { numPets === 0 ? <div>
+                <h1 className="display-6 lead text-center mt-5">
+                You have no pets listed!
+                <p className="lead" style={{marginTop: 50}}>
+        Go back to <Link to="/">home</Link>.
+      </p>
+              </h1>
+              
+
+                </div>: <div>
+
               <h1 className="display-6 lead text-center mt-5">
                 Currently, {numPets} {numPets > 1 ? 'pets are' : 'pet is'} waiting!
               </h1>
@@ -531,6 +541,7 @@ const PetListing = () => {
 
                 </div>
               </div>
+              </div>}
             </main>
             <Footer />
           </div>
