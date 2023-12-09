@@ -53,7 +53,7 @@ const NewPet = () => {
       
     }).then(request => {
       if (request.status === 201) {
-        navigate("/listings");
+        navigate(`/listings?page=1&status=Available&shelter=${shelterName}`);
       } else {
         let json = request.json();
         json.then(json => {

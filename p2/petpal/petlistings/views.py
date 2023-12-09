@@ -58,7 +58,7 @@ class PetListingViewSet(viewsets.ModelViewSet):
 
     
     if (breed_param is not None):
-        queryset = queryset.filter(breed = breed_param)
+        queryset = queryset.filter(breed__iexact = breed_param)
 
     if (age_param is not None):
         queryset = queryset.filter(age = age_param)

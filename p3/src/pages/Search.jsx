@@ -27,11 +27,12 @@ const PetListing = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [sortOption, setSortOption] = useState('Sort Options');
   const [statusOption, setStatusOption] = useState('Available');
+  const [status, setStatus] = useState([]);
   const [shelterOption, setShelterOption] = useState('Choose a Shelter');
   const [shelters, setShelters] = useState([]);
-  const [ageOption, setAgeOption] = useState('All Ages');
+  const [ageOption, setAgeOption] = useState('Choose an Age');
   const [ages, setAges] = useState([]);
-  const [breedOption, setBreedOption] = useState('All Breeds');
+  const [breedOption, setBreedOption] = useState('Choose a Breed');
   const [breeds, setBreeds] = useState([]);
   const location = useLocation();
   const [loggedIn, setLoggedIn] = useState(false);
@@ -62,26 +63,9 @@ const PetListing = () => {
       setLoggedIn(false);
     }
   }, [authToken, decoded]);
+   
 
 
-  useEffect(() => {
-    let fetchURI = 'http://127.0.0.1:8000/accounts/shelters/';
-    const sts = []
-    fetch(fetchURI, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'pet/json',
-        'Authorization': `Bearer ${authToken}`,
-      },
-      credentials: 'include',
-    }).then((response) => response.json())
-    .then((data) => {
-      const newShelters = data.results.map((result, i) => {
-          return result.shelter_name
-      })
-
-      setShelters(newShelters);
-  })})
 
   useEffect(() => {
     
@@ -91,8 +75,8 @@ const PetListing = () => {
     let status = searchParams.get('status');
     let sort = searchParams.get('sort');
     let shelter = searchParams.get('shelter');
-    console.log(shelter)
-
+    let age = searchParams.get('age');
+    let breed = searchParams.get('breed');
 
    
     
@@ -138,16 +122,53 @@ const PetListing = () => {
 
     // console.log(shelter, shelterOption);
 
-    if (shelterOption === 'All Shelters') {
-      
-
-    }
-    else if (shelter !== null && shelterOption === 'Choose a Shelter') {
-      console.log('here')
-      setShelterOption(shelter);
+    if (shelterOption === 'Choose a Shelter' && shelter !== null) {
       searchParams.set('shelter', shelter);
-      
+      fetchURI = fetchURI + `&shelter=${shelter.toLowerCase()}`;
+      setShelterOption(capitalizeFirstLetter(shelter) );
     }
+    else if (shelterOption !== 'Choose a Shelter') {
+      if (shelterOption === 'All Shelters') {
+
+      } else {
+        searchParams.set('shelter', shelterOption);
+        searchParams.set('page', 1);
+        fetchURI = fetchURI + `&shelter=${shelterOption.toLowerCase()}`;
+      }
+    }
+
+    if (ageOption === 'Choose an Age' && age !== null) {
+      searchParams.set('age', age);
+      fetchURI = fetchURI + `&age=${Number(ageOption)}`;
+      setAgeOption(age);
+    }
+    else if (ageOption !== 'Choose an Age') {
+      if (ageOption === 'All Ages') {
+
+      } else {
+        searchParams.set('age', ageOption);
+        searchParams.set('page', 1);
+        fetchURI = fetchURI + `&age=${Number(ageOption)}`;
+      }
+    }
+
+    
+    if (breedOption === 'Choose a Breed' && breed !== null) {
+      searchParams.set('breed', breed);
+      fetchURI = fetchURI + `&breed=${breed.toLowerCase()}`;
+      setBreedOption(capitalizeFirstLetter(breed));
+    }
+    else if (breedOption !== 'Choose a Breed') {
+      if (breedOption === 'All Breeds') {
+
+      } else {
+        searchParams.set('breed', breedOption);
+        searchParams.set('page', 1);
+        fetchURI = fetchURI + `&breed=${breedOption.toLowerCase()}`;
+      }
+    }
+
+    console.log(searchParams.toString());
 
 
 
@@ -186,6 +207,14 @@ const PetListing = () => {
 
         setTotalPages(Math.ceil(data.count / 10));
 
+        const newShelters = data.results.map((result, i) => {
+          return result.shelter
+        })
+        
+        const uniqueShelters = [...new Set(newShelters)];
+        
+
+        setShelters(uniqueShelters);
 
         const newBreeds = data.results.map((result, i) => (result.breed));
         const uniqueBreeds = [...new Set(newBreeds)];
@@ -196,9 +225,17 @@ const PetListing = () => {
         const uniqueAges = [...new Set(newAges)];
         uniqueAges.sort(function (a, b) { return a - b });
         setAges(uniqueAges);
+        
+        const newStatus = data.results.map((result, i) => (result.status));
+        const uniqueStatus = [...new Set(newStatus)];
+        uniqueStatus.sort();
+        setStatus(uniqueStatus);
+        
+
+        
       })
       .catch((error) => console.error('Error fetching applications:', error));
-  }, [currentPage, location.search, authToken, sortOption, statusOption, navigate, totalPages, shelterOption]);
+  }, [currentPage, location.search, authToken, sortOption, statusOption, navigate, totalPages, shelterOption, ageOption, breedOption]);
 
   const handlePageChange = (direction, sortOp) => {
     
@@ -325,7 +362,7 @@ const PetListing = () => {
             <Header />
             <main>
               <h1 className="display-6 lead text-center mt-5">
-                Currently, {numPets} pets are waiting!
+                Currently, {numPets} {numPets > 1 ? 'pets are' : 'pet is'} waiting!
               </h1>
 
               <div>
@@ -349,7 +386,7 @@ const PetListing = () => {
                     }>Adopted</Dropdown.Item>
                   </DropdownButton>
 
-                  <DropdownButton justified as={ButtonGroup} id="dropdown-basic-button" title={shelterOption}>
+                  <DropdownButton justified as={ButtonGroup} id="dropdown-basic-button" title={capitalizeFirstLetter(shelterOption)}>
                     <Dropdown.Item onClick={() => {
                       setShelterOption('All Shelters');
                     }
@@ -413,21 +450,6 @@ const PetListing = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <Row xs={1} md={4} className="g-2" style={{ padding: 30, marginTop: -30 }}>
                   {cardData.map((card) => (
                     <Col key={card.id}>
@@ -440,7 +462,7 @@ const PetListing = () => {
                         <Card.Img variant="top" src={card.image} style={{ height: 200, maxHeight: 200 }} />
                         <Card.Body>
                           <Card.Title>{capitalizeFirstLetter(card.name)}, {card.age} years old</Card.Title>
-                          <Card.Text>
+                          <Card.Text style={{minHeight: 150}}>
                             {card.description}
                           </Card.Text>
                           <Link className='btn btn-primary' to={`/listings/${card.id}`} state={card}>
