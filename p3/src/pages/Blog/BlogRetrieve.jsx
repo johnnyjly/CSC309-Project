@@ -39,8 +39,8 @@ function BlogRetrieve() {
     function handle_delete(id) {
         console.log(params.username); // DEBUG
         console.log(id); // DEBUG
-        ajax_or_login(`/blogs/${params.username}/${id}/`, {method: 'DELETE'}, navigate);
-        navigate(`/shelters/${params.username}`);
+        ajax_or_login(`/blogs/${params.username}/${id}/`, {method: 'DELETE'}, navigate)
+        .then(response => navigate(`/shelters/${params.username}`));
     }
 
     function handle_edit(id) {

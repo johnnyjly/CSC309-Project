@@ -36,9 +36,9 @@ function BlogEdit() {
         ajax_or_login(`/blogs/${params.username}/${params.pk}/`, {
             method: 'PUT',
             body: data,
-        }, navigate);
-
-        navigate(`/blogs/${params.username}/${params.pk}`);
+        }, navigate)
+        .then(response => navigate(`/blogs/${params.username}/${params.pk}`));
+        event.preventDefault();
     }
 
     return <div>
