@@ -1,5 +1,6 @@
 import { ajax_or_login } from "../../ajax.js";
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 function CommentCreate(props) {
 
@@ -8,13 +9,70 @@ function CommentCreate(props) {
     function handle_submit(event) {
         let data = new FormData(event.target);
 
-        console.log(data.get('content')); // DEBUG
-        console.log(data.get('rating')); // DEBUG
+        console.log('Content:', data.get('content')); // DEBUG
+        console.log('Rating:', data.get('rating')); // DEBUG
 
         ajax_or_login(props.url, {
             method: 'POST',
             body: data,
-        }, navigate);
+        }, navigate)
+        .then(response => {
+            if (response.ok) {
+                console.log("Response is OK");
+                return response.json();
+            }
+            else {
+                console.log("Response has error");
+                throw Error(response.statusText);
+            }
+        })
+        .then(json => {
+            console.log("JSON:", json);
+            switch (props.on) {
+                case 'shelter':
+                    if (json.pet_shelter_name === jwtDecode(localStorage.getItem('access')).username) {
+                        return;
+                    }
+                    var notif = {
+                        'message': data.get('content'),
+                        'is_read': false,
+                        'recipient': json.pet_shelter_name,
+                        'type': 'comment_on_shelter',
+                        'pk': json.ID,
+                    }
+                    break;
+                case 'application':
+                    var notif = {
+                        'message': data.get('content'),
+                        'is_read': false,
+                        'recipient': jwtDecode(localStorage.getItem('access')).username === json.pet_shelter_name
+                        ? json.pet_seeker_name
+                        : json.pet_shelter_name,
+                        'type': 'comment_on_application',
+                        'pk': json.ID,
+                    }
+                    break;
+                case 'blog':
+                    return;
+            }
+            console.log("Notification Body:", notif);
+            ajax_or_login(`/notifications/`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(notif),
+                credentials: 'include',
+              })
+              .then((response) => response.json())
+              .then((data) => {})
+              .catch((error) => {
+                console.error('Error sending notification:', error);
+              });
+        })
+        .catch(error => console.log(error));
+
+        event.preventDefault();
     }
 
     return <form id="comment-create" class="card-footer py-3 border-0" style={{backgroundColor: "#fff", marginBottom: "1em"}} onSubmit={handle_submit}>
