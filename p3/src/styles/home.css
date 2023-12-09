@@ -1,0 +1,32 @@
+.about {
+    background: url(../assets/favicon/homebird.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 916px;
+    display: flex;
+    align-items: center;
+}
+
+.about .titlepage {
+    padding-bottom: 0;
+}
+
+.about .titlepage p {
+    line-height: 33px;
+    padding-top: 30px;
+    color: #fff;
+    font-weight: 400;
+    padding-bottom: 80px;
+}
+
+.about .titlepage .read_more {
+    float: right;
+}
+
+.about_box_img figure {
+    margin: 0;
+}
+
+.about_box_img figure img {
+    width: 100%;
+}
