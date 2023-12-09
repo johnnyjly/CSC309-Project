@@ -51,7 +51,7 @@ function BlogList(props) {
             ? response.results.map(result =>
               <>
                 <div class="card" style={{marginTop: "0.5rem", marginBottom: "0.5rem"}}>
-                  <div class="card-body" style={{height: "55px"}}>
+                  <div class="card-body" style={{height: "100px"}}>
                     <h6><a href={ `/blogs/${props.username}/${result.ID}/`} style={{textDecoration: "none"}}>{ result.title }</a></h6>
                     <p class="text-muted small mb-0">Posted: { format_time(result.creation_time) }</p>
                     <p class="text-muted small mb-0">Last Updated: { format_time(result.update_time) }</p>
