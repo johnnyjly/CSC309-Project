@@ -27,7 +27,7 @@ from rest_framework.exceptions import ValidationError, PermissionDenied
 from django.shortcuts import get_object_or_404
 from applications.models import Application
 from rest_framework.pagination import PageNumberPagination
-
+from django.http import Http404
 
 # Create your views here.
 # Create Shelter and Seeker user
@@ -98,7 +98,7 @@ class SeekerRetrieveView(RetrieveAPIView):
             ).exists():
                 return seeker
             else:
-                raise PermissionDenied()
+                raise Http404()
         elif user.username != self.kwargs["username"]:
             raise PermissionDenied()
         else:
