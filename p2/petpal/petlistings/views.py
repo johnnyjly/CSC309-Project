@@ -19,9 +19,11 @@ class PetListingViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
+        print("inside update")
 
         if instance.shelter == request.user.petshelter:
             self.perform_update(serializer)
+            print("hello")
             return Response(serializer.data)
         else:
             return Response(
@@ -30,16 +32,19 @@ class PetListingViewSet(viewsets.ModelViewSet):
             )
         
   def get_queryset(self):
+    print("hello")
+    queryset = Pet.objects.all()
     sort_param = self.request.query_params.get('sort')
     if sort_param is not None:
-      queryset = Pet.objects.all()
-      return queryset.order_by('-' + sort_param)
+      
+      queryset = queryset.order_by('-' + sort_param)
 
     status_param = self.request.query_params.get('status')
     shelter_param = self.request.query_params.get('shelter')
     breed_param = self.request.query_params.get('breed')
     age_param = self.request.query_params.get('age')
-    queryset = Pet.objects.all()
+    
+    
     if (status_param is not None):
         if (status_param.lower() == 'pending'):
             queryset = queryset.filter(status = 'pending')

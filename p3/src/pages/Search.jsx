@@ -1,7 +1,6 @@
 // PetListing page
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 
 import Header from "../components/Header/Header.jsx";
 import Footer from '../components/Footer/Footer.jsx';
@@ -28,7 +27,7 @@ const PetListing = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [sortOption, setSortOption] = useState('Sort Options');
   const [statusOption, setStatusOption] = useState('Available');
-  const [shelterOption, setShelterOption] = useState('All Shelters');
+  const [shelterOption, setShelterOption] = useState('Choose a Shelter');
   const [shelters, setShelters] = useState([]);
   const [ageOption, setAgeOption] = useState('All Ages');
   const [ages, setAges] = useState([]);
@@ -38,6 +37,9 @@ const PetListing = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isShelter, setIsShelter] = useState(false);
   const [shelterName, setShelterName] = useState('');
+  const [numPets, setNumPets] = useState(0);
+
+  const navigate = useNavigate();
 
   // TODO: add ajax_or_login() or support 404 page if not logged in
   const authToken = localStorage.access;
@@ -62,10 +64,97 @@ const PetListing = () => {
   }, [authToken, decoded]);
 
 
+  useEffect(() => {
+    let fetchURI = 'http://127.0.0.1:8000/accounts/shelters/';
+    const sts = []
+    fetch(fetchURI, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'pet/json',
+        'Authorization': `Bearer ${authToken}`,
+      },
+      credentials: 'include',
+    }).then((response) => response.json())
+    .then((data) => {
+      const newShelters = data.results.map((result, i) => {
+          return result.shelter_name
+      })
 
+      setShelters(newShelters);
+  })})
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/petlistings/?page=${currentPage}`, {
+    
+    const searchParams = new URLSearchParams(location.search);
+    const page = searchParams.get('page');
+
+    let status = searchParams.get('status');
+    let sort = searchParams.get('sort');
+    let shelter = searchParams.get('shelter');
+    console.log(shelter)
+
+
+   
+    
+    if (page === null) {
+      searchParams.set('page', 1);
+    }
+
+    // if (shelter !== null) {
+    //   searchParams.set('shelter', shelter);
+    // }
+
+    let fetchURI;
+
+    if (page < 1) {
+      searchParams.set('page', 1);
+    } else if (page > totalPages) {
+      searchParams.set('page', totalPages);
+    }
+
+    if (sort === null) {
+      fetchURI = `http://127.0.0.1:8000/petlistings/?page=${currentPage}`;
+    }
+    else if (sort !== null) {
+      setSortOption(sort);
+      if (sort === 'Last Updated') {
+        sort = 'publication_date';
+      }
+      fetchURI = `http://127.0.0.1:8000/petlistings/?page=${currentPage}&sort=${sort.toLowerCase()}`;
+    }
+
+   
+
+    if (statusOption !== null) {
+      searchParams.set('status', statusOption);
+      fetchURI = fetchURI + `&status=${statusOption.toLowerCase()}`;
+    }
+
+    // if (shelterOption !== null && shelterOption === 'Choose a Shelter') {
+    //   searchParams.set('shelter', shelterOption);
+    //   fetchURI = fetchURI + `&shelter=${shelterOption.toLowerCase()}`;
+      
+    // }
+
+    // console.log(shelter, shelterOption);
+
+    if (shelterOption === 'All Shelters') {
+      
+
+    }
+    else if (shelter !== null && shelterOption === 'Choose a Shelter') {
+      console.log('here')
+      setShelterOption(shelter);
+      searchParams.set('shelter', shelter);
+      
+    }
+
+
+
+    navigate(`/listings?${searchParams.toString()}`);
+    setCurrentPage(Number(searchParams.get('page')));
+  
+    fetch(fetchURI, {
       method: 'GET',
       headers: {
         'Content-Type': 'pet/json',
@@ -91,12 +180,12 @@ const PetListing = () => {
           image: result.image,
           date: result.publication_date,
         }));
-        setCardData(newCardData);
+        setCardData(newCardData !== null ? newCardData : [{}]);
+
+        setNumPets(data.count);
 
         setTotalPages(Math.ceil(data.count / 10));
-        const newShelters = data.results.map((result, i) => (result.shelter));
-        const uniqueShelters = [...new Set(newShelters)];
-        setShelters(uniqueShelters);
+
 
         const newBreeds = data.results.map((result, i) => (result.breed));
         const uniqueBreeds = [...new Set(newBreeds)];
@@ -109,15 +198,71 @@ const PetListing = () => {
         setAges(uniqueAges);
       })
       .catch((error) => console.error('Error fetching applications:', error));
-  }, [currentPage, location.search, authToken]);
+  }, [currentPage, location.search, authToken, sortOption, statusOption, navigate, totalPages, shelterOption]);
 
-  const handlePageChange = direction => {
+  const handlePageChange = (direction, sortOp) => {
+    
     setCurrentPage(prevPage =>
       direction === 'next' ? Math.min(prevPage + 1, totalPages) : Math.max(prevPage - 1, 1)
     );
+
+
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('page', direction === 'next' ? Math.min(currentPage + 1, totalPages) : Math.max(currentPage - 1, 1));
+    navigate(`/listings?${searchParams.toString()}`);
+
   };
 
-  const handleSortChange = (option) => {
+  const handleShelterChange = (option, pageNum) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('page', pageNum);
+    searchParams.set('shelter', option);
+    navigate(`/listings?${searchParams.toString()}`);
+    setShelterOption(option);
+
+    fetch(`http://127.0.0.1:8000/petlistings/?page=${currentPage}&shelter=${option}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'pet/json',
+        'Authorization': `Bearer ${authToken}`,
+      },
+      credentials: 'include',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const newCardData = data.results.map((result, i) => ({
+          key: i + 1,
+          id: result.id,
+          age: result.age,
+          color: result.color,
+          gender: result.gender,
+          name: result.name,
+          shelter: result.shelter,
+          shelter_id: result.shelter_id,
+          description: result.description,
+          status: result.status,
+          size: result.size,
+          breed: result.breed,
+          image: result.image,
+          date: result.publication_date,
+        }));
+
+
+        setCardData(newCardData);
+
+        setTotalPages(Math.ceil(data.count / 10));
+      })
+      .catch((error) => console.error('Error fetching applications:', error));
+
+    
+  }
+ 
+
+  const handleSortChange = (option, pageNum) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('page', pageNum);
+    searchParams.set('sort', option);
+    navigate(`/listings?${searchParams.toString()}`);
     setSortOption(option);
     switch (option) {
       case 'Age':
@@ -131,7 +276,7 @@ const PetListing = () => {
         break;
     }
 
-    fetch(`http://127.0.0.1:8000/petlistings/?sort=${option}`, {
+    fetch(`http://127.0.0.1:8000/petlistings/?page=${currentPage}&sort=${option}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'pet/json',
@@ -157,6 +302,7 @@ const PetListing = () => {
           image: result.image,
           date: result.publication_date,
         }));
+
 
         setCardData(newCardData);
 
@@ -179,7 +325,7 @@ const PetListing = () => {
             <Header />
             <main>
               <h1 className="display-6 lead text-center mt-5">
-                Currently, {cardData.length} pets are waiting!
+                Currently, {numPets} pets are waiting!
               </h1>
 
               <div>
@@ -210,7 +356,7 @@ const PetListing = () => {
                     }>All Shelters</Dropdown.Item>
                     {shelters.map((shelter) => (
                       <Dropdown.Item onClick={() => {
-                        setShelterOption(capitalizeFirstLetter(shelter));
+                        setShelterOption(shelter);
                       }
                       }>{capitalizeFirstLetter(shelter)}</Dropdown.Item>
                     ))}
@@ -249,10 +395,10 @@ const PetListing = () => {
 
                   <DropdownButton as={ButtonGroup} id="dropdown-basic-button" title={sortOption}>
                     <Dropdown.Item onClick={() => {
-                      handleSortChange('Age');
+                      handleSortChange('Age', currentPage);
                     }}>Age</Dropdown.Item>
                     <Dropdown.Item onClick={() => {
-                      handleSortChange('Last Updated');
+                      handleSortChange('Last Updated', currentPage);
                     }}>Last Updated</Dropdown.Item>
                   </DropdownButton>
 
@@ -282,15 +428,15 @@ const PetListing = () => {
 
 
 
-                <Row xs={1} md={3} className="g-2" style={{ padding: 30, marginTop: -30 }}>
+                <Row xs={1} md={4} className="g-2" style={{ padding: 30, marginTop: -30 }}>
                   {cardData.map((card) => (
                     <Col key={card.id}>
                       <Card key={card.id} >
-                        <Card.Header>{capitalizeFirstLetter(card.status)} 
-                        {card.shelter === shelterName ? <Link className='btn btn-primary' style={{ float: 'right',  fontSize: 14, padding: '2px 6px 2px 6px'}} role='button' to={`/editpet/${card.id}`} state={card}> Update </Link> : ''}
-                        
+                        <Card.Header>{capitalizeFirstLetter(card.status)}
+                          {card.shelter === shelterName ? <Link className='btn btn-primary' style={{ float: 'right', fontSize: 14, padding: '2px 6px 2px 6px' }} role='button' to={`/editpet/${card.id}`} state={card}> Update </Link> : ''}
+
                         </Card.Header>
-                        
+
                         <Card.Img variant="top" src={card.image} style={{ height: 200, maxHeight: 200 }} />
                         <Card.Body>
                           <Card.Title>{capitalizeFirstLetter(card.name)}, {card.age} years old</Card.Title>
@@ -298,7 +444,7 @@ const PetListing = () => {
                             {card.description}
                           </Card.Text>
                           <Link className='btn btn-primary' to={`/listings/${card.id}`} state={card}>
-                            Details 
+                            Details
                           </Link>
                           {/* <Button variant="outline-primary" href={`/listings/${card.id}`} >Details</Button> */}
                         </Card.Body>
@@ -345,13 +491,14 @@ const PetListing = () => {
 
                 <div className="pagination-container">
                   <button type="button" className="btn btn-primary"
-                    onClick={() => handlePageChange('previous')}
+                    onClick={() => handlePageChange('previous', sortOption)}
                     disabled={currentPage === 1}>
+                      
                     Previous
                   </button>
                   <span>{`Page: ${currentPage} of ${totalPages}`}</span>
                   <button type="button" className="btn btn-primary"
-                    onClick={() => handlePageChange('next')}
+                    onClick={() => handlePageChange('next', sortOption )}
                     disabled={currentPage === totalPages}>
                     Next
                   </button>
