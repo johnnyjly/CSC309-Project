@@ -45,6 +45,8 @@ function User() {
             .then(response => {
                 if (response.ok) {
                     return response.json();
+                } else if (response.status === 404) {
+                    navigate("/404");
                 } else {
                     throw Error(response.statusText);
                 }
