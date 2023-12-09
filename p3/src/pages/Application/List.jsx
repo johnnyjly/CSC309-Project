@@ -21,10 +21,12 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const AppList = () => {
   const [cardData, setCardData] = useState([]);
+  const [visibleCardData, setVisibleCardData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [sortOption, setSortOption] = useState('None');
   const [statusOption, setStatusOption] = useState('All');
+  const [searchInput, setSearchInput] = useState('');
   const location = useLocation();
   const PAGE_SIZE = 10;
 
@@ -62,6 +64,7 @@ const AppList = () => {
           last_created: result.creation_time,
         }));
         setCardData(newCardData);
+        setVisibleCardData(newCardData);
         setTotalPages(Math.ceil(data.count / PAGE_SIZE));
       })
       .catch((error) => {
@@ -70,6 +73,7 @@ const AppList = () => {
   }, [currentPage]);
 
   const handlePageChange = direction => {
+    handleStatusChange('All');
     setCurrentPage(prevPage =>
         direction === 'next' ? Math.min(prevPage + 1, totalPages) : Math.max(prevPage - 1, 1)
     );
@@ -98,7 +102,7 @@ const AppList = () => {
         break;
     }
   
-    setCardData(sortedData);
+    setVisibleCardData(sortedData);
   };
 
   const handleStatusChange = (option) => {
@@ -122,34 +126,27 @@ const AppList = () => {
       default:
         option = '';
         break;
-  }
+    }
 
-    ajax_or_login(`/applications/?page=${currentPage}&status=${option}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
+    const filteredData = cardData.filter((card) => {
+      return (card.status.toLowerCase().includes(option.toLowerCase()));
     })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Fetched data:', data);
-      const newCardData = data.results.map((result) => ({
-        id: result.ID,
-        name: result.animal,
-        shelter: result.shelter,
-        applicant: result.applicant,
-        status: result.status,
-        last_created: result.last_created,
-      }));
-      setCardData(newCardData);
-      setTotalPages(Math.ceil(data.count / PAGE_SIZE));
-    })
-    .catch((error) => {
-      console.error('Error fetching applications:', error);
-    })
+    setVisibleCardData(filteredData);
   }
   
+  const handleSearch = (searchInput) => {
+    setSearchInput(searchInput);
+    handleStatusChange('All');
+    const filteredData = cardData.filter((card) => {
+      return (
+        card.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+        card.shelter.toLowerCase().includes(searchInput.toLowerCase()) ||
+        card.applicant.toLowerCase().includes(searchInput.toLowerCase())
+      );
+    })
+    setVisibleCardData(filteredData);
+  }
+
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -166,24 +163,20 @@ const AppList = () => {
               ) : (
                 <h1 class="display-6 lead text-center mt-5">You have no Applications</h1>
               )}
-              {/* <div class="input-group mt-5 px-5">
-                <input type="search" class="form-control rounded" placeholder="Search for keywords" aria-label="Search" aria-describedby="search-addon" />
-                <div class="btn-group">
-                  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Search By
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Name</a></li>
-                    <li><a class="dropdown-item" href="#">Age</a></li>
-                    <li><a class="dropdown-item" href="#">Breed</a></li>
-                    <li><a class="dropdown-item" href="#">Colour</a></li>
-                    <li><a class="dropdown-item" href="#">Gender</a></li>
-                    <li><a class="dropdown-item" href="#">Location</a></li>
-                    <li><a class="dropdown-item" href="#">Size</a></li>
-                  </ul>
-                </div>
-                <button type="button" class="btn btn-outline-primary p-3">Search</button>
-              </div> */}
+              <div class="input-group mt-5 px-5">
+                <input 
+                  type="search" 
+                  class="form-control rounded" 
+                  placeholder="Search for keywords" 
+                  aria-label="Search" 
+                  aria-describedby="search-addon"
+                  value={searchInput}
+                  onChange={(e) => {
+                    setSearchInput(e.target.value);
+                    handleSearch(e.target.value);
+                  }}
+                />
+              </div>
 
               <div class="sort-wrapper text-end">
                 <DropdownButton className="ddbtn" as={ButtonGroup} id="dropdown-basic-button" title={"Sort by: "+sortOption}>
@@ -204,7 +197,7 @@ const AppList = () => {
                     handleSortChange('Last Created');
                   }}>Last Created</Dropdown.Item>
                 </DropdownButton>
-                <DropdownButton className="ddbtn2" as={ButtonGroup} id="dropdown-basic-button" title={"Status: "+statusOption}>
+                <DropdownButton className="ddbtn2" as={ButtonGroup} id="dropdown-basic-button" title={`Status: ${statusOption}`}>
                   <Dropdown.Item onClick={() => {
                     handleStatusChange('Pending');
                   }}>Pending</Dropdown.Item>
@@ -222,7 +215,7 @@ const AppList = () => {
                   }}>All</Dropdown.Item>
                 </DropdownButton>
                 <div className="card-container row row-cols-1 row-cols-md-3 g-4">
-                  {cardData.map((card) => (
+                  {visibleCardData.map((card) => (
                     <div key={card.id} className="col">
                       <div className="card">
                         <div className="card-body">
