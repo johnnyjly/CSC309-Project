@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ajax, ajax_or_login } from "../../ajax.js";
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { ajax_or_login } from "../../ajax.js";
+import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 
@@ -23,13 +23,15 @@ function BlogList(props) {
         }
       })
       .then(json => {
+        // console.log(json); // DEBUG
+        // console.log(response); // DEBUG
         setResponse(json);
       })
       .catch(error => setError(error.toString()));
   }, [query, page, navigate]);
 
-  console.log(response); // DEBUG
-  console.log(jwtDecode(localStorage.getItem('access')).username); // DEBUG
+  // console.log(response); // DEBUG
+  // console.log(jwtDecode(localStorage.getItem('access')).username); // DEBUG
 
   function format_time(time) {
     time = time.split('T');
@@ -38,7 +40,7 @@ function BlogList(props) {
 
   return <div className="container my-5 py-5">
     <div className="justify-content-center">
-      <div class="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-center">
         <div className="col-md-12 col-lg-10 col-xl-8">
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h2>Blog Posts</h2>
@@ -48,7 +50,7 @@ function BlogList(props) {
               </Link>
               : <></>}
           </div>
-          <div class="row d-flex justify-content-center">
+          <div className="row d-flex justify-content-center">
             {response.results !== undefined && response.results.length > 0
               ? response.results.map((result, index) =>
               (
