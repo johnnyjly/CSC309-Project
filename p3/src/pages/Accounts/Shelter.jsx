@@ -55,7 +55,7 @@ function Shelter() {
                 setUser(json);
             })
             .catch(error => setError(error));
-    }, [navigate, username, error]);
+    }, [navigate, username]);
 
     return <>
         <div className="page_container">

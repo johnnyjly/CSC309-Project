@@ -4,16 +4,11 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image'
-import Button from 'react-bootstrap/Button';
 
 import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const token = localStorage.getItem("access");
-  const navigate = useNavigate();
-
-  var username = localStorage.getItem("username");
   return <>
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>

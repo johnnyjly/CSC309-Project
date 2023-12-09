@@ -10,7 +10,7 @@ from rest_framework.serializers import (
     ImageField,
     EmailField,
 )
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError as restValidationError
 from django.core.validators import validate_email, RegexValidator
 from django.core.exceptions import ValidationError as djangoValidationError
 
@@ -53,7 +53,7 @@ class UserCreateSerializer(ModelSerializer):
             errors["password2"] = "password mismatch"
             
         if not valid:
-            raise ValidationError(errors)
+            raise restValidationError(errors)
             
         # check user type
         if become_shelter:
@@ -145,10 +145,9 @@ class SeekerUpdateSerializer(ModelSerializer):
             else:
                 errors["password"] = "Old password is incorrect."
                 valid = False
-
+        
         if not valid:
-            raise ValidationError(errors)
-
+            raise restValidationError(errors)
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
@@ -174,13 +173,16 @@ class ShelterUpdateSerializer(SeekerUpdateSerializer):
             if (
                 PetShelter.objects.filter(shelter_name=shelter_name) and shelter_name != instance.shelter_name
             ):
-                raise ValidationError({"shelter_name": "This shelter name already exists."})
-        
-        # update Shelter
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
+                raise restValidationError({"shelter_name": "This shelter name already exists."})
+            else:
+                setattr(instance, "shelter_name", validated_data["shelter_name"])
+        if "shelter_avatar" in validated_data:
+            setattr(instance, "shelter_avatar", validated_data["shelter_avatar"])
+        if "mission_statement" in validated_data:
+            setattr(instance, "mission_statement", validated_data["mission_statement"])
         instance.save()
-        return instance
+        # update Shelter
+        return super().update(instance, validated_data)
 
 
 # Get profile of a shelter

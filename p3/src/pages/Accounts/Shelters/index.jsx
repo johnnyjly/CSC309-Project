@@ -62,7 +62,7 @@ function Shelters() {
         if (error !== "") {
             alert(error);
         }
-    }, [query, navigate, query]);
+    }, [query, navigate]);
 
     return <>
         <div className="page_container">

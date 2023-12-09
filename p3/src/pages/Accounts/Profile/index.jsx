@@ -19,8 +19,7 @@ import { ajax_or_login } from '../../../ajax';
 
 const Profile = () => {
     const navigate = useNavigate();
-    const [errors, setErrors] = useState({ emailError: "", usernameError: "", phoneError: "", passwordError: "", otherErrors: "" });
-
+    const [errors, setErrors] = useState({ emailError: "", usernameError: "", phoneError: "", passwordError: "", shelterError: "", otherErrors: "" });
     const { username } = useParams();
 
     const [user, setUser] = useState({
@@ -64,6 +63,14 @@ const Profile = () => {
 
     function handle_profile_submit(event) {
         let data = new FormData(event.target);
+
+        // Always send the receive_communications and receive_news values
+        // This is because the html checkbox would be implicily set to false if it is not
+        // included in the form data.
+        // This is annoying.
+        data.append("receive_communications", user.receive_communications);
+        data.append("receive_news", user.receive_news);
+
         ajax_or_login(`/accounts/${username}/profile/`, {
             method: "PUT",
             body: data,
@@ -81,6 +88,7 @@ const Profile = () => {
                             emailError: json.email ? "**" + json.email  : "",
                             phoneError: json.phone_number ? "**" + json.phone_number : "",
                             usernameError: json.username ? "**" + json.username : "",
+                            shelterError: json.shelter_name ? "**" + json.shelter_name : "",
                             otherErrors: ""
                         });
                     }
@@ -95,6 +103,7 @@ const Profile = () => {
                     emailError: "",
                     phoneError: "",
                     usernameError: "",
+                    shelterError: "",
                     otherErrors: ""
                 });
                 setUser(json);
@@ -294,13 +303,13 @@ const Profile = () => {
                                     <div className="col-12">
                                         <div className="form-floating">
                                             <input type="password" className="form-control" id="old_password" name="old_password" autoComplete="current_password" required></input>
-                                            <label htmlFor="old_password" className="form-label">New password</label>
+                                            <label htmlFor="old_password" className="form-label">Old password</label>
                                         </div>
                                     </div>
                                     <div className="col-12">
                                         <div className="form-floating">
                                             <input type="password" className="form-control" id="new_password" name="new_password" autoComplete="new_password" required></input>
-                                            <label htmlFor="new_password" className="form-label">Confirm password</label>
+                                            <label htmlFor="new_password" className="form-label">New password</label>
                                             <small id="login-fail" className="form-text">{errors.passwordError}</small>
                                         </div>
                                     </div>
@@ -354,7 +363,8 @@ const Profile = () => {
                                                 <input type="text" className="form-control" id="shelter_name" name="shelter_name"
                                                     defaultValue={user.shelter_name} required></input>
                                                 <label htmlFor="shelter_name" className="update-labels">Current shelter name</label>
-                                                <small className="form-text">**Default as your username.</small>
+                                                {errors.shelterError === "" ? <small className="form-text">**Default as your username.</small> 
+                                                : <small id="login-fail" className="form-text">{errors.shelterError}</small>}
                                             </div>
                                         </div>
                                         <div className="col-md-6">
