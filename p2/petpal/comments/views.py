@@ -26,11 +26,12 @@ class CommentOnShelterListCreate(ListCreateAPIView, LoginRequiredMixin):
 
     def perform_create(self, serializer):
         pet_shelter = get_object_or_404(PetShelter, username=self.kwargs['username'])
-        comment = CommentOnShelter.objects.create(**serializer.validated_data,
-                                                  commenter=self.request.user,
-                                                  creation_time=datetime.now(),
-                                                  pet_shelter=pet_shelter,)
-        comment.save()
+        # comment = CommentOnShelter.objects.create(**serializer.validated_data,
+        #                                           commenter=self.request.user,
+        #                                           creation_time=datetime.now(),
+        #                                          pet_shelter=pet_shelter,)
+        serializer.save(commenter=self.request.user, creation_time=datetime.now(), pet_shelter=pet_shelter, 
+                        pet_shelter_name=pet_shelter.username)
 
 
 class CommentOnShelterRetrieve(RetrieveAPIView, LoginRequiredMixin):
@@ -65,12 +66,14 @@ class CommentOnApplicationListCreate(ListCreateAPIView, LoginRequiredMixin):
         application = get_object_or_404(Application, ID=self.kwargs['pk'])
         if self.request.user.username not in [application.applicant.username, application.shelter.username]:
             raise Http404
-        comment = CommentOnApplication.objects.create(**serializer.validated_data,
-                                                      commenter=self.request.user,
-                                                      creation_time=datetime.now(),
-                                                      application=application,)
+        # comment = CommentOnApplication.objects.create(**serializer.validated_data,
+        #                                               commenter=self.request.user,
+        #                                               creation_time=datetime.now(),
+        #                                               application=application,)
         application.update_time = datetime.now()
-        comment.save()
+        serializer.save(commenter=self.request.user, creation_time=datetime.now(), application=application,
+                        pet_seeker_name=application.applicant.username, pet_shelter_name=application.shelter.username)
+        # comment.save()
         application.save()
 
 

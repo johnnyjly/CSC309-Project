@@ -6,25 +6,27 @@ from .models import *
 class CommentOnShelterCreateSerializer(ModelSerializer):
     class Meta:
         model = CommentOnShelter
-        fields = ['content', 'rating']
+        fields = '__all__'
+        read_only_fields = ['ID', 'commenter', 'commenter_name', 'creation_time', 'pet_shelter', 'pet_shelter_name']
 
 
 class CommentOnShelterListSerializer(ModelSerializer):
     class Meta:
         model = CommentOnShelter
-        fields = ['ID', 'content', 'rating', 'commenter_name', 'creation_time']
+        fields = '__all__'
 
 
 class CommentOnApplicationCreateSerializer(ModelSerializer):
     class Meta:
         model = CommentOnApplication
-        fields = ['content']
+        fields = '__all__'
+        read_only_fields = ['ID', 'commenter', 'commenter_name', 'creation_time', 'application', 'pet_seeker_name', 'pet_shelter_name']
 
 
 class CommentOnApplicationListSerializer(ModelSerializer):
     class Meta:
         model = CommentOnApplication
-        fields = ['ID', 'content', 'commenter_name', 'creation_time']
+        fields = '__all__'
 
 
 class CommentOnBlogPostCreateSerializer(ModelSerializer):

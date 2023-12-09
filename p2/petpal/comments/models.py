@@ -20,11 +20,14 @@ class Comment(models.Model):
 
 class CommentOnShelter(Comment):
     pet_shelter = models.ForeignKey(PetShelter, on_delete=models.CASCADE, blank=False, related_name='pet_shelter')
+    pet_shelter_name = models.CharField(max_length=255, blank=True, null=True)
     rating = models.IntegerField(blank=False, validators=[MinValueValidator(1), MaxValueValidator(5)])
 
 
 class CommentOnApplication(Comment):
     application = models.ForeignKey(Application, on_delete=models.CASCADE, blank=False)
+    pet_seeker_name = models.CharField(max_length=255, blank=True, null=True)
+    pet_shelter_name = models.CharField(max_length=255, blank=True, null=True)
 
 
 class CommentOnBlogPost(Comment):
