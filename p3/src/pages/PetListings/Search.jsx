@@ -63,12 +63,12 @@ const PetListing = () => {
       setLoggedIn(false);
     }
   }, [authToken, decoded]);
-   
+
 
 
 
   useEffect(() => {
-    
+
     const searchParams = new URLSearchParams(location.search);
     const page = searchParams.get('page');
 
@@ -78,8 +78,8 @@ const PetListing = () => {
     let age = searchParams.get('age');
     let breed = searchParams.get('breed');
 
-   
-    
+
+
     if (page === null) {
       searchParams.set('page', 1);
     }
@@ -107,7 +107,7 @@ const PetListing = () => {
       fetchURI = `/petlistings/?page=${currentPage}&sort=${sort.toLowerCase()}`;
     }
 
-   
+
 
     if (statusOption !== null) {
       searchParams.set('status', statusOption);
@@ -117,7 +117,7 @@ const PetListing = () => {
     // if (shelterOption !== null && shelterOption === 'Choose a Shelter') {
     //   searchParams.set('shelter', shelterOption);
     //   fetchURI = fetchURI + `&shelter=${shelterOption.toLowerCase()}`;
-      
+
     // }
 
     // console.log(shelter, shelterOption);
@@ -125,7 +125,7 @@ const PetListing = () => {
     if (shelterOption === 'Choose a Shelter' && shelter !== null) {
       searchParams.set('shelter', shelter);
       fetchURI = fetchURI + `&shelter=${shelter.toLowerCase()}`;
-      setShelterOption(capitalizeFirstLetter(shelter) );
+      setShelterOption(capitalizeFirstLetter(shelter));
     }
     else if (shelterOption !== 'Choose a Shelter') {
       if (shelterOption === 'All Shelters') {
@@ -154,7 +154,7 @@ const PetListing = () => {
       }
     }
 
-    
+
     if (breedOption === 'Choose a Breed' && breed !== null) {
       searchParams.set('breed', breed);
       fetchURI = fetchURI + `&breed=${breed.toLowerCase()}`;
@@ -177,7 +177,7 @@ const PetListing = () => {
 
     navigate(`/listings?${searchParams.toString()}`);
     setCurrentPage(Number(searchParams.get('page')));
-  
+
     ajax(fetchURI, {
       method: 'GET',
       headers: {
@@ -213,9 +213,9 @@ const PetListing = () => {
         const newShelters = data.results.map((result, i) => {
           return result.shelter
         })
-        
+
         const uniqueShelters = [...new Set(newShelters)];
-        
+
 
         setShelters(uniqueShelters);
 
@@ -228,20 +228,20 @@ const PetListing = () => {
         const uniqueAges = [...new Set(newAges)];
         uniqueAges.sort(function (a, b) { return a - b });
         setAges(uniqueAges);
-        
+
         const newStatus = data.results.map((result, i) => (result.status));
         const uniqueStatus = [...new Set(newStatus)];
         uniqueStatus.sort();
         setStatus(uniqueStatus);
-        
 
-        
+
+
       })
       .catch((error) => console.error('Error fetching applications:', error));
   }, [currentPage, location.search, authToken, sortOption, statusOption, navigate, totalPages, shelterOption, ageOption, breedOption]);
 
   const handlePageChange = (direction, sortOp) => {
-    
+
     setCurrentPage(prevPage =>
       direction === 'next' ? Math.min(prevPage + 1, totalPages) : Math.max(prevPage - 1, 1)
     );
@@ -294,9 +294,9 @@ const PetListing = () => {
       })
       .catch((error) => console.error('Error fetching applications:', error));
 
-    
+
   }
- 
+
 
   const handleSortChange = (option, pageNum) => {
     const searchParams = new URLSearchParams(location.search);
@@ -364,145 +364,151 @@ const PetListing = () => {
           <div className="content_wrap">
             <Header />
             <main>
-              { numPets === 0 ? <div>
+              {numPets === 0 ? <div>
                 <h1 className="display-6 lead text-center mt-5">
-                You have no pets listed!
-                <p className="lead" style={{marginTop: 50}}>
-        Go back to <Link to="/">home</Link>.
-      </p>
-              </h1>
-              
+                  The shelter have no pets listed!
+                  {isShelter ?
+                    <p className="lead" style={{ marginTop: 50 }}>
+                      Check the <a href="/listings?page=1&status=Available" style={{textDecoration: "none"}}>pet listing</a> page and add your own pets.
+                    </p>
+                    :
+                    <p className="lead" style={{ marginTop: 50 }}>
+                      Check the other <a href="/shelters" style={{textDecoration: "none"}}>shelters</a> or search the <a href="/listings" style={{textDecoration: "none"}}>pet listings</a>.
+                    </p>
+                  }
+                </h1>
 
-                </div>: <div>
 
-              <h1 className="display-6 lead text-center mt-5">
-                Currently, {numPets} {numPets > 1 ? 'pets are' : 'pet is'} waiting!
-              </h1>
+              </div> : <div>
 
-              <div>
-                {/* <input type="search" style={{maxHeight: 45}} className="form-control rounded" placeholder="Search for keywords" aria-label="Search" aria-describedby="search-addon"
+                <h1 className="display-6 lead text-center mt-5">
+                  Currently, {numPets} {numPets > 1 ? 'pets are' : 'pet is'} waiting!
+                </h1>
+
+                <div>
+                  {/* <input type="search" style={{maxHeight: 45}} className="form-control rounded" placeholder="Search for keywords" aria-label="Search" aria-describedby="search-addon"
                 onChange={inputHandler} onKeyDown={e => handleKeyDown(e)} value={searchQuery}/> */}
-                <div></div>
+                  <div></div>
 
-                <ButtonGroup justified style={{ display: 'flex', justifyContent: 'center', marginBottom: 15 }} >
-                  <DropdownButton as={ButtonGroup} id="dropdown-basic-button" title={statusOption}>
-                    <Dropdown.Item onClick={() => {
-                      setStatusOption('Available');
-                    }
-                    }>Available</Dropdown.Item>
-                    <Dropdown.Item onClick={() => {
-                      setStatusOption('Pending');
-                    }
-                    }>Pending</Dropdown.Item>
-                    <Dropdown.Item onClick={() => {
-                      setStatusOption('Adopted');
-                    }
-                    }>Adopted</Dropdown.Item>
-                  </DropdownButton>
-
-                  <DropdownButton justified as={ButtonGroup} id="dropdown-basic-button" title={capitalizeFirstLetter(shelterOption)}>
-                    <Dropdown.Item onClick={() => {
-                      setShelterOption('All Shelters');
-                    }
-                    }>All Shelters</Dropdown.Item>
-                    {shelters.map((shelter) => (
+                  <ButtonGroup justified style={{ display: 'flex', justifyContent: 'center', marginBottom: 15 }} >
+                    <DropdownButton as={ButtonGroup} id="dropdown-basic-button" title={statusOption}>
                       <Dropdown.Item onClick={() => {
-                        setShelterOption(shelter);
+                        setStatusOption('Available');
                       }
-                      }>{capitalizeFirstLetter(shelter)}</Dropdown.Item>
-                    ))}
-
-                  </DropdownButton>
-
-                  <DropdownButton justified as={ButtonGroup} id="dropdown-basic-button" title={ageOption}>
-                    <Dropdown.Item onClick={() => {
-                      setAgeOption('All Ages');
-                    }
-                    }>All Ages</Dropdown.Item>
-                    {ages.map((ages) => (
+                      }>Available</Dropdown.Item>
                       <Dropdown.Item onClick={() => {
-                        setAgeOption(ages);
+                        setStatusOption('Pending');
                       }
-                      }>{ages}</Dropdown.Item>
-                    ))}
-
-                  </DropdownButton>
-
-                  <DropdownButton as={ButtonGroup} id="dropdown-basic-button" title={capitalizeFirstLetter(breedOption)}>
-                    <Dropdown.Item onClick={() => {
-                      setBreedOption('All Breeds');
-                    }
-                    }>All Breeds</Dropdown.Item>
-                    {breeds.map((breed) => (
+                      }>Pending</Dropdown.Item>
                       <Dropdown.Item onClick={() => {
-                        setBreedOption(breed);
+                        setStatusOption('Adopted');
                       }
-                      }>{capitalizeFirstLetter(breed)}</Dropdown.Item>
+                      }>Adopted</Dropdown.Item>
+                    </DropdownButton>
+
+                    <DropdownButton justified as={ButtonGroup} id="dropdown-basic-button" title={capitalizeFirstLetter(shelterOption)}>
+                      <Dropdown.Item onClick={() => {
+                        setShelterOption('All Shelters');
+                      }
+                      }>All Shelters</Dropdown.Item>
+                      {shelters.map((shelter) => (
+                        <Dropdown.Item onClick={() => {
+                          setShelterOption(shelter);
+                        }
+                        }>{capitalizeFirstLetter(shelter)}</Dropdown.Item>
+                      ))}
+
+                    </DropdownButton>
+
+                    <DropdownButton justified as={ButtonGroup} id="dropdown-basic-button" title={ageOption}>
+                      <Dropdown.Item onClick={() => {
+                        setAgeOption('All Ages');
+                      }
+                      }>All Ages</Dropdown.Item>
+                      {ages.map((ages) => (
+                        <Dropdown.Item onClick={() => {
+                          setAgeOption(ages);
+                        }
+                        }>{ages}</Dropdown.Item>
+                      ))}
+
+                    </DropdownButton>
+
+                    <DropdownButton as={ButtonGroup} id="dropdown-basic-button" title={capitalizeFirstLetter(breedOption)}>
+                      <Dropdown.Item onClick={() => {
+                        setBreedOption('All Breeds');
+                      }
+                      }>All Breeds</Dropdown.Item>
+                      {breeds.map((breed) => (
+                        <Dropdown.Item onClick={() => {
+                          setBreedOption(breed);
+                        }
+                        }>{capitalizeFirstLetter(breed)}</Dropdown.Item>
+                      ))}
+
+                    </DropdownButton>
+
+
+
+                    <DropdownButton as={ButtonGroup} id="dropdown-basic-button" title={sortOption}>
+                      <Dropdown.Item onClick={() => {
+                        handleSortChange('Age', currentPage);
+                      }}>Age</Dropdown.Item>
+                      <Dropdown.Item onClick={() => {
+                        handleSortChange('Last Updated', currentPage);
+                      }}>Last Updated</Dropdown.Item>
+                    </DropdownButton>
+
+
+                    {isShelter ? <Link className='btn btn-primary' style={{ marginTop: 30, maxWidth: 160 }} role='button' to='/newpet'>
+                      + Add a new pet
+                    </Link> : ''}
+
+
+
+                  </ButtonGroup>
+
+
+
+                  <Row xs={1} md={4} className="g-2" style={{ padding: 30, marginTop: -30 }}>
+                    {cardData.map((card) => (
+                      <Col key={card.id}>
+                        <Card key={card.id} >
+                          <Card.Header>{capitalizeFirstLetter(card.status)}
+                            {card.shelter === shelterName ? <Link className='btn btn-primary' style={{ float: 'right', fontSize: 14, padding: '2px 6px 2px 6px' }} role='button' to={`/editpet/${card.id}`} state={card}> Update </Link> : ''}
+
+                          </Card.Header>
+
+                          <Card.Img variant="top" src={card.image} style={{ height: 200, maxHeight: 200 }} />
+                          <Card.Body>
+                            <Card.Title>{capitalizeFirstLetter(card.name)}, {card.age} years old</Card.Title>
+                            <Card.Text style={{ minHeight: 150 }}>
+                              {card.description}
+                            </Card.Text>
+                            <Link className='btn btn-primary' to={`/listings/${card.id}`} state={card}>
+                              Details
+                            </Link>
+                            {/* <Button variant="outline-primary" href={`/listings/${card.id}`} >Details</Button> */}
+                          </Card.Body>
+
+                          <Card.Footer className="test-muted">
+                            <small className="text-muted">Last updated {new Date(card.date).toLocaleDateString()}</small>
+
+                          </Card.Footer>
+
+                        </Card>
+                      </Col>
+
+
+
                     ))}
-
-                  </DropdownButton>
-
-
-
-                  <DropdownButton as={ButtonGroup} id="dropdown-basic-button" title={sortOption}>
-                    <Dropdown.Item onClick={() => {
-                      handleSortChange('Age', currentPage);
-                    }}>Age</Dropdown.Item>
-                    <Dropdown.Item onClick={() => {
-                      handleSortChange('Last Updated', currentPage);
-                    }}>Last Updated</Dropdown.Item>
-                  </DropdownButton>
-
-
-                  {isShelter ? <Link className='btn btn-primary' style={{ marginTop: 30, maxWidth: 160 }} role='button' to='/newpet'>
-                    + Add a new pet
-                  </Link> : ''}
-
-
-
-                </ButtonGroup>
-
-
-
-                <Row xs={1} md={4} className="g-2" style={{ padding: 30, marginTop: -30 }}>
-                  {cardData.map((card) => (
-                    <Col key={card.id}>
-                      <Card key={card.id} >
-                        <Card.Header>{capitalizeFirstLetter(card.status)}
-                          {card.shelter === shelterName ? <Link className='btn btn-primary' style={{ float: 'right', fontSize: 14, padding: '2px 6px 2px 6px' }} role='button' to={`/editpet/${card.id}`} state={card}> Update </Link> : ''}
-
-                        </Card.Header>
-
-                        <Card.Img variant="top" src={card.image} style={{ height: 200, maxHeight: 200 }} />
-                        <Card.Body>
-                          <Card.Title>{capitalizeFirstLetter(card.name)}, {card.age} years old</Card.Title>
-                          <Card.Text style={{minHeight: 150}}>
-                            {card.description}
-                          </Card.Text>
-                          <Link className='btn btn-primary' to={`/listings/${card.id}`} state={card}>
-                            Details
-                          </Link>
-                          {/* <Button variant="outline-primary" href={`/listings/${card.id}`} >Details</Button> */}
-                        </Card.Body>
-
-                        <Card.Footer className="test-muted">
-                          <small className="text-muted">Last updated {new Date(card.date).toLocaleDateString()}</small>
-
-                        </Card.Footer>
-
-                      </Card>
-                    </Col>
-
-
-
-                  ))}
-                </Row>
+                  </Row>
 
 
 
 
 
-                {/* {cardData.map((card) => (
+                  {/* {cardData.map((card) => (
                     <div key={card.id} className="col">
                       <div key={card.id} className="card">
                         <div key={card.id} className="card-body">
@@ -525,22 +531,22 @@ const PetListing = () => {
                     </div>
                   ))} */}
 
-                <div className="pagination-container">
-                  <button type="button" className="btn btn-primary"
-                    onClick={() => handlePageChange('previous', sortOption)}
-                    disabled={currentPage === 1}>
-                      
-                    Previous
-                  </button>
-                  <span>{`Page: ${currentPage} of ${totalPages}`}</span>
-                  <button type="button" className="btn btn-primary"
-                    onClick={() => handlePageChange('next', sortOption )}
-                    disabled={currentPage === totalPages}>
-                    Next
-                  </button>
+                  <div className="pagination-container">
+                    <button type="button" className="btn btn-primary"
+                      onClick={() => handlePageChange('previous', sortOption)}
+                      disabled={currentPage === 1}>
 
+                      Previous
+                    </button>
+                    <span>{`Page: ${currentPage} of ${totalPages}`}</span>
+                    <button type="button" className="btn btn-primary"
+                      onClick={() => handlePageChange('next', sortOption)}
+                      disabled={currentPage === totalPages}>
+                      Next
+                    </button>
+
+                  </div>
                 </div>
-              </div>
               </div>}
             </main>
             <Footer />
