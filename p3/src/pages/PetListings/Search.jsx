@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 
-import Header from "../components/Header/Header.jsx";
-import Footer from '../components/Footer/Footer.jsx';
-import ErrorNotLoggedIn from './ErrorNotLoggedIn.js';
+import Header from "../../components/Header/Header.jsx";
+import Footer from '../../components/Footer/Footer.jsx';
+import ErrorNotLoggedIn from '../ErrorNotLoggedIn.js';
 
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -129,6 +129,7 @@ const PetListing = () => {
     }
     else if (shelterOption !== 'Choose a Shelter') {
       if (shelterOption === 'All Shelters') {
+        searchParams.delete('shelter');
 
       } else {
         searchParams.set('shelter', shelterOption);
@@ -144,6 +145,7 @@ const PetListing = () => {
     }
     else if (ageOption !== 'Choose an Age') {
       if (ageOption === 'All Ages') {
+        searchParams.delete('age');
 
       } else {
         searchParams.set('age', ageOption);
@@ -160,6 +162,7 @@ const PetListing = () => {
     }
     else if (breedOption !== 'Choose a Breed') {
       if (breedOption === 'All Breeds') {
+        searchParams.delete('breed');
 
       } else {
         searchParams.set('breed', breedOption);

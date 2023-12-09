@@ -12,10 +12,10 @@ import Shelters from './pages/Accounts/Shelters';
 import Shelter from './pages/Accounts/Shelter';
 import User from './pages/Accounts/User';
 
-import Search from './pages/Search';
-import NewPet from './pages/NewPet';
-import EditPet from './pages/EditPet';
-import PetDetails from './pages/PetDetails'
+import Search from './pages/PetListings/Search';
+import NewPet from './pages/PetListings/NewPet';
+import EditPet from './pages/PetListings/EditPet';
+import PetDetails from './pages/PetListings/PetDetails'
 
 import AppList from './pages/Application/List';
 import AppDetail from './pages/Application/Detail';

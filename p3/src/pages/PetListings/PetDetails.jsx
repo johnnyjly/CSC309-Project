@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Header from "../components/Header/Header.jsx";
-import Footer from '../components/Footer/Footer.jsx';
+import Header from "../../components/Header/Header.jsx";
+import Footer from '../../components/Footer/Footer.jsx';
 import { useLocation, useNavigate } from 'react-router-dom'
 import Image from 'react-bootstrap/Image'
-import { ajax_or_login } from '../ajax.js';
+import { ajax_or_login } from '../../ajax.js';
 import { jwtDecode } from 'jwt-decode';
 
 import './pet-details.css'
