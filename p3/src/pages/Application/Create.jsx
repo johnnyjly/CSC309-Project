@@ -69,32 +69,6 @@ const AppApply = () => {
     })
   }, []);
 
-  // TODO: Move this to when pet listing apply is pressed
-  // useEffect(() => {
-  //   ajax_or_login(`/applications/`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     credentials: 'include',
-  //   })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log('Fetched data:', data);
-  //     while (username == null) {};
-  //     const matchingApplication = data.results.find(
-  //       (app) => app.animal === petData.name && app.applicant === username
-  //     );
-  //     if (matchingApplication) {
-  //       alert("You already applied for this pet!")
-  //       navigate('/applications');
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error('Error fetching applications:', error);
-  //   })
-  // }, []);
-
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -143,7 +117,6 @@ const AppApply = () => {
             bodyData[key] = formData.has(key) ? true : false;
           }
         });
-        console.log(bodyData);
         ajax_or_login(`/applications/`, {
           method: 'POST',
           headers: {
@@ -153,9 +126,30 @@ const AppApply = () => {
           credentials: 'include',
         })
         .then((response) => response.json())
-        .then((data) => {
-          alert("Applied successfully!");
-          navigate("/applications/")
+        .then((appdata) => {
+          let notifBody = {
+            "message": appdata.applicant + " submitted an application for " + petData.name + "!",
+            "is_read": "false",
+            "recipient": petData.shelter,
+            "type": "application",
+            "pk": appdata.ID
+          }
+          ajax_or_login(`/notifications/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(notifBody),
+            credentials: 'include',
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            alert("Applied successfully!");
+            navigate("/applications/")
+          })
+          .catch((error) => {
+            console.error('Error sending notification:', error);
+          });
         })
         .catch((error) => {
           console.error('Error submitting application:', error);

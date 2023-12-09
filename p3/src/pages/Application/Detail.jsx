@@ -120,8 +120,8 @@ const AppDetail = () => {
     }, navigate)
     .then((response) => response.json())
     .then(data => {
-        alert("Rejected successfully!")
-        window.location.reload();
+      alert("Rejected successfully!")
+      window.location.reload();
     })
     .catch((error) => {
       console.error('Error fetching applications:', error);
