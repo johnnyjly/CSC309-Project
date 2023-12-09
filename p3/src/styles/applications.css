@@ -174,7 +174,7 @@ footer {
 
   .search-wrapper {
     display: block;
-    height: 100rem;
+    height: 100rem !important;
   }
 
   .search-wrap {

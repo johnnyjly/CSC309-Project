@@ -1,6 +1,6 @@
 // Import Basic Libraries
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { ajax_or_login } from '../../ajax.js';
 import { jwtDecode } from 'jwt-decode';
 
@@ -143,7 +143,12 @@ const AppDetail = () => {
               <div className="row gx-5">
                 <aside className="col-lg-6">
                   <h2 className="title text-dark">
-                    {capitalizeFirstLetter(appData.applicant)+`'s Form for `+capitalizeFirstLetter(appData.animal)}
+                    <span>
+                      <Link to={`/users/${appData.applicant}/seeker/`}>
+                        {capitalizeFirstLetter(appData.applicant)}
+                      </Link>
+                    </span>
+                    's Form for{' '}{capitalizeFirstLetter(appData.animal)}
                   </h2>
                   <CommentList on={'application'} pk={appID} />
                 </aside>
