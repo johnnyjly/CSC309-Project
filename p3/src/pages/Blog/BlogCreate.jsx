@@ -18,42 +18,47 @@ function BlogCreate() {
       method: 'POST',
       body: data,
     }, navigate)
-      .then(response=>{
+      .then(response => {
         navigate(`/shelters/${params.username}`);
       })
-      event.preventDefault();
+    event.preventDefault();
   }
 
   return <div>
     <div className="page_container">
       <div className="content_wrap">
         <Header />
-        <section style={{ marginLeft: "1em", marginRight: "1em" }}>
-          <h1>Create Blog Post</h1>
-          <form id="comment-create" className="card-footer py-3 border-0" style={{ backgroundColor: "#f8f9fa" }} onSubmit={handle_submit}>
-            <div className="d-flex flex-start w-100">
-              <div className="form-outline w-100">
-                <label className="form-label" htmlFor="title">Title</label>
-                <input className="form-control" name="title" id="title" type="text" maxLength="1000"
-                  style={{ background: "#fff" }}></input>
-                <label className="form-label" htmlFor="image">Image (optional)</label>
-                <input className="form-control" name="image" id="image" type="file"
-                  style={{ background: "#fff" }}></input>
-                <label className="form-label" htmlFor="content">Content</label>
-                <textarea className="form-control" name="content" id="content" rows="4"
-                  style={{ background: "#fff" }}></textarea>
-              </div>
+        <main>
+          <div className="container mt-5 mb-5">
+            <div className="row justify-content-center">
+              <h1>Create Blog Post</h1>
+              <form id="comment-create" className="card-footer py-3 border-0" style={{ backgroundColor: "#f8f9fa" }} onSubmit={handle_submit}>
+                <div className="d-flex flex-start w-100">
+                  <div className="form-outline w-100">
+                    <label className="form-label" htmlFor="title">Title</label>
+                    <input className="form-control" name="title" id="title" type="text" maxLength="1000"
+                      style={{ background: "#fff" }}></input>
+                    <p></p>
+                    <label className="form-label" htmlFor="image">Image (optional)</label>
+                    <input className="form-control" name="image" id="image" type="file"
+                      style={{ background: "#fff" }}></input>
+                    <p></p>
+                    <label className="form-label" htmlFor="content">Content</label>
+                    <textarea className="form-control" name="content" id="content" rows="4"
+                      style={{ background: "#fff" }}></textarea>
+                  </div>
+                </div>
+                <div className="float-end mt-2 pt-1">
+                  <button type="submit" className="btn btn-primary btn-sm">Post</button>
+                </div>
+              </form>
             </div>
-            <div className="float-end mt-2 pt-1">
-              <button type="submit" className="btn btn-primary btn-sm">Post</button>
             </div>
-          </form>
-        </section>
-        <div style={{ margin: "6em" }}></div>
+            </main>
+          </div>
+          <Footer />
       </div>
-      <Footer />
     </div>
-  </div>
 };
 
-export default BlogCreate;
+    export default BlogCreate;
