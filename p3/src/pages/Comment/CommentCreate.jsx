@@ -71,8 +71,6 @@ function CommentCreate(props) {
               });
         })
         .catch(error => console.log(error));
-
-        event.preventDefault();
     }
 
     return <form id="comment-create" class="card-footer py-3 border-0" style={{backgroundColor: "#fff", marginBottom: "1em"}} onSubmit={handle_submit}>
