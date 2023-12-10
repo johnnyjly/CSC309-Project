@@ -47,6 +47,7 @@ const PetListing = () => {
 
   let decoded;
 
+
   useEffect(() => {
     try {
       decoded = jwtDecode(authToken);
@@ -90,11 +91,10 @@ const PetListing = () => {
 
     let fetchURI;
 
-    if (page < 1) {
+    console.log(page)
+    if (page < 1 ) {
       searchParams.set('page', 1);
-    } else if (page > totalPages) {
-      searchParams.set('page', totalPages);
-    }
+    } 
 
     if (sort === null) {
       fetchURI = `/petlistings/?page=${currentPage}`;
@@ -133,7 +133,7 @@ const PetListing = () => {
 
       } else {
         searchParams.set('shelter', shelterOption);
-        searchParams.set('page', 1);
+        searchParams.set('page', currentPage);
         fetchURI = fetchURI + `&shelter=${shelterOption.toLowerCase()}`;
       }
     }
@@ -241,7 +241,7 @@ const PetListing = () => {
   }, [currentPage, location.search, authToken, sortOption, statusOption, navigate, totalPages, shelterOption, ageOption, breedOption]);
 
   const handlePageChange = (direction, sortOp) => {
-
+    console.log("total: " + totalPages)
     setCurrentPage(prevPage =>
       direction === 'next' ? Math.min(prevPage + 1, totalPages) : Math.max(prevPage - 1, 1)
     );
@@ -366,7 +366,7 @@ const PetListing = () => {
             <main>
               {numPets === 0 ? <div>
                 <h1 className="display-6 lead text-center mt-5">
-                  The shelter have no pets listed!
+                  No entries Found!
                   {isShelter ?
                     <p className="lead" style={{ marginTop: 50 }}>
                       Check the <a href="/listings?page=1&status=Available" style={{textDecoration: "none"}}>pet listing</a> page and add your own pets.
@@ -482,7 +482,7 @@ const PetListing = () => {
                           <Card.Img variant="top" src={card.image} style={{ height: 200, maxHeight: 200 }} />
                           <Card.Body>
                             <Card.Title>{capitalizeFirstLetter(card.name)}, {card.age} years old</Card.Title>
-                            <Card.Text style={{ minHeight: 150 }}>
+                            <Card.Text style={{ minHeight: 300 }}>
                               {card.description}
                             </Card.Text>
                             <Link className='btn btn-primary' to={`/listings/${card.id}`} state={card}>

@@ -161,14 +161,14 @@ const NewPet = () => {
                       <select
                         id="status"
                         name="status"
-                        value={status}
+                        value="available"
                         onChange={handleStatusChange}
                         className="form-select"
+                        
                         required
                       >
                         <option value="available">Available</option>
-                        <option value="pending">Pending</option>
-                        <option value="adopted">Adopted</option>
+                        
                       </select>
                       <label htmlFor="status" className="form-label">Pet Status</label>
                       <small id="size-fail" className="form-text">{errors.statusError}</small>

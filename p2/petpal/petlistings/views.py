@@ -32,7 +32,6 @@ class PetListingViewSet(viewsets.ModelViewSet):
             )
         
   def get_queryset(self):
-    print("hello")
     queryset = Pet.objects.all()
     sort_param = self.request.query_params.get('sort')
     if sort_param is not None:
